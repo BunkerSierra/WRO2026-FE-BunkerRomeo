@@ -406,10 +406,48 @@ You can see here the STL archive of the Steering Kuckels whit the new adjustment
 
 These changes were carried out because no matter how good our gyro-based PD control was, there was an underlying mechanical problem. It is well known that hardware issues cannot be solved with software.
 
-
 Similarly, we use the gyro sensor for the robot's turns. Upon reaching the desired point, the robot turns the wheels and moves forward until it detects the target angle. Once reached, it stops the motors and returns the steering to the neutral position.
 
 ![IMG_GiroSensor](/schemes/IMG_GiroSensor.jpg)
+
+
+**Update 22/12/2025: Forward and turn tests**
+
+After the Panama International, we continued testing to get closer to 0 degrees of drift without using the gyro sensor, and we also measured the overshoot of the distance the robot travels.
+These tests were performed with the following characteristics: 100 cm of forward movement, without the use of a direction sensor, without the use of ultrasonic sensors, without moving the direction during the tests and maintaining a PWM speed of 180 for the first table, 150 for the second and 165 for the third in the DC motor.
+The values ​​are in centimeters for overshoot, and in degrees for drift.
+
+     27/10/2025 Forward Tests (The steering servomotor is held at 61 degrees):
+
+| Average Overshoot  | Overshoot Dispersion | Drift Average | Drift Dispersion |
+|--------------------|----------------------|---------------|------------------|
+| -6.68              | 8.4                  | 13            | 1.37             |
+
+
+     07/11/2025 Forward Tests (The steering servomotor is held at 65 degrees):
+
+| Average Overshoot  | Overshoot Dispersion | Drift Average | Drift Dispersion |
+|--------------------|----------------------|---------------|------------------|
+| 8.25               | 4.24                 | 0.04          | 1.57             |
+
+
+     12/11/2025 Forward Tests (The steering servomotor is held at 65 degrees):
+
+| Average Overshoot  | Overshoot Dispersion | Drift Average | Drift Dispersion |
+|--------------------|----------------------|---------------|------------------|
+| -7.78              | 3.54                 | -0.07         | 2.44             |
+
+
+Also, a 90-degree turn of the robot was tested without using the gyro sensor. These tests were done with the steering servo motor at 30 degrees and 135 speed. The distance was calculated using the encoder of the DC movement motor. The values are all in degrees.
+
+    15/11/2025 Turn Tests (The steering servomotor is held at 30 degrees):
+    
+| Average Overshoot  | Overshoot Dispersion | Drift Average | Drift Dispersion |
+|--------------------|----------------------|---------------|------------------|
+| -23.37             | 10.75                | 71.63         | 10.75            |
+
+
+
 
 **Update 12/09/2025: Inertial Measurement Unit (IMU) Replacement**
 
