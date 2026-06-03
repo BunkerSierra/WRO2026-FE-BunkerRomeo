@@ -137,7 +137,7 @@ Durante esta edición realizamos cambios importantes en el sistema de visión y 
 | Vista | Foto |
 |-------|------|
 | Vista Frontal | ![VistaFrontal](v-photos/VistaFrontal.jpeg) | 
-| Vista Lateral Izquierda | ![VistaLateralizq](v-photos/VistalLateralLizq.jpeg) |
+| Vista Lateral Izquierda | ![VistaLateraLizq](v-photos/VistalLateraLizq.jpeg) |
 | Vista Trasera | ![VistaTrasera](v-photos/VistaTrasera.jpeg) |
 | Vista Lateral Derecha | ![VistaLateralder](v-photos/VistaLateralder.jpeg) |
 | Vista Superior | ![VistaSuperior](v-photos/VistaSuperior.jpeg) | 
