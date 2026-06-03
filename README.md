@@ -130,14 +130,17 @@ Durante esta edición realizamos cambios importantes en el sistema de visión y 
 
 ## Especificaciones del robot
 
-**Fotos del vehículo rev.15 (Regional Mexicali):**
 
-- Vista Superior ![]()
-- Vista Inferior ![]()
-- Vista Frontal ![]()
-- Vista Trasera ![]()
-- Vista Lateral derecha ![]() 
-- Vista Lateral izquierda ![]()
+
+## Fotos del vehículo rev.15 (Regional Mexicali)
+
+| Vista | Foto |
+|-------|------|
+| Vista Frontal | ![VistaFrontal](v-photos/VistaFrontal.jpeg) |
+| Vista Inferior | ![VistaInferior](v-photos/VistalInferior.jpeg) |
+| Vista Lateral Izquierda | ![VistaLateral Izquierda](v-photos/VistalLateralLizq.jpeg) |
+| Vista Superior | ![VistaSuperior](v-photos/VistaSuperior.jpeg) |
+| Vista Trasera | ![VistaTrasera](v-photos/VistaTrasera.jpeg) |
 
 
 ---
