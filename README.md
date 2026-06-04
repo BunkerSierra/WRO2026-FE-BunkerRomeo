@@ -148,15 +148,15 @@ Durante esta edición realizamos cambios importantes en el sistema de visión y 
 
 ## BOM (Bill of Materials)
 
-| Componente | Requerimiento de energía | Precio |
-|------------|--------------------------|--------|
-| Arduino Mega 2560 | 0.25-0.5W | ≈ 24.46 Dlls |
-| Motor DC con Encoder: GA37-520 300RPM | 5.55-16.65W | ≈ 22.12 Dlls |
-| Puente H TB6612FNG | 0.025W | ≈ 4.35 Dlls |
-| Servo Motor: MG90S | 0.5-2.5W | ≈ 4.08 Dlls |
-| Sensores Ultrasónicos: HC-SR04P x3 | 0.225W | ≈ 2.72 Dlls (una unidad) |
-| Acelerómetro/Giroscopio: GY-9250 | 0.033W | ≈ 9.24 Dlls |
-| LED x4 | 0.264W | ≈ 0.11 Dlls (una unidad) |
-| Buzzer | — | ≈ 0.27 Dlls |
-| SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | ≈ 40.65 Dlls |
-| **Total** | | **≈ 108 Dlls** |
+| Componente | Requerimiento de energía | Imagen | Precio |
+|------------|--------------------------|--------|--------|
+| Arduino Mega 2560 | 0.25-0.5W | ![Arduino](schemes/ArduinoMega.jpg) | ≈ 24.46 Dlls |
+| Motor DC con Encoder: GA37-520 300RPM | 5.55-16.65W | ![Motor DC](schemes/MOTORDC.jpg) | ≈ 22.12 Dlls |
+| Puente H TB6612FNG | 0.025W | ![Puente H](schemes/HBRIDGE.jpg) | ≈ 4.35 Dlls |
+| Servo Motor: MG90S | 0.5-2.5W | ![Servo](schemes/SERVO.webp) | ≈ 4.08 Dlls |
+| Sensores Ultrasonicos: HC-SR04P x3 | 0.225W | ![Ultrasonico](schemes/ULTRASONICO.webp) | ≈ 2.72 Dlls |
+| Acelerometro/Giroscopio: GY-9250 | 0.033W | ![Giroscopio](schemes/GIRO.jpg) | ≈ 9.24 Dlls |
+| LED x4 | 0.264W | No disponible | ≈ 0.44 Dlls |
+| Buzzer | N/A | ![Buzzer](schemes/BUZ.jpg) | ≈ 0.27 Dlls |
+| SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | ![HuskyLens](schemes/HUSKY.webp) | ≈ 40.65 Dlls |
+| **Total** | | | **≈ 108 Dlls** |
