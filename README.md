@@ -160,3 +160,4 @@ Durante esta edición realizamos cambios importantes en el sistema de visión y 
 | Buzzer | N/A | ![Buzzer](schemes/BUZ.jpg) | ≈ 0.27 Dlls |
 | SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | ![HuskyLens](schemes/HUSKY.webp) | ≈ 40.65 Dlls |
 | **Total** | | | **≈ 108 Dlls** |
+.
