@@ -92,7 +92,7 @@ La implementación de este sensor tenía como propósito:
 
 > **Nota:** Debido a limitaciones de tiempo durante el proceso de integración y calibración, decidimos **no utilizar el sensor durante la competencia regional**. A pesar de ello, consideramos que su implementación representa una mejora importante para futuras iteraciones del robot.
 >
-> **Actualización (5 de julio de 2026):** Tras el Regional de Baja California, este sensor pasó de ser experimental a formar parte permanente de la arquitectura del robot. Ver la sección [Actualización Post-Regional de Baja California](#actualización-post-regional-de-baja-california-5-de-julio-de-2026) para más detalle.
+> **Actualización (5 de julio de 2026):** Tras el Regional de Baja California, este sensor pasó de ser experimental a formar parte permanente de la arquitectura del robot.
 
 ### Modificaciones en el sistema de alimentación
 
