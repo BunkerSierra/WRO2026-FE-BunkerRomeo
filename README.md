@@ -26,6 +26,9 @@ Somos un equipo de Baja California, México, compuesto por dos integrantes: Ian 
 
 Este es nuestro segundo año participando en la categoría Future Engineers. Comenzamos nuestra preparación al inicio del año (enero de 2025) y, con el paso del tiempo, nuestro robot ha pasado por varias iteraciones y mejoras.
 
+![EQUIPOROMEO](/schemes/EQUIPOROMEO)
+
+
 [⬆ Volver al índice](#índice)
 
 ---
