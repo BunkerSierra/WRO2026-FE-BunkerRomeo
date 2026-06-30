@@ -55,8 +55,8 @@ Además, recalculamos constantemente la trayectoria mientras el obstáculo perma
 
 La implementación de Pure Pursuit también redujo significativamente la complejidad del sistema, ya que únicamente necesitamos:
 
-- detectar el obstáculo,
-- generar waypoints alrededor de este,
+- detectar el obstáculo.
+- generar waypoints alrededor de este.
 - y seguir la trayectoria calculada geométricamente.
 
 El algoritmo funciona calculando la curvatura necesaria para alcanzar un punto objetivo ubicado cierta distancia adelante del vehículo, conocido como **lookahead point**. Esto produce giros más suaves y estables durante la navegación.
@@ -89,8 +89,8 @@ El sensor VL53L0X utiliza tecnología **Time-of-Flight (ToF)** para medir distan
 
 La implementación de este sensor tenía como propósito:
 
-- mejorar la detección frontal de obstáculos,
-- aumentar la precisión de medición a corta distancia,
+- mejorar la detección frontal de obstáculos.
+- aumentar la precisión de medición a corta distancia.
 - y complementar la información obtenida mediante visión por computadora.
 
 > **Nota:** Debido a limitaciones de tiempo durante el proceso de integración y calibración, decidimos **no utilizar el sensor durante la competencia regional**. A pesar de ello, consideramos que su implementación representa una mejora importante para futuras iteraciones del robot.
@@ -105,9 +105,9 @@ En la edición pasada utilizamos un arreglo compuesto por **seis baterías de 3.
 
 Para esta edición, reemplazamos el sistema por únicamente **dos baterías de 7.8V y 12200mAh**, permitiéndonos:
 
-- simplificar el sistema de energía,
-- reducir el espacio ocupado por las baterías,
-- mejorar la distribución interna de componentes,
+- simplificar el sistema de energía.
+- reducir el espacio ocupado por las baterías.
+- mejorar la distribución interna de componentes.
 - y disminuir el peso total del robot.
 
 **¿Por qué se hizo este cambio?**
@@ -119,9 +119,9 @@ Aunque estas baterías poseen una menor capacidad de almacenamiento, ofrecen ven
 
 Actualmente continuamos realizando pruebas comparativas entre ambas configuraciones de alimentación para determinar cuál ofrece el mejor equilibrio entre:
 
-- autonomía,
-- estabilidad eléctrica,
-- peso,
+- autonomía.
+- estabilidad eléctrica.
+- peso.
 - y rendimiento general durante la competencia.
 
 Gracias a todas estas modificaciones, logramos desarrollar un robot más compacto, eficiente y adaptable, tanto a nivel mecánico como electrónico.
@@ -141,10 +141,10 @@ Durante esta edición realizamos cambios importantes en el sistema de visión y 
 
 #### Propósitos de la nueva implementación:
 
-- simplificar la arquitectura electrónica del robot,
-- reducir la complejidad del procesamiento de visión artificial,
-- mejorar la detección y seguimiento de obstáculos en tiempo real,
-- disminuir la carga de procesamiento del sistema general,
+- simplificar la arquitectura electrónica del robot.
+- reducir la complejidad del procesamiento de visión artificial.
+- mejorar la detección y seguimiento de obstáculos en tiempo real.
+- disminuir la carga de procesamiento del sistema general.
 - y optimizar la capacidad de reacción del robot durante maniobras dinámicas.
 
 > **Estado actual:** La cámara HuskyLens ya ha sido integrada al robot (desde el 21 de mayo de 2026). Se continuará realizando pruebas y calibraciones para evaluar el rendimiento de los diferentes modos de reconocimiento de la cámara y determinar la configuración más adecuada para las condiciones de competencia.
