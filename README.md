@@ -1,4 +1,4 @@
-# Equipo Bunker Romeo – WRO Future Engineers 2026
+# Equipo Bunker Romeo – WRO Futuros Ingenieros 2026
 
 ## Índice
 
