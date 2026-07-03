@@ -13,10 +13,13 @@
 3. [Especificaciones del robot](#especificaciones-del-robot)
    - [Fotos del vehículo rev.15 (Regional Mexicali)](#fotos-del-vehículo-rev15-regional-mexicali)
 4. [Incidente eléctrico del 25 de junio de 2026](#incidente-eléctrico-del-25-de-junio-de-2026)
-5. [Actualización Post-Regional de Baja California (5 de julio de 2026)](#actualización-post-regional-de-baja-california-5-de-julio-de-2026)
+5. [Sensor trasero de esquina y pruebas de vuelta abierta (28 de junio de 2026)](#sensor-trasero-de-esquina-y-pruebas-de-vuelta-abierta-28-de-junio-de-2026)
+   - [Sensor para lectura de líneas de esquina](#sensor-para-lectura-de-líneas-de-esquina)
+   - [Pruebas de la ronda de vuelta abierta](#pruebas-de-la-ronda-de-vuelta-abierta)
+6. [Actualización Post-Regional de Baja California (5 de julio de 2026)](#actualización-post-regional-de-baja-california-5-de-julio-de-2026)
    - [Cambio de sensores laterales: de ultrasónico a VL53L0X ToF](#cambio-de-sensores-laterales-de-ultrasónico-a-vl53l0x-tof)
    - [Cambio de algoritmo de navegación en curvas: de giroscopio a seguimiento de muro](#cambio-de-algoritmo-de-navegación-en-curvas-de-alineación-por-giroscopio-a-seguimiento-de-muro)
-6. [BOM (Bill of Materials)](#bom-bill-of-materials)
+7. [BOM (Bill of Materials)](#bom-bill-of-materials)
 
 ---
 
@@ -95,7 +98,7 @@ La implementación de este sensor tenía como propósito:
 
 > **Nota:** Debido a limitaciones de tiempo durante el proceso de integración y calibración, decidimos **no utilizar el sensor durante la competencia regional**. A pesar de ello, consideramos que su implementación representa una mejora importante para futuras iteraciones del robot.
 >
-> **Actualización (5 de julio de 2026):** Tras el Regional de Baja California, este sensor pasó de ser experimental a formar parte permanente de la arquitectura del robot.
+> **Actualización (5 de junio de 2026):** Tras el Regional de Baja California, este sensor pasó de ser experimental a formar parte permanente de la arquitectura del robot.
 
 ### Modificaciones en el sistema de alimentación
 
@@ -182,6 +185,29 @@ Como consecuencia, las pruebas de navegación se detuvieron temporalmente mientr
 
 ---
 
+## Sensor trasero de esquina y pruebas de vuelta abierta (28 de junio de 2026)
+
+### Sensor para lectura de líneas de esquina
+
+El día **28 de junio de 2026** se incorporó un nuevo **sensor infrarrojo MH Sensor Series** ubicado en el **extremo trasero inferior** del robot. Su propósito es permitir que, al momento de tomar una vuelta, el robot pueda **leer las líneas de la esquina** de la pista.
+
+**¿Por qué se hizo este cambio?**
+Hasta ese momento, el robot no contaba con un sensor dedicado exclusivamente a detectar las líneas ubicadas en las esquinas de la pista, lo que podía generar imprecisiones al iniciar o finalizar una maniobra de giro. Con este nuevo sensor infrarrojo, el robot obtiene una referencia adicional para identificar con mayor exactitud su posición dentro de la esquina, complementando la información proporcionada por los sensores laterales VL53L0X y el algoritmo de seguimiento de muro.
+
+### Pruebas de la ronda de vuelta abierta
+
+Ese mismo día, **28 de junio de 2026**, se realizaron pruebas de la **ronda de vuelta abierta (Open Round)**. Durante estas pruebas, el robot mostró un desempeño constante:
+
+- Completó **3 vueltas** de forma consistente.
+- Se estacionó correctamente en el **cuadrante en el que había iniciado** el recorrido.
+- Todo el recorrido se completó dentro de **75 segundos**.
+
+Estos resultados validan, en conjunto, las mejoras implementadas hasta la fecha (Pure Pursuit, sensores VL53L0X laterales, seguimiento de muro y el nuevo sensor de esquina), reflejando un avance importante en la estabilidad y repetibilidad del sistema de navegación.
+
+[⬆ Volver al índice](#índice)
+
+---
+
 ## Actualización Post-Regional de Baja California (5 de junio de 2026)
 
 A partir del **Regional de Baja California**, comenzamos a implementar una serie de cambios tanto en el hardware como en el algoritmo de navegación del robot, con el objetivo de mejorar la precisión durante las maniobras de evasión y el seguimiento de muros dentro de la pista.
@@ -224,7 +250,6 @@ Actualmente nos encontramos en fase de pruebas con este nuevo enfoque, ajustando
 | LED x4 | 0.264W | ![LED](schemes/LED.png) | ≈ 0.44 Dlls |
 | Buzzer | N/A | ![Buzzer](schemes/BUZ.jpg) | ≈ 0.27 Dlls |
 | SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | ![HuskyLens](schemes/HUSKY.webp) | ≈ 40.65 Dlls |
-| **Total** | | | **≈ 116 Dlls** |
-
-
+| Sensor Infrarrojo (Line Tracking): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | ![Infrarrojo](schemes/MH.jpg) | ≈ 1.50 Dlls* |
+| **Total** | | | **≈ 117.50 Dlls*** |
 [⬆ Volver al índice](#índice)
