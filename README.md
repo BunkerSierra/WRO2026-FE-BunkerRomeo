@@ -1,25 +1,27 @@
-# Equipo Bunker Romeo – WRO Futuros Ingenieros 2026
+# Equipo Bunker Romeo – WRO Future Engineers 2026
 
 ## Índice
 
 1. [Acerca del Equipo](#acerca-del-equipo)
-2. [Implementación de Pure Pursuit y Mejoras Estructurales del Robot](#implementación-de-pure-pursuit-y-mejoras-estructurales-del-robot)
+2. [Videos de la Competencia](#videos-de-la-competencia)
+   - [Open Challenge](#open-challenge)
+3. [Implementación de Pure Pursuit y Mejoras Estructurales del Robot](#implementación-de-pure-pursuit-y-mejoras-estructurales-del-robot)
    - [Funcionamiento del sistema Pure Pursuit](#funcionamiento-del-sistema-pure-pursuit)
    - [Modificaciones estructurales del robot](#modificaciones-estructurales-del-robot)
      - [Footprint](#footprint)
    - [Implementación del sensor VL53L0X](#implementación-del-sensor-vl53l0x)
    - [Modificaciones en el sistema de alimentación](#modificaciones-en-el-sistema-de-alimentación)
    - [Modificaciones en el sistema de visión y hardware](#modificaciones-en-el-sistema-de-visión-y-hardware)
-3. [Especificaciones del robot](#especificaciones-del-robot)
+4. [Especificaciones del robot](#especificaciones-del-robot)
    - [Fotos del vehículo rev.15 (Regional Mexicali)](#fotos-del-vehículo-rev15-regional-mexicali)
-4. [Incidente eléctrico del 25 de junio de 2026](#incidente-eléctrico-del-25-de-junio-de-2026)
-5. [Sensor trasero de esquina y pruebas de vuelta abierta (28 de junio de 2026)](#sensor-trasero-de-esquina-y-pruebas-de-vuelta-abierta-28-de-junio-de-2026)
+5. [Incidente eléctrico del 25 de junio de 2026](#incidente-eléctrico-del-25-de-junio-de-2026)
+6. [Sensor trasero de esquina y pruebas de vuelta abierta (28 de junio de 2026)](#sensor-trasero-de-esquina-y-pruebas-de-vuelta-abierta-28-de-junio-de-2026)
    - [Sensor para lectura de líneas de esquina](#sensor-para-lectura-de-líneas-de-esquina)
    - [Pruebas de la ronda de vuelta abierta](#pruebas-de-la-ronda-de-vuelta-abierta)
-6. [Actualización Post-Regional de Baja California (5 de julio de 2026)](#actualización-post-regional-de-baja-california-5-de-julio-de-2026)
+7. [Actualización Post-Regional de Baja California (5 de julio de 2026)](#actualización-post-regional-de-baja-california-5-de-julio-de-2026)
    - [Cambio de sensores laterales: de ultrasónico a VL53L0X ToF](#cambio-de-sensores-laterales-de-ultrasónico-a-vl53l0x-tof)
    - [Cambio de algoritmo de navegación en curvas: de giroscopio a seguimiento de muro](#cambio-de-algoritmo-de-navegación-en-curvas-de-alineación-por-giroscopio-a-seguimiento-de-muro)
-7. [BOM (Bill of Materials)](#bom-bill-of-materials)
+8. [BOM (Bill of Materials)](#bom-bill-of-materials)
 
 ---
 
@@ -31,6 +33,29 @@ Este es nuestro segundo año participando en la categoría Future Engineers. Com
 
 ![EQUIPOROMEO](/t-photos/EQUIPOROMEO.jpeg)
 
+
+[⬆ Volver al índice](#índice)
+
+---
+
+## Videos de la Competencia
+
+Conforme al reglamento oficial **WRO 2026 – Future Engineers**, cada equipo debe publicar un video en YouTube (público o accesible mediante enlace) que documente el manejo autónomo del vehículo para cada reto, con una duración mínima de 30 segundos por video.
+
+| Reto | Estado | Enlace | Duración del recorrido |
+|------|--------|--------|-------------------------|
+| **Open Challenge** (Vuelta Abierta) | ✅ Publicado | [Ver en YouTube](https://youtu.be/jBpTh44YIUg) | 75 s |
+| **Obstacle Challenge** (Vuelta con Obstáculos) | ⏳ Pendiente | — | — |
+
+### Open Challenge
+
+El video corresponde a la prueba de la ronda de vuelta abierta realizada el **28 de junio de 2026** (ver sección [Pruebas de la ronda de vuelta abierta](#pruebas-de-la-ronda-de-vuelta-abierta)). En la corrida documentada, el robot:
+
+- Ejecuta de forma autónoma **3 vueltas consecutivas** sobre la pista.
+- Se estaciona en el **cuadrante de inicio** del recorrido, sin intervención manual.
+- Completa la totalidad del reto en **75 segundos**.
+
+**Sistemas involucrados durante la corrida:** navegación por Pure Pursuit para evasión de obstáculos, seguimiento de muro (*wall-following*) mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
 
 [⬆ Volver al índice](#índice)
 
@@ -98,7 +123,7 @@ La implementación de este sensor tenía como propósito:
 
 > **Nota:** Debido a limitaciones de tiempo durante el proceso de integración y calibración, decidimos **no utilizar el sensor durante la competencia regional**. A pesar de ello, consideramos que su implementación representa una mejora importante para futuras iteraciones del robot.
 >
-> **Actualización (5 de junio de 2026):** Tras el Regional de Baja California, este sensor pasó de ser experimental a formar parte permanente de la arquitectura del robot.
+> **Actualización (5 de julio de 2026):** Tras el Regional de Baja California, este sensor pasó de ser experimental a formar parte permanente de la arquitectura del robot.
 
 ### Modificaciones en el sistema de alimentación
 
@@ -189,7 +214,7 @@ Como consecuencia, las pruebas de navegación se detuvieron temporalmente mientr
 
 ### Sensor para lectura de líneas de esquina
 
-El día **28 de junio de 2026** se incorporó un nuevo **sensor infrarrojo MH Sensor Series** ubicado en el **extremo trasero inferior** del robot. Su propósito es permitir que, al momento de tomar una vuelta, el robot pueda **leer las líneas de la esquina** de la pista.
+El día **28 de junio de 2026** se incorporó un nuevo **sensor infrarrojo MH Sensor Series** (basado en el sensor óptico TCRT5000 con comparador LM393) ubicado en el **extremo trasero inferior** del robot. Su propósito es permitir que, al momento de tomar una vuelta, el robot pueda **leer las líneas de la esquina** de la pista.
 
 **¿Por qué se hizo este cambio?**
 Hasta ese momento, el robot no contaba con un sensor dedicado exclusivamente a detectar las líneas ubicadas en las esquinas de la pista, lo que podía generar imprecisiones al iniciar o finalizar una maniobra de giro. Con este nuevo sensor infrarrojo, el robot obtiene una referencia adicional para identificar con mayor exactitud su posición dentro de la esquina, complementando la información proporcionada por los sensores laterales VL53L0X y el algoritmo de seguimiento de muro.
@@ -203,6 +228,8 @@ Ese mismo día, **28 de junio de 2026**, se realizaron pruebas de la **ronda de 
 - Todo el recorrido se completó dentro de **75 segundos**.
 
 Estos resultados validan, en conjunto, las mejoras implementadas hasta la fecha (Pure Pursuit, sensores VL53L0X laterales, seguimiento de muro y el nuevo sensor de esquina), reflejando un avance importante en la estabilidad y repetibilidad del sistema de navegación.
+
+🎥 **Video de evidencia:** [Ver corrida completa en YouTube](https://youtu.be/jBpTh44YIUg) — ver también sección [Videos de la Competencia](#videos-de-la-competencia).
 
 [⬆ Volver al índice](#índice)
 
@@ -250,6 +277,7 @@ Actualmente nos encontramos en fase de pruebas con este nuevo enfoque, ajustando
 | LED x4 | 0.264W | ![LED](schemes/LED.png) | ≈ 0.44 Dlls |
 | Buzzer | N/A | ![Buzzer](schemes/BUZ.jpg) | ≈ 0.27 Dlls |
 | SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | ![HuskyLens](schemes/HUSKY.webp) | ≈ 40.65 Dlls |
-| Sensor Infrarrojo (Line Tracking): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | ![Infrarrojo](schemes/MH.jpg) | ≈ 1.50 Dlls* |
+| Sensor Infrarrojo (Line Tracking): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | ![Infrarrojo](schemes/MH_IR.jpg) | ≈ 1.50 Dlls* |
 | **Total** | | | **≈ 117.50 Dlls*** |
+
 [⬆ Volver al índice](#índice)
