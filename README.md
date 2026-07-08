@@ -22,8 +22,9 @@
 7. [Actualización Post-Regional de Baja California (5 de julio de 2026)](#actualización-post-regional-de-baja-california-5-de-julio-de-2026)
    - [Cambio de sensores laterales: de ultrasónico a VL53L0X ToF](#cambio-de-sensores-laterales-de-ultrasónico-a-vl53l0x-tof)
    - [Cambio de algoritmo de navegación en curvas: de giroscopio a seguimiento de muro](#cambio-de-algoritmo-de-navegación-en-curvas-de-alineación-por-giroscopio-a-seguimiento-de-muro)
-8. [Pruebas de evasión de obstáculos (7 de julio de 2026)](#pruebas-de-evasión-de-obstáculos-7-de-julio-de-2026)
-9. [BOM (Bill of Materials)](#bom-bill-of-materials)
+8. [Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)
+9. [Pruebas de evasión de obstáculos (7 de julio de 2026)](#pruebas-de-evasión-de-obstáculos-7-de-julio-de-2026)
+10. [BOM (Bill of Materials)](#bom-bill-of-materials)
 
 ---
 
@@ -57,7 +58,7 @@ El video corresponde a la prueba de la ronda de vuelta abierta realizada el **28
 - Se estaciona en el **cuadrante de inicio** del recorrido, sin intervención manual.
 - Completa la totalidad del reto en **75 segundos**.
 
-**Sistemas involucrados durante la corrida:** navegación por Pure Pursuit para evasión de obstáculos, seguimiento de muro (*wall-following*) mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
+**Sistemas involucrados durante la corrida:** seguimiento de muro (*wall-following*) mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
 
 ### Obstacle Challenge
 
@@ -66,7 +67,7 @@ El video corresponde a la prueba de evasión de obstáculos realizada el **7 de 
 - **Pilar rojo:** el robot lo mantiene de su lado derecho, conforme a la regla de tránsito del reto.
 - **Pilar verde:** el robot lo mantiene de su lado izquierdo.
 
-**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens, generación de *waypoints* alrededor de cada pilar según su color detectado, y cálculo de trayectoria mediante el algoritmo Pure Pursuit, ejecutado por el servomotor de dirección MG90S.
+**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens, seguimiento del obstáculo manteniéndolo centrado en cámara a partir de 50 cm de distancia, giro de evasión a partir de 30 cm, y protocolo de re-centrado de 10 frames al perder de vista el obstáculo (ver sección [Cambio de algoritmo de evasión de obstáculos](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)).
 
 [⬆ Volver al índice](#índice)
 
@@ -79,6 +80,8 @@ Durante esta revisión realizamos múltiples modificaciones tanto en el sistema 
 Una de las mejoras más importantes fue la implementación de un sistema de seguimiento de trayectoria basado en **Pure Pursuit**, utilizando inicialmente la cámara Raspberry Pi Rev 1.3 como sensor principal de percepción.
 
 Anteriormente, nuestro sistema de evasión de obstáculos dependía principalmente de maniobras preprogramadas y casos específicos. Sin embargo, con la incorporación del algoritmo Pure Pursuit, ahora somos capaces de generar trayectorias dinámicas alrededor de los obstáculos detectados.
+
+> **⚠️ Actualización:** El algoritmo Pure Pursuit descrito en esta sección fue posteriormente **eliminado y reemplazado** por un esquema de evasión reactiva basado en distancia, vigente desde, al menos, las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver sección [Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)). Los sistemas de sensores para mantener distancia respecto a los muros y para la toma de vueltas **no cambiaron**. La siguiente descripción se conserva como referencia histórica del proceso de desarrollo.
 
 ### Funcionamiento del sistema Pure Pursuit
 
@@ -238,7 +241,7 @@ Ese mismo día, **28 de junio de 2026**, se realizaron pruebas de la **ronda de 
 - Se estacionó correctamente en el **cuadrante en el que había iniciado** el recorrido.
 - Todo el recorrido se completó dentro de **75 segundos**.
 
-Estos resultados validan, en conjunto, las mejoras implementadas hasta la fecha (Pure Pursuit, sensores VL53L0X laterales, seguimiento de muro y el nuevo sensor de esquina), reflejando un avance importante en la estabilidad y repetibilidad del sistema de navegación.
+Estos resultados validan, en conjunto, las mejoras implementadas hasta la fecha (sensores VL53L0X laterales, seguimiento de muro y el nuevo sensor de esquina), reflejando un avance importante en la estabilidad y repetibilidad del sistema de navegación.
 
 🎥 **Video de evidencia:** [Ver corrida completa en YouTube](https://youtu.be/jBpTh44YIUg) — ver también sección [Videos de la Competencia](#videos-de-la-competencia).
 
@@ -274,6 +277,26 @@ Actualmente nos encontramos en fase de pruebas con este nuevo enfoque, ajustando
 
 ---
 
+## Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia
+
+Se eliminó el uso del algoritmo **Pure Pursuit** para la evasión de obstáculos. Es importante aclarar que **únicamente** se sustituyó este componente: los sensores y el algoritmo utilizados para mantener distancia respecto a los muros y para la toma de vueltas (ver sección [Cambio de algoritmo de navegación en curvas](#cambio-de-algoritmo-de-navegación-en-curvas-de-alineación-por-giroscopio-a-seguimiento-de-muro)) **no cambiaron**.
+
+### Funcionamiento del nuevo esquema de evasión de obstáculos
+
+1. El robot avanza en línea recta sobre la pista.
+2. Al detectar un obstáculo a **50 cm** de distancia, inicia su seguimiento, ajustando la dirección para mantenerlo **centrado en el campo de visión de la cámara HuskyLens**.
+3. Al llegar a **30 cm** de distancia del obstáculo, el robot comienza a girar para esquivarlo.
+4. El giro continúa hasta que el obstáculo **deja de ser detectado** por la cámara.
+5. Una vez perdido de vista, se ejecuta un **protocolo de revisión de 10 frames**, durante el cual el robot se re-centra respecto al carril antes de continuar en línea recta.
+
+A diferencia de Pure Pursuit, que generaba *waypoints* y calculaba una trayectoria curva geométrica alrededor del obstáculo, este esquema es puramente **reactivo**: se basa únicamente en dos umbrales de distancia (50 cm / 30 cm) y en mantener centrado el obstáculo detectado dentro del campo visual de la cámara, sin planeación de trayectoria previa.
+
+> **Nota:** Este cambio afecta exclusivamente al sistema de evasión de obstáculos (Obstacle Challenge). Los sistemas de sensores VL53L0X para mantener distancia respecto a los muros y el esquema de seguimiento de muro (*wall-following*) para tomar las vueltas permanecen sin cambios.
+
+[⬆ Volver al índice](#índice)
+
+---
+
 ## Pruebas de evasión de obstáculos (7 de julio de 2026)
 
 El día **7 de julio de 2026** se realizaron pruebas de **evasión de obstáculos** correspondientes al reto Obstacle Challenge.
@@ -283,7 +306,7 @@ El video documentado muestra una corrida sobre una **sección recta de la pista*
 - Al detectar el **pilar rojo**, el robot ajusta su trayectoria para mantenerlo de su lado **derecho**.
 - Al detectar el **pilar verde**, el robot ajusta su trayectoria para mantenerlo de su lado **izquierdo**.
 
-Ambas maniobras se resuelven mediante el mismo esquema ya utilizado para la evasión de obstáculos: detección de color a través de la cámara HuskyLens, generación de *waypoints* alrededor del pilar detectado y cálculo de la trayectoria curva mediante el algoritmo **Pure Pursuit** (ver sección [Funcionamiento del sistema Pure Pursuit](#funcionamiento-del-sistema-pure-pursuit)).
+Ambas maniobras se resuelven mediante el nuevo esquema de evasión reactiva basado en distancia: detección de color a través de la cámara HuskyLens, seguimiento del obstáculo manteniéndolo centrado en cámara a partir de 50 cm, giro de evasión a partir de 30 cm, y protocolo de re-centrado de 10 frames al perder de vista el obstáculo (ver sección [Cambio de algoritmo de evasión de obstáculos](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)).
 
 🎥 **Video de evidencia:** [Ver corrida en YouTube](https://youtu.be/mim8iLk7CLE) — ver también sección [Videos de la Competencia](#videos-de-la-competencia).
 
