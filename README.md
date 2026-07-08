@@ -7,7 +7,7 @@
    - [Open Challenge](#open-challenge)
    - [Obstacle Challenge](#obstacle-challenge)
 3. [Implementación de Pure Pursuit y Mejoras Estructurales del Robot](#implementación-de-pure-pursuit-y-mejoras-estructurales-del-robot)
-   - [Funcionamiento del sistema Pure Pursuit](#funcionamiento-del-sistema-pure-pursuit)
+   - [Funcionamiento del sistema Pure Pursuit (histórico, ya no vigente)](#funcionamiento-del-sistema-pure-pursuit-histórico-ya-no-vigente)
    - [Modificaciones estructurales del robot](#modificaciones-estructurales-del-robot)
      - [Footprint](#footprint)
    - [Implementación del sensor VL53L0X](#implementación-del-sensor-vl53l0x)
@@ -79,29 +79,29 @@ Durante esta revisión realizamos múltiples modificaciones tanto en el sistema 
 
 Una de las mejoras más importantes fue la implementación de un sistema de seguimiento de trayectoria basado en **Pure Pursuit**, utilizando inicialmente la cámara Raspberry Pi Rev 1.3 como sensor principal de percepción.
 
-Anteriormente, nuestro sistema de evasión de obstáculos dependía principalmente de maniobras preprogramadas y casos específicos. Sin embargo, con la incorporación del algoritmo Pure Pursuit, ahora somos capaces de generar trayectorias dinámicas alrededor de los obstáculos detectados.
+Anteriormente, nuestro sistema de evasión de obstáculos dependía principalmente de maniobras preprogramadas y casos específicos. Con la incorporación del algoritmo Pure Pursuit, el robot fue capaz de generar trayectorias dinámicas alrededor de los obstáculos detectados.
 
-> **⚠️ Actualización:** El algoritmo Pure Pursuit descrito en esta sección fue posteriormente **eliminado y reemplazado** por un esquema de evasión reactiva basado en distancia, vigente desde, al menos, las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver sección [Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)). Los sistemas de sensores para mantener distancia respecto a los muros y para la toma de vueltas **no cambiaron**. La siguiente descripción se conserva como referencia histórica del proceso de desarrollo.
+> **⚠️ Actualización:** El algoritmo Pure Pursuit descrito en esta sección fue posteriormente **eliminado y reemplazado** por un esquema de evasión reactiva basado en distancia, vigente desde, al menos, las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver sección [Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)). **Ya no se generan waypoints ni trayectorias geométricas** para la evasión de obstáculos. Los sistemas de sensores para mantener distancia respecto a los muros y para la toma de vueltas **no cambiaron**. La siguiente descripción se conserva únicamente como referencia histórica del proceso de desarrollo.
 
-### Funcionamiento del sistema Pure Pursuit
+### Funcionamiento del sistema Pure Pursuit (histórico, ya no vigente)
 
-1. Capturamos imágenes del entorno en tiempo real mediante la cámara.
-2. Utilizamos visión por computadora para detectar la posición relativa del obstáculo.
-3. Dependiendo de la ubicación detectada, generamos waypoints alrededor del objeto.
-4. Estos waypoints forman una trayectoria temporal que el robot debe seguir.
-5. El controlador Pure Pursuit selecciona continuamente un punto adelantado sobre la trayectoria y calcula el ángulo de dirección necesario para alcanzarlo.
+1. Se capturaban imágenes del entorno en tiempo real mediante la cámara.
+2. Se utilizaba visión por computadora para detectar la posición relativa del obstáculo.
+3. Dependiendo de la ubicación detectada, se generaban waypoints alrededor del objeto.
+4. Estos waypoints formaban una trayectoria temporal que el robot debía seguir.
+5. El controlador Pure Pursuit seleccionaba continuamente un punto adelantado sobre la trayectoria y calculaba el ángulo de dirección necesario para alcanzarlo.
 
-Este enfoque nos permite generar movimientos más suaves y naturales en comparación con sistemas basados únicamente en correcciones directas o maniobras fijas.
+Este enfoque permitía generar movimientos más suaves y naturales en comparación con sistemas basados únicamente en correcciones directas o maniobras fijas.
 
-Además, recalculamos constantemente la trayectoria mientras el obstáculo permanece visible, permitiéndonos corregir pequeñas variaciones en tiempo real y adaptarnos dinámicamente a diferentes posiciones de los obstáculos.
+Además, la trayectoria se recalculaba constantemente mientras el obstáculo permanecía visible, lo que permitía corregir pequeñas variaciones en tiempo real y adaptarse dinámicamente a diferentes posiciones de los obstáculos.
 
-La implementación de Pure Pursuit también redujo significativamente la complejidad del sistema, ya que únicamente necesitamos:
+La implementación de Pure Pursuit también redujo, en su momento, la complejidad del sistema, ya que únicamente se requería:
 
 - detectar el obstáculo.
 - generar waypoints alrededor de este.
 - y seguir la trayectoria calculada geométricamente.
 
-El algoritmo funciona calculando la curvatura necesaria para alcanzar un punto objetivo ubicado cierta distancia adelante del vehículo, conocido como **lookahead point**. Esto produce giros más suaves y estables durante la navegación.
+El algoritmo funcionaba calculando la curvatura necesaria para alcanzar un punto objetivo ubicado cierta distancia adelante del vehículo, conocido como **lookahead point**. Esto producía giros más suaves y estables durante la navegación.
 
 ### Modificaciones estructurales del robot
 
