@@ -5,6 +5,7 @@
 1. [Acerca del Equipo](#acerca-del-equipo)
 2. [Videos de la Competencia](#videos-de-la-competencia)
    - [Open Challenge](#open-challenge)
+   - [Obstacle Challenge](#obstacle-challenge)
 3. [Implementación de Pure Pursuit y Mejoras Estructurales del Robot](#implementación-de-pure-pursuit-y-mejoras-estructurales-del-robot)
    - [Funcionamiento del sistema Pure Pursuit](#funcionamiento-del-sistema-pure-pursuit)
    - [Modificaciones estructurales del robot](#modificaciones-estructurales-del-robot)
@@ -21,7 +22,8 @@
 7. [Actualización Post-Regional de Baja California (5 de julio de 2026)](#actualización-post-regional-de-baja-california-5-de-julio-de-2026)
    - [Cambio de sensores laterales: de ultrasónico a VL53L0X ToF](#cambio-de-sensores-laterales-de-ultrasónico-a-vl53l0x-tof)
    - [Cambio de algoritmo de navegación en curvas: de giroscopio a seguimiento de muro](#cambio-de-algoritmo-de-navegación-en-curvas-de-alineación-por-giroscopio-a-seguimiento-de-muro)
-8. [BOM (Bill of Materials)](#bom-bill-of-materials)
+8. [Pruebas de evasión de obstáculos (7 de julio de 2026)](#pruebas-de-evasión-de-obstáculos-7-de-julio-de-2026)
+9. [BOM (Bill of Materials)](#bom-bill-of-materials)
 
 ---
 
@@ -45,7 +47,7 @@ Conforme al reglamento oficial **WRO 2026 – Future Engineers**, cada equipo de
 | Reto | Estado | Enlace | Duración del recorrido |
 |------|--------|--------|-------------------------|
 | **Open Challenge** (Vuelta Abierta) | ✅ Publicado | [Ver en YouTube](https://youtu.be/jBpTh44YIUg) | 75 s |
-| **Obstacle Challenge** (Vuelta con Obstáculos) | ⏳ Pendiente | — | — |
+| **Obstacle Challenge** (Vuelta con Obstáculos) | ✅ Publicado | [Ver en YouTube](https://youtu.be/mim8iLk7CLE) | Clip de prueba |
 
 ### Open Challenge
 
@@ -56,6 +58,15 @@ El video corresponde a la prueba de la ronda de vuelta abierta realizada el **28
 - Completa la totalidad del reto en **75 segundos**.
 
 **Sistemas involucrados durante la corrida:** navegación por Pure Pursuit para evasión de obstáculos, seguimiento de muro (*wall-following*) mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
+
+### Obstacle Challenge
+
+El video corresponde a la prueba de evasión de obstáculos realizada el **7 de julio de 2026** (ver sección [Pruebas de evasión de obstáculos](#pruebas-de-evasión-de-obstáculos-7-de-julio-de-2026)). El clip muestra al robot recorriendo una **sección recta de la pista** y evadiendo, en orden, un pilar **rojo** seguido de un pilar **verde**:
+
+- **Pilar rojo:** el robot lo mantiene de su lado derecho, conforme a la regla de tránsito del reto.
+- **Pilar verde:** el robot lo mantiene de su lado izquierdo.
+
+**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens, generación de *waypoints* alrededor de cada pilar según su color detectado, y cálculo de trayectoria mediante el algoritmo Pure Pursuit, ejecutado por el servomotor de dirección MG90S.
 
 [⬆ Volver al índice](#índice)
 
@@ -258,6 +269,25 @@ Este cambio de hardware nos permitió replantear también el algoritmo utilizado
 **Ahora:** con la incorporación de los sensores VL53L0X en los laterales, el robot ya no depende del giroscopio para este propósito. En su lugar, el sistema mide constantemente la **distancia entre el robot y el muro exterior**, y ajusta la dirección para mantener una distancia consistente respecto a dicho muro mientras avanza por la curva. En otras palabras, migramos de un esquema de alineación angular (giroscopio) hacia un esquema de **seguimiento de muro (wall-following)** basado en distancia.
 
 Actualmente nos encontramos en fase de pruebas con este nuevo enfoque, ajustando parámetros de control para lograr un seguimiento estable del muro exterior en diferentes configuraciones de pista.
+
+[⬆ Volver al índice](#índice)
+
+---
+
+## Pruebas de evasión de obstáculos (7 de julio de 2026)
+
+El día **7 de julio de 2026** se realizaron pruebas de **evasión de obstáculos** correspondientes al reto Obstacle Challenge.
+
+El video documentado muestra una corrida sobre una **sección recta de la pista**, en la que el robot detecta y evade, en orden, un **pilar rojo** y posteriormente un **pilar verde**:
+
+- Al detectar el **pilar rojo**, el robot ajusta su trayectoria para mantenerlo de su lado **derecho**.
+- Al detectar el **pilar verde**, el robot ajusta su trayectoria para mantenerlo de su lado **izquierdo**.
+
+Ambas maniobras se resuelven mediante el mismo esquema ya utilizado para la evasión de obstáculos: detección de color a través de la cámara HuskyLens, generación de *waypoints* alrededor del pilar detectado y cálculo de la trayectoria curva mediante el algoritmo **Pure Pursuit** (ver sección [Funcionamiento del sistema Pure Pursuit](#funcionamiento-del-sistema-pure-pursuit)).
+
+🎥 **Video de evidencia:** [Ver corrida en YouTube](https://youtu.be/mim8iLk7CLE) — ver también sección [Videos de la Competencia](#videos-de-la-competencia).
+
+> **Estado actual:** esta prueba corresponde a un tramo recto de la pista. Continuamos con pruebas adicionales para validar la evasión de pilares en distintas posiciones y combinaciones de color a lo largo del circuito completo.
 
 [⬆ Volver al índice](#índice)
 
