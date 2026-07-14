@@ -81,7 +81,7 @@ Una de las mejoras más importantes fue la implementación de un sistema de segu
 
 Anteriormente, nuestro sistema de evasión de obstáculos dependía principalmente de maniobras preprogramadas y casos específicos. Con la incorporación del algoritmo Pure Pursuit, el robot fue capaz de generar trayectorias dinámicas alrededor de los obstáculos detectados.
 
-> **⚠️ Actualización:** El algoritmo Pure Pursuit descrito en esta sección fue posteriormente **eliminado y reemplazado** por un esquema de evasión reactiva basado en distancia, vigente desde, al menos, las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver sección [Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)). **Ya no se generan waypoints ni trayectorias geométricas** para la evasión de obstáculos. Los sistemas de sensores para mantener distancia respecto a los muros y para la toma de vueltas **no cambiaron**. La siguiente descripción se conserva únicamente como referencia histórica del proceso de desarrollo.
+> ** Actualización:** El algoritmo Pure Pursuit descrito en esta sección fue posteriormente **eliminado y reemplazado** por un esquema de evasión reactiva basado en distancia, vigente desde, al menos, las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver sección [Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)). **Ya no se generan waypoints ni trayectorias geométricas** para la evasión de obstáculos. Los sistemas de sensores para mantener distancia respecto a los muros y para la toma de vueltas **no cambiaron**. La siguiente descripción se conserva únicamente como referencia histórica del proceso de desarrollo.
 
 ### Funcionamiento del sistema Pure Pursuit (histórico, ya no vigente)
 
@@ -145,7 +145,7 @@ También realizamos cambios importantes en el sistema de alimentación eléctric
 
 En la edición pasada utilizamos un arreglo compuesto por **seis baterías de 3.7V**, conectadas para obtener aproximadamente **12V y 20000mAh**. Aunque esta configuración cumplía con los requerimientos energéticos del sistema, ocupaba una cantidad considerable de espacio dentro del robot y aumentaba significativamente el peso general de la plataforma.
 
-Para esta edición, reemplazamos el sistema por únicamente **dos baterías de 7.8V y 12200mAh**, permitiéndonos:
+Para esta edición, reemplazamos el sistema por únicamente **dos baterías de 7.8V y 2200mAh**, permitiéndonos:
 
 - simplificar el sistema de energía.
 - reducir el espacio ocupado por las baterías.
