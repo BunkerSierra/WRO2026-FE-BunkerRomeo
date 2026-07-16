@@ -234,7 +234,7 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 | LED x4 | 0.264W | ![LED](schemes/LED.png) | ≈ 0.44 Dlls |
 | Buzzer | N/A | ![Buzzer](schemes/BUZ.jpg) | ≈ 0.27 Dlls |
 | SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | ![HuskyLens](schemes/HUSKY.webp) | ≈ 40.65 Dlls |
-| Sensor Infrarrojo (Line Tracking): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | ![Infrarrojo](schemes/MH_IR.jpg) | ≈ 1.50 Dlls* |
+| Sensor Infrarrojo (Line Tracking): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | ![Infrarrojo](schemes/MH.jpg) | ≈ 1.50 Dlls* |
 | **Total** | | | **≈ 117.50 Dlls*** |
 
 [⬆ Volver al índice](#índice)
