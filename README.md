@@ -205,7 +205,7 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
   2. Al detectar un obstáculo a 50 cm, inicia su seguimiento manteniéndolo centrado en el campo de visión de la HuskyLens.
   3. A 30 cm, comienza a girar para esquivarlo.
   4. El giro continúa hasta perder de vista el obstáculo.
-  5. Se ejecuta un protocolo de re-centrado de 10 frames respecto al carril antes de continuar recto.
+  6. Se ejecuta un protocolo de re-centrado de 10 frames respecto al carril antes de continuar recto.
 
   **Este cambio afecta únicamente al sistema de evasión de obstáculos**; los sensores y el algoritmo de seguimiento de muro (Decisión 9) no se modificaron.
 - **Evidencia/Resultado:** validado en las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver Decisión 11).
