@@ -3,28 +3,17 @@
 ## Índice
 
 1. [Acerca del Equipo](#acerca-del-equipo)
-2. [Videos de la Competencia](#videos-de-la-competencia)
+2. [Resumen del Vehículo (Estado Actual)](#resumen-del-vehículo-estado-actual)
+   - [Diseño Mecánico](#diseño-mecánico)
+   - [Potencia y Sensores](#potencia-y-sensores)
+   - [Software y Navegación](#software-y-navegación)
+   - [Fotos del Vehículo (rev.15 – Regional Mexicali)](#fotos-del-vehículo-rev15--regional-mexicali)
+3. [Videos de la Competencia](#videos-de-la-competencia)
    - [Open Challenge](#open-challenge)
    - [Obstacle Challenge](#obstacle-challenge)
-3. [Implementación de Pure Pursuit y Mejoras Estructurales del Robot](#implementación-de-pure-pursuit-y-mejoras-estructurales-del-robot)
-   - [Funcionamiento del sistema Pure Pursuit (histórico, ya no vigente)](#funcionamiento-del-sistema-pure-pursuit-histórico-ya-no-vigente)
-   - [Modificaciones estructurales del robot](#modificaciones-estructurales-del-robot)
-     - [Footprint](#footprint)
-   - [Implementación del sensor VL53L0X](#implementación-del-sensor-vl53l0x)
-   - [Modificaciones en el sistema de alimentación](#modificaciones-en-el-sistema-de-alimentación)
-   - [Modificaciones en el sistema de visión y hardware](#modificaciones-en-el-sistema-de-visión-y-hardware)
-4. [Especificaciones del robot](#especificaciones-del-robot)
-   - [Fotos del vehículo rev.15 (Regional Mexicali)](#fotos-del-vehículo-rev15-regional-mexicali)
-5. [Incidente eléctrico del 25 de junio de 2026](#incidente-eléctrico-del-25-de-junio-de-2026)
-6. [Sensor trasero de esquina y pruebas de vuelta abierta (28 de junio de 2026)](#sensor-trasero-de-esquina-y-pruebas-de-vuelta-abierta-28-de-junio-de-2026)
-   - [Sensor para lectura de líneas de esquina](#sensor-para-lectura-de-líneas-de-esquina)
-   - [Pruebas de la ronda de vuelta abierta](#pruebas-de-la-ronda-de-vuelta-abierta)
-7. [Actualización Post-Regional de Baja California (5 de julio de 2026)](#actualización-post-regional-de-baja-california-5-de-julio-de-2026)
-   - [Cambio de sensores laterales: de ultrasónico a VL53L0X ToF](#cambio-de-sensores-laterales-de-ultrasónico-a-vl53l0x-tof)
-   - [Cambio de algoritmo de navegación en curvas: de giroscopio a seguimiento de muro](#cambio-de-algoritmo-de-navegación-en-curvas-de-alineación-por-giroscopio-a-seguimiento-de-muro)
-8. [Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)
-9. [Pruebas de evasión de obstáculos (7 de julio de 2026)](#pruebas-de-evasión-de-obstáculos-7-de-julio-de-2026)
-10. [BOM (Bill of Materials)](#bom-bill-of-materials)
+4. [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería)
+5. [Reproducibilidad: Estructura del Repositorio y Guía de Construcción](#reproducibilidad-estructura-del-repositorio-y-guía-de-construcción)
+6. [BOM (Bill of Materials)](#bom-bill-of-materials)
 
 ---
 
@@ -32,172 +21,53 @@
 
 Somos un equipo de Baja California, México, compuesto por dos integrantes: Ian Fernando Rivera Armenta y Jacobo Arteaga Castañeda, de Bunker Robotics. Ambos miembros del equipo cuentan con experiencia en otras competencias, específicamente en la categoría Robomission, sumando un total de 10 años de experiencia combinada.
 
-Este es nuestro segundo año participando en la categoría Future Engineers. Comenzamos nuestra preparación al inicio del año (enero de 2025) y, con el paso del tiempo, nuestro robot ha pasado por varias iteraciones y mejoras.
+Este es nuestro segundo año participando en la categoría Future Engineers. Comenzamos nuestra preparación al inicio del año (enero de 2025) y, con el paso del tiempo, nuestro robot ha pasado por varias iteraciones y mejoras que se documentan a detalle en la [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería) de este documento.
 
 ![EQUIPOROMEO](/t-photos/EQUIPOROMEO.jpeg)
 
-
 [⬆ Volver al índice](#índice)
 
 ---
 
-## Videos de la Competencia
+## Resumen del Vehículo (Estado Actual)
 
-Conforme al reglamento oficial **WRO 2026 – Future Engineers**, cada equipo debe publicar un video en YouTube (público o accesible mediante enlace) que documente el manejo autónomo del vehículo para cada reto, con una duración mínima de 30 segundos por video.
+Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamiento detrás de cada decisión de diseño —qué alternativas se consideraron y por qué se eligió cada solución— se documenta a detalle en la [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería).
 
-| Reto | Estado | Enlace | Duración del recorrido |
-|------|--------|--------|-------------------------|
-| **Open Challenge** (Vuelta Abierta) | ✅ Publicado | [Ver en YouTube](https://youtu.be/jBpTh44YIUg) | 75 s |
-| **Obstacle Challenge** (Vuelta con Obstáculos) | ✅ Publicado | [Ver en YouTube](https://youtu.be/mim8iLk7CLE) | Clip de prueba |
+### Diseño Mecánico
 
-### Open Challenge
+| Aspecto | Especificación actual |
+|---|---|
+| Ruedas | 57 × 14 mm (Lego Spike Prime) |
+| Altura total | 20.3 cm |
+| Ancho total | 14.6 cm |
+| Controlador principal | Arduino Mega 2560 |
 
-El video corresponde a la prueba de la ronda de vuelta abierta realizada el **28 de junio de 2026** (ver sección [Pruebas de la ronda de vuelta abierta](#pruebas-de-la-ronda-de-vuelta-abierta)). En la corrida documentada, el robot:
+> El chasis fue rediseñado a partir de una versión anterior que usaba ruedas de 62.4 × 20 mm (altura 23.9 cm, ancho 15 cm). Razonamiento completo en la Bitácora, **Decisión 3**.
 
-- Ejecuta de forma autónoma **3 vueltas consecutivas** sobre la pista.
-- Se estaciona en el **cuadrante de inicio** del recorrido, sin intervención manual.
-- Completa la totalidad del reto en **75 segundos**.
+### Potencia y Sensores
 
-**Sistemas involucrados durante la corrida:** seguimiento de muro (*wall-following*) mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
+| Sistema | Especificación actual |
+|---|---|
+| Alimentación principal | 2 × baterías 7.8 V, 2200 mAh |
+| Alimentación en evaluación | 2 × baterías 7.4 V, 3000 mAh (pruebas comparativas en curso) |
+| Sensores laterales (muros) | 2 × VL53L0X (láser ToF) |
+| Sensor frontal | 1 × HC-SR04P (ultrasónico) |
+| Sensor de esquina (líneas) | 1 × MH Sensor Series (TCRT5000 + comparador LM393), extremo trasero inferior |
+| IMU / giroscopio | GY-9250 (en el BOM; ya no se usa para navegación en curvas — ver Bitácora, **Decisión 9**) |
+| Visión | HuskyLens PRO OV5640 |
 
-### Obstacle Challenge
+> Los sensores laterales cambiaron de ultrasónico (HC-SR04P) a VL53L0X ToF, y el algoritmo de toma de curvas migró de alineación por giroscopio a seguimiento de muro. Razonamiento completo en la Bitácora, **Decisiones 8 y 9**.
 
-El video corresponde a la prueba de evasión de obstáculos realizada el **7 de julio de 2026** (ver sección [Pruebas de evasión de obstáculos](#pruebas-de-evasión-de-obstáculos-7-de-julio-de-2026)). El clip muestra al robot recorriendo una **sección recta de la pista** y evadiendo, en orden, un pilar **rojo** seguido de un pilar **verde**:
+### Software y Navegación
 
-- **Pilar rojo:** el robot lo mantiene de su lado derecho, conforme a la regla de tránsito del reto.
-- **Pilar verde:** el robot lo mantiene de su lado izquierdo.
+- **Controlador:** Arduino Mega 2560 (único SBC/SBM del sistema desde el 21 de mayo de 2026).
+- **Visión:** HuskyLens realiza la detección de color de los pilares (rojo/verde) y el seguimiento del obstáculo.
+- **Toma de curvas:** seguimiento de muro (*wall-following*) con los sensores laterales VL53L0X + lectura de líneas de esquina con el sensor infrarrojo trasero.
+- **Evasión de obstáculos:** esquema reactivo basado en umbrales de distancia (seguimiento desde 50 cm, giro de evasión desde 30 cm, re-centrado de 10 frames). Este esquema reemplazó al algoritmo Pure Pursuit usado en versiones anteriores.
 
-**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens, seguimiento del obstáculo manteniéndolo centrado en cámara a partir de 50 cm de distancia, giro de evasión a partir de 30 cm, y protocolo de re-centrado de 10 frames al perder de vista el obstáculo (ver sección [Cambio de algoritmo de evasión de obstáculos](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)).
+> El sistema de evasión de obstáculos pasó de un enfoque basado en Pure Pursuit (generación de *waypoints* y trayectorias geométricas) a un esquema reactivo más simple. Razonamiento completo en la Bitácora, **Decisión 10**.
 
-[⬆ Volver al índice](#índice)
-
----
-
-## Implementación de Pure Pursuit y Mejoras Estructurales del Robot
-
-Durante esta revisión realizamos múltiples modificaciones tanto en el sistema de navegación como en la estructura física y electrónica del robot, con el objetivo de mejorar la estabilidad, reducir dimensiones y aumentar la capacidad de adaptación ante diferentes escenarios de competencia.
-
-Una de las mejoras más importantes fue la implementación de un sistema de seguimiento de trayectoria basado en **Pure Pursuit**, utilizando inicialmente la cámara Raspberry Pi Rev 1.3 como sensor principal de percepción.
-
-Anteriormente, nuestro sistema de evasión de obstáculos dependía principalmente de maniobras preprogramadas y casos específicos. Con la incorporación del algoritmo Pure Pursuit, el robot fue capaz de generar trayectorias dinámicas alrededor de los obstáculos detectados.
-
-> ** Actualización:** El algoritmo Pure Pursuit descrito en esta sección fue posteriormente **eliminado y reemplazado** por un esquema de evasión reactiva basado en distancia, vigente desde, al menos, las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver sección [Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)). **Ya no se generan waypoints ni trayectorias geométricas** para la evasión de obstáculos. Los sistemas de sensores para mantener distancia respecto a los muros y para la toma de vueltas **no cambiaron**. La siguiente descripción se conserva únicamente como referencia histórica del proceso de desarrollo.
-
-### Funcionamiento del sistema Pure Pursuit (histórico, ya no vigente)
-
-1. Se capturaban imágenes del entorno en tiempo real mediante la cámara.
-2. Se utilizaba visión por computadora para detectar la posición relativa del obstáculo.
-3. Dependiendo de la ubicación detectada, se generaban waypoints alrededor del objeto.
-4. Estos waypoints formaban una trayectoria temporal que el robot debía seguir.
-5. El controlador Pure Pursuit seleccionaba continuamente un punto adelantado sobre la trayectoria y calculaba el ángulo de dirección necesario para alcanzarlo.
-
-Este enfoque permitía generar movimientos más suaves y naturales en comparación con sistemas basados únicamente en correcciones directas o maniobras fijas.
-
-Además, la trayectoria se recalculaba constantemente mientras el obstáculo permanecía visible, lo que permitía corregir pequeñas variaciones en tiempo real y adaptarse dinámicamente a diferentes posiciones de los obstáculos.
-
-La implementación de Pure Pursuit también redujo, en su momento, la complejidad del sistema, ya que únicamente se requería:
-
-- detectar el obstáculo.
-- generar waypoints alrededor de este.
-- y seguir la trayectoria calculada geométricamente.
-
-El algoritmo funcionaba calculando la curvatura necesaria para alcanzar un punto objetivo ubicado cierta distancia adelante del vehículo, conocido como **lookahead point**. Esto producía giros más suaves y estables durante la navegación.
-
-### Modificaciones estructurales del robot
-
-También realizamos modificaciones importantes en las dimensiones físicas del robot debido al cambio de ruedas instaladas en los extremos derecho e izquierdo del sistema.
-
-#### Footprint
-
-En la revisión anterior utilizamos ruedas de **62.4 mm × 20 mm**, las cuales ofrecían buena estabilidad, pero incrementaban el tamaño general del robot. Para esta temporada, sustituimos dichas ruedas por un nuevo modelo de **57 mm × 14 mm** de Lego Spike Prime, permitiéndonos reducir tanto la altura como el ancho de la estructura.
-
-**¿Por qué se hizo este cambio?**
-Se realizó porque las nuevas ruedas tienen un **coeficiente de desgaste más alto** que el de las otras llantas, lo que mejora la durabilidad y el agarre en superficies de competencia. Además, su menor tamaño contribuye a reducir dimensiones y peso.
-
-#### Como resultado:
-
-- Redujimos la altura total del robot de **23.9 cm** a **20.3 cm**.
-- El ancho pasó de **15 cm** a **14.6 cm**.
-
-Esta reducción nos permitió obtener una estructura más compacta y ligera, además de mejorar ligeramente el centro de gravedad del sistema, favoreciendo la estabilidad durante curvas y maniobras rápidas. El menor tamaño de las ruedas también contribuyó a optimizar la distribución interna de componentes electrónicos y cableado dentro del chasis.
-
-### Implementación del sensor VL53L0X
-
-Otro cambio importante fue la incorporación del **sensor láser VL53L0X** dentro del sistema electrónico del robot.
-
-En temporadas anteriores únicamente habíamos utilizado este sensor para pruebas experimentales, por lo que no formaba parte de nuestro sistema final. Sin embargo, durante esta edición logramos integrarlo exitosamente dentro de la arquitectura principal del robot.
-
-El sensor VL53L0X utiliza tecnología **Time-of-Flight (ToF)** para medir distancias mediante luz infrarroja, ofreciendo mediciones más precisas y estables que los sensores ultrasónicos convencionales.
-
-La implementación de este sensor tenía como propósito:
-
-- mejorar la detección frontal de obstáculos.
-- aumentar la precisión de medición a corta distancia.
-- y complementar la información obtenida mediante visión por computadora.
-
-> **Nota:** Debido a limitaciones de tiempo durante el proceso de integración y calibración, decidimos **no utilizar el sensor durante la competencia regional**. A pesar de ello, consideramos que su implementación representa una mejora importante para futuras iteraciones del robot.
->
-> **Actualización (5 de julio de 2026):** Tras el Regional de Baja California, este sensor pasó de ser experimental a formar parte permanente de la arquitectura del robot.
-
-### Modificaciones en el sistema de alimentación
-
-También realizamos cambios importantes en el sistema de alimentación eléctrica del robot con el objetivo de reducir espacio, simplificar la distribución energética y disminuir el peso total de la estructura.
-
-En la edición pasada utilizamos un arreglo compuesto por **seis baterías de 3.7V**, conectadas para obtener aproximadamente **12V y 2000mAh**. Aunque esta configuración cumplía con los requerimientos energéticos del sistema, ocupaba una cantidad considerable de espacio dentro del robot y aumentaba significativamente el peso general de la plataforma.
-
-Para esta edición, reemplazamos el sistema por únicamente **dos baterías de 7.8V y 2200mAh**, permitiéndonos:
-
-- simplificar el sistema de energía.
-- reducir el espacio ocupado por las baterías.
-- mejorar la distribución interna de componentes.
-- y disminuir el peso total del robot.
-
-**¿Por qué se hizo este cambio?**
-Se realizó para **liberar espacio interno, reducir el peso y simplificar la gestión energética**. La configuración anterior era voluminosa y pesada; el nuevo arreglo mantiene suficiente autonomía con una fracción del tamaño y masa.
-
-Además, recientemente comenzamos a realizar pruebas utilizando un **segundo conjunto de baterías de 7.4V y 3000mAh**. Estas pruebas tienen como objetivo evaluar alternativas más ligeras y compactas que nos permitan reducir aún más el peso del robot y mejorar la eficiencia energética del sistema.
-
-Aunque estas baterías poseen una menor capacidad de almacenamiento, ofrecen ventajas importantes en términos de tamaño, distribución interna y reducción de carga sobre la estructura del robot.
-
-Actualmente continuamos realizando pruebas comparativas entre ambas configuraciones de alimentación para determinar cuál ofrece el mejor equilibrio entre:
-
-- autonomía.
-- estabilidad eléctrica.
-- peso.
-- y rendimiento general durante la competencia.
-
-Gracias a todas estas modificaciones, logramos desarrollar un robot más compacto, eficiente y adaptable, tanto a nivel mecánico como electrónico.
-
-### Modificaciones en el sistema de visión y hardware
-
-Durante esta edición realizamos cambios importantes en el sistema de visión y en el hardware principal del robot, con el objetivo de simplificar la arquitectura electrónica y mejorar la detección de obstáculos durante la navegación autónoma.
-
-**Anteriormente**, utilizábamos una **Raspberry Pi** junto con una **cámara Raspberry Pi** como sistema principal de procesamiento y percepción visual. Esta configuración ofrecía resultados funcionales en tareas básicas de visión por computadora, pero incrementaba la complejidad general del sistema y requería una mayor carga de procesamiento para ejecutar los algoritmos de detección.
-
-**El cambio a HuskyLens** se realizó el **21 de mayo de 2026**. Decidimos reemplazar tanto la cámara Raspberry Pi como la propia Raspberry Pi por una **cámara HuskyLens**, utilizando únicamente el **Arduino Mega** como controlador principal.
-
-#### Razones del cambio:
-
-- **Facilidad de implementación**: la HuskyLens tiene funciones integradas de visión artificial y modos preconfigurados de reconocimiento y seguimiento de objetos, lo que simplifica enormemente el desarrollo del sistema de detección y evasión de obstáculos.
-- **Menor carga de procesamiento**: al delegar la visión artificial a la HuskyLens, el Arduino Mega queda liberado para tareas de control y navegación, mejorando la capacidad de reacción durante maniobras dinámicas.
-
-#### Propósitos de la nueva implementación:
-
-- simplificar la arquitectura electrónica del robot.
-- reducir la complejidad del procesamiento de visión artificial.
-- mejorar la detección y seguimiento de obstáculos en tiempo real.
-- disminuir la carga de procesamiento del sistema general.
-- y optimizar la capacidad de reacción del robot durante maniobras dinámicas.
-
-> **Estado actual:** La cámara HuskyLens ya ha sido integrada al robot (desde el 21 de mayo de 2026). Se continuará realizando pruebas y calibraciones para evaluar el rendimiento de los diferentes modos de reconocimiento de la cámara y determinar la configuración más adecuada para las condiciones de competencia.
-
-[⬆ Volver al índice](#índice)
-
----
-
-## Especificaciones del robot
-
-### Fotos del vehículo rev.15 (Regional Mexicali)
+### Fotos del Vehículo (rev.15 – Regional Mexicali)
 
 | Vista | Foto |
 |-------|------|
@@ -212,105 +82,139 @@ Durante esta edición realizamos cambios importantes en el sistema de visión y 
 
 ---
 
-## Incidente eléctrico del 25 de junio de 2026
+## Videos de la Competencia
 
-El día **25 de junio de 2026** se presentó una falla eléctrica en el robot durante las pruebas: tanto el **regulador de voltaje** como el **servomotor de dirección (MG90S)** sufrieron un corto circuito y resultaron dañados (quemados).
+Conforme al reglamento oficial WRO 2026 – Future Engineers, cada equipo debe publicar un video en YouTube (público o accesible mediante enlace) que documente el manejo autónomo del vehículo para cada reto, con una duración mínima de 30 segundos por video.
 
-Como consecuencia, las pruebas de navegación se detuvieron temporalmente mientras se diagnosticaba el origen de la falla.
+| Reto | Estado | Enlace | Duración del recorrido |
+|------|--------|--------|-------------------------|
+| **Open Challenge** (Vuelta Abierta) | ✅ Publicado | [Ver en YouTube](https://youtu.be/jBpTh44YIUg) | 75 s |
+| **Obstacle Challenge** (Vuelta con Obstáculos) | ✅ Publicado | [Ver en YouTube](https://youtu.be/mim8iLk7CLE) | Clip de prueba |
 
-**Estado actual:** el equipo se encuentra en proceso de **reemplazar ambos componentes** y de revisar el cableado y las conexiones asociadas, con el objetivo de evitar que la falla se repita antes de retomar las pruebas y continuar con la siguiente competencia.
+### Open Challenge
 
-[⬆ Volver al índice](#índice)
+El video corresponde a la prueba de la ronda de vuelta abierta realizada el **28 de junio de 2026**. En la corrida documentada, el robot:
 
----
+- Ejecuta de forma autónoma **3 vueltas consecutivas** sobre la pista.
+- Se estaciona en el **cuadrante de inicio** del recorrido, sin intervención manual.
+- Completa la totalidad del reto en **75 segundos**.
 
-## Sensor trasero de esquina y pruebas de vuelta abierta (28 de junio de 2026)
+**Sistemas involucrados durante la corrida:** seguimiento de muro (*wall-following*) mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
 
-### Sensor para lectura de líneas de esquina
+### Obstacle Challenge
 
-El día **28 de junio de 2026** se incorporó un nuevo **sensor infrarrojo MH Sensor Series** (basado en el sensor óptico TCRT5000 con comparador LM393) ubicado en el **extremo trasero inferior** del robot. Su propósito es permitir que, al momento de tomar una vuelta, el robot pueda **leer las líneas de la esquina** de la pista.
+El video corresponde a la prueba de evasión de obstáculos realizada el **7 de julio de 2026**. El clip muestra al robot recorriendo una **sección recta de la pista** y evadiendo, en orden, un pilar **rojo** seguido de un pilar **verde**:
 
-**¿Por qué se hizo este cambio?**
-Hasta ese momento, el robot no contaba con un sensor dedicado exclusivamente a detectar las líneas ubicadas en las esquinas de la pista, lo que podía generar imprecisiones al iniciar o finalizar una maniobra de giro. Con este nuevo sensor infrarrojo, el robot obtiene una referencia adicional para identificar con mayor exactitud su posición dentro de la esquina, complementando la información proporcionada por los sensores laterales VL53L0X y el algoritmo de seguimiento de muro.
+- **Pilar rojo:** el robot lo mantiene de su lado derecho, conforme a la regla de tránsito del reto.
+- **Pilar verde:** el robot lo mantiene de su lado izquierdo.
 
-### Pruebas de la ronda de vuelta abierta
-
-Ese mismo día, **28 de junio de 2026**, se realizaron pruebas de la **ronda de vuelta abierta (Open Round)**. Durante estas pruebas, el robot mostró un desempeño constante:
-
-- Completó **3 vueltas** de forma consistente.
-- Se estacionó correctamente en el **cuadrante en el que había iniciado** el recorrido.
-- Todo el recorrido se completó dentro de **75 segundos**.
-
-Estos resultados validan, en conjunto, las mejoras implementadas hasta la fecha (sensores VL53L0X laterales, seguimiento de muro y el nuevo sensor de esquina), reflejando un avance importante en la estabilidad y repetibilidad del sistema de navegación.
-
-🎥 **Video de evidencia:** [Ver corrida completa en YouTube](https://youtu.be/jBpTh44YIUg) — ver también sección [Videos de la Competencia](#videos-de-la-competencia).
+**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens, seguimiento del obstáculo manteniéndolo centrado en cámara a partir de 50 cm de distancia, giro de evasión a partir de 30 cm, y protocolo de re-centrado de 10 frames al perder de vista el obstáculo.
 
 [⬆ Volver al índice](#índice)
 
 ---
 
-## Actualización Post-Regional de Baja California (5 de junio de 2026)
+## Bitácora de Decisiones de Ingeniería
 
-A partir del **Regional de Baja California**, comenzamos a implementar una serie de cambios tanto en el hardware como en el algoritmo de navegación del robot, con el objetivo de mejorar la precisión durante las maniobras de evasión y el seguimiento de muros dentro de la pista.
+> Esta sección documenta, en orden cronológico, el **razonamiento detrás de cada cambio importante** en el robot: el problema o restricción que lo motivó, las alternativas consideradas, la decisión tomada y la evidencia que la respalda. El objetivo es mostrar el proceso de ingeniería completo, no solo el resultado final.
 
+Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consideradas → Decisión y justificación → Evidencia/Resultado**.
 
-### Cambio de sensores laterales: de ultrasónico a VL53L0X ToF
+### Resumen rápido
 
-Anteriormente, los sensores ubicados en los **laterales** del robot eran de tipo ultrasónico (HC-SR04P). A partir de esta actualización, sustituimos dichos sensores por **sensores láser VL53L0X** de tipo **Time-of-Flight (ToF)**.
+| # | Fecha | Decisión | Categoría | Estado |
+|---|---|---|---|---|
+| 1 | Inicio de temporada (s/f) | RPi + Pure Pursuit para evasión de obstáculos | Software | Reemplazado (ver 10) |
+| 2 | 21 may 2026 | Raspberry Pi → HuskyLens + Arduino Mega | Software/Hardware | Vigente |
+| 3 | s/f | Ruedas 62.4×20 mm → 57×14 mm | Mecánico | Vigente |
+| 4 | s/f | Baterías 6×3.7 V → 2×7.8 V/2200 mAh | Potencia | Vigente (comparando alternativa 7.4 V/3000 mAh) |
+| 5 | Antes del regional | VL53L0X probado, no usado en el regional | Sensores | Superado (ver 8) |
+| 6 | 25 jun 2026 | Falla eléctrica (regulador + servo) | Riesgo/Mantenimiento | Resuelto |
+| 7 | 28 jun 2026 | Sensor de esquina IR + validación Open Round | Sensores | Vigente |
+| 8 | 5 jul 2026 | Sensores laterales: ultrasónico → VL53L0X | Sensores | Vigente |
+| 9 | 5 jul 2026 | Curvas: giroscopio → seguimiento de muro | Software | En pruebas |
+| 10 | Post-regional (s/f exacta) | Evasión: Pure Pursuit → reactivo por distancia | Software | Vigente |
+| 11 | 7 jul 2026 | Validación de evasión de obstáculos | Pruebas | Parcial (solo tramo recto) |
 
-**¿Por qué se hizo este cambio?**
-Se realizó con el objetivo de obtener **mayor precisión al momento de detectar la distancia entre el muro y el robot**. Los sensores ultrasónicos, al depender de la reflexión de ondas sonoras, son más susceptibles a variaciones de lectura según el ángulo o el material del muro; en cambio, los sensores VL53L0X, al basarse en luz infrarroja, ofrecen mediciones más estables y consistentes a corta distancia.
+### Decisión 1 — Arquitectura inicial de evasión de obstáculos: Raspberry Pi + Pure Pursuit
 
-Vale la pena señalar que este sensor ya había sido probado de forma experimental anteriormente (ver sección [Implementación del sensor VL53L0X](#implementación-del-sensor-vl53l0x)), pero no se había integrado de forma definitiva debido a limitaciones de tiempo durante el regional previo. Con esta actualización, el VL53L0X pasa a formar parte permanente de la arquitectura electrónica del robot, ahora utilizado específicamente en los laterales.
+- **Contexto/Restricción:** el sistema de evasión de obstáculos dependía inicialmente de maniobras preprogramadas y casos específicos, lo cual limitaba la adaptabilidad del robot ante distintas posiciones de obstáculos.
+- **Decisión:** implementar un sistema de seguimiento de trayectoria basado en **Pure Pursuit**, usando la cámara Raspberry Pi Rev 1.3 como sensor principal de percepción. El algoritmo detectaba la posición del obstáculo, generaba *waypoints* alrededor de este y seleccionaba continuamente un punto adelantado (*lookahead point*) sobre la trayectoria para calcular el ángulo de dirección necesario.
+- **Resultado:** el enfoque generó movimientos más suaves que las maniobras fijas, pero incrementó la complejidad y la carga de procesamiento del sistema (ver Decisión 2 y Decisión 10).
 
-### Cambio de algoritmo de navegación en curvas: de alineación por giroscopio a seguimiento de muro
+### Decisión 2 — Cambio de plataforma de visión: Raspberry Pi → HuskyLens (21 de mayo de 2026)
 
-Este cambio de hardware nos permitió replantear también el algoritmo utilizado para tomar las vueltas dentro de la pista.
+- **Contexto/Restricción:** la Raspberry Pi + cámara Raspberry Pi ofrecía resultados funcionales, pero incrementaba la complejidad general del sistema y requería mayor carga de procesamiento para ejecutar los algoritmos de detección.
+- **Opciones consideradas:** optimizar el pipeline de visión sobre Raspberry Pi vs. migrar a un sensor de visión dedicado con modos de reconocimiento preconfigurados.
+- **Decisión y justificación:** se reemplazaron la Raspberry Pi y su cámara por una **cámara HuskyLens**, dejando al **Arduino Mega** como único controlador. La HuskyLens simplifica el desarrollo del sistema de detección (funciones de visión artificial integradas) y libera al Arduino Mega para tareas de control y navegación, mejorando la capacidad de reacción durante maniobras dinámicas.
+- **Evidencia/Resultado:** HuskyLens integrada desde el 21 de mayo de 2026; se continúa calibrando y evaluando los distintos modos de reconocimiento de la cámara.
 
-**Antes:** dependíamos del sensor giroscópico (GY-9250) para alinear al robot durante el giro, utilizando la medición de orientación angular para corregir la trayectoria.
+### Decisión 3 — Rediseño de ruedas y footprint
 
-**Ahora:** con la incorporación de los sensores VL53L0X en los laterales, el robot ya no depende del giroscopio para este propósito. En su lugar, el sistema mide constantemente la **distancia entre el robot y el muro exterior**, y ajusta la dirección para mantener una distancia consistente respecto a dicho muro mientras avanza por la curva. En otras palabras, migramos de un esquema de alineación angular (giroscopio) hacia un esquema de **seguimiento de muro (wall-following)** basado en distancia.
+- **Contexto/Restricción:** las ruedas anteriores (62.4 × 20 mm) ofrecían buena estabilidad pero incrementaban el tamaño general del robot.
+- **Opciones consideradas:** mantener las ruedas actuales vs. adoptar un modelo más pequeño (Lego Spike Prime, 57 × 14 mm).
+- **Decisión y justificación:** se sustituyeron las ruedas por el modelo de 57 × 14 mm. Estas ruedas tienen un coeficiente de desgaste más alto, lo que mejora la durabilidad y el agarre en superficies de competencia; su menor tamaño también reduce dimensiones y peso.
+- **Evidencia/Resultado:** altura reducida de 23.9 cm a 20.3 cm; ancho de 15 cm a 14.6 cm. La estructura resultante es más compacta y ligera, con un centro de gravedad ligeramente mejorado que favorece la estabilidad en curvas y maniobras rápidas.
 
-Actualmente nos encontramos en fase de pruebas con este nuevo enfoque, ajustando parámetros de control para lograr un seguimiento estable del muro exterior en diferentes configuraciones de pista.
+### Decisión 4 — Simplificación del sistema de alimentación
 
-[⬆ Volver al índice](#índice)
+- **Contexto/Restricción:** el arreglo anterior de 6 baterías de 3.7 V (~12 V, 2000 mAh) cumplía los requerimientos energéticos, pero ocupaba mucho espacio interno y aumentaba el peso del robot.
+- **Opciones consideradas:** mantener el arreglo de 6 celdas vs. consolidar en menos celdas de mayor voltaje.
+- **Decisión y justificación:** se adoptaron **2 baterías de 7.8 V, 2200 mAh**, liberando espacio interno, reduciendo peso y simplificando la gestión energética.
+- **Evidencia/Resultado:** reducción de espacio y peso confirmada; autonomía suficiente mantenida. **Iteración en curso:** actualmente se prueba un segundo conjunto de baterías (7.4 V, 3000 mAh) más ligero y compacto pero de menor capacidad, para determinar el mejor equilibrio entre autonomía, estabilidad eléctrica, peso y rendimiento general. Esta comparación **aún no concluye**.
 
----
+### Decisión 5 — Prueba experimental del sensor VL53L0X (no desplegado en el regional)
 
-## Cambio de algoritmo de evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia
+- **Contexto/Restricción:** el sensor láser VL53L0X (Time-of-Flight) se integró de forma experimental en la arquitectura electrónica para mejorar la detección frontal de obstáculos y la precisión a corta distancia.
+- **Decisión de mitigación de riesgo:** debido a limitaciones de tiempo durante la integración y calibración, el equipo decidió **no utilizar el sensor durante la competencia regional**, priorizando la confiabilidad del sistema sobre la incorporación de un componente insuficientemente probado.
+- **Resultado:** el sensor se documentó como una mejora importante para futuras iteraciones y se integró de forma permanente después del regional (ver Decisión 8).
 
-Se eliminó el uso del algoritmo **Pure Pursuit** para la evasión de obstáculos. Es importante aclarar que **únicamente** se sustituyó este componente: los sensores y el algoritmo utilizados para mantener distancia respecto a los muros y para la toma de vueltas (ver sección [Cambio de algoritmo de navegación en curvas](#cambio-de-algoritmo-de-navegación-en-curvas-de-alineación-por-giroscopio-a-seguimiento-de-muro)) **no cambiaron**.
+### Decisión 6 — Incidente eléctrico y respuesta a falla (25 de junio de 2026)
 
-### Funcionamiento del nuevo esquema de evasión de obstáculos
+- **Contexto:** durante las pruebas, el regulador de voltaje y el servomotor de dirección (MG90S) sufrieron un corto circuito y resultaron dañados.
+- **Impacto:** las pruebas de navegación se detuvieron temporalmente mientras se diagnosticaba el origen de la falla.
+- **Acción de mitigación:** reemplazo de ambos componentes y revisión del cableado y las conexiones asociadas, con el objetivo de evitar que la falla se repita.
+- **Estado:** Resuelto con el debido cambio de componentes. 
 
-1. El robot avanza en línea recta sobre la pista.
-2. Al detectar un obstáculo a **50 cm** de distancia, inicia su seguimiento, ajustando la dirección para mantenerlo **centrado en el campo de visión de la cámara HuskyLens**.
-3. Al llegar a **30 cm** de distancia del obstáculo, el robot comienza a girar para esquivarlo.
-4. El giro continúa hasta que el obstáculo **deja de ser detectado** por la cámara.
-5. Una vez perdido de vista, se ejecuta un **protocolo de revisión de 10 frames**, durante el cual el robot se re-centra respecto al carril antes de continuar en línea recta.
+### Decisión 7 — Sensor de esquina trasero y validación con pruebas de vuelta abierta (28 de junio de 2026)
 
-A diferencia de Pure Pursuit, que generaba *waypoints* y calculaba una trayectoria curva geométrica alrededor del obstáculo, este esquema es puramente **reactivo**: se basa únicamente en dos umbrales de distancia (50 cm / 30 cm) y en mantener centrado el obstáculo detectado dentro del campo visual de la cámara, sin planeación de trayectoria previa.
+- **Contexto/Restricción:** el robot no contaba con un sensor dedicado a detectar las líneas de las esquinas de la pista, lo que podía generar imprecisiones al iniciar o finalizar una maniobra de giro.
+- **Decisión y justificación:** se incorporó un sensor infrarrojo **MH Sensor Series** (basado en TCRT5000 con comparador LM393) en el extremo trasero inferior, complementando la información de los sensores laterales VL53L0X y el algoritmo de seguimiento de muro.
+- **Evidencia/Resultado:** en las pruebas de vuelta abierta del mismo día, el robot completó **3 vueltas de forma consistente**, se estacionó correctamente en el cuadrante de inicio y completó el recorrido en **75 segundos**, validando en conjunto los sensores VL53L0X laterales, el seguimiento de muro y el nuevo sensor de esquina. Ver video en la sección [Open Challenge](#open-challenge).
 
-> **Nota:** Este cambio afecta exclusivamente al sistema de evasión de obstáculos (Obstacle Challenge). Los sistemas de sensores VL53L0X para mantener distancia respecto a los muros y el esquema de seguimiento de muro (*wall-following*) para tomar las vueltas permanecen sin cambios.
+### Decisión 8 — Sensores laterales: de ultrasónico a VL53L0X ToF (5 de julio de 2026)
 
-[⬆ Volver al índice](#índice)
+- **Contexto/Restricción:** los sensores ultrasónicos (HC-SR04P) usados en los laterales eran susceptibles a variaciones de lectura según el ángulo o el material del muro.
+- **Opciones consideradas:** mantener los sensores ultrasónicos vs. desplegar de forma definitiva el VL53L0X, ya validado experimentalmente (Decisión 5) pero no usado en el regional por límites de tiempo.
+- **Decisión y justificación:** se sustituyeron los sensores laterales ultrasónicos por **VL53L0X ToF**, que al basarse en luz infrarroja ofrecen mediciones más estables y consistentes a corta distancia que la reflexión de ondas sonoras.
+- **Resultado:** el VL53L0X pasa a formar parte permanente de la arquitectura electrónica, específicamente en los laterales.
 
----
+### Decisión 9 — Navegación en curvas: de giroscopio a seguimiento de muro
 
-## Pruebas de evasión de obstáculos (7 de julio de 2026)
+- **Contexto:** el robot dependía del sensor giroscópico (GY-9250) para alinearse durante el giro, usando la orientación angular para corregir la trayectoria.
+- **Decisión y justificación:** el cambio de hardware de la Decisión 8 (VL53L0X en los laterales) permitió migrar a un esquema de **seguimiento de muro** (*wall-following*): el sistema mide constantemente la distancia entre el robot y el muro exterior y ajusta la dirección para mantenerla constante durante la curva, sin depender del giroscopio.
+- **Estado:** en fase de pruebas, ajustando parámetros de control para lograr un seguimiento estable en diferentes configuraciones de pista.
+- **Nota de pensamiento sistémico:** este cambio de algoritmo fue posible *gracias* a la decisión de hardware anterior (Decisión 8) — un ejemplo de cómo una decisión de sensado habilitó directamente una simplificación en el software de navegación.
 
-El día **7 de julio de 2026** se realizaron pruebas de **evasión de obstáculos** correspondientes al reto Obstacle Challenge.
+### Decisión 10 — Evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia
 
-El video documentado muestra una corrida sobre una **sección recta de la pista**, en la que el robot detecta y evade, en orden, un **pilar rojo** y posteriormente un **pilar verde**:
+- **Contexto/Restricción:** Pure Pursuit requería generar *waypoints* y recalcular constantemente una trayectoria geométrica alrededor de cada obstáculo, lo cual añadía complejidad de cómputo y de diseño.
+- **Opciones consideradas:** mantener y refinar Pure Pursuit vs. adoptar un esquema reactivo más simple basado en umbrales de distancia.
+- **Decisión y justificación:** se eliminó Pure Pursuit para la evasión de obstáculos y se adoptó un esquema reactivo:
+  1. El robot avanza en línea recta.
+  2. Al detectar un obstáculo a 50 cm, inicia su seguimiento manteniéndolo centrado en el campo de visión de la HuskyLens.
+  3. A 30 cm, comienza a girar para esquivarlo.
+  4. El giro continúa hasta perder de vista el obstáculo.
+  5. Se ejecuta un protocolo de re-centrado de 10 frames respecto al carril antes de continuar recto.
 
-- Al detectar el **pilar rojo**, el robot ajusta su trayectoria para mantenerlo de su lado **derecho**.
-- Al detectar el **pilar verde**, el robot ajusta su trayectoria para mantenerlo de su lado **izquierdo**.
+  **Este cambio afecta únicamente al sistema de evasión de obstáculos**; los sensores y el algoritmo de seguimiento de muro (Decisión 9) no se modificaron.
+- **Evidencia/Resultado:** validado en las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver Decisión 11).
 
-Ambas maniobras se resuelven mediante el nuevo esquema de evasión reactiva basado en distancia: detección de color a través de la cámara HuskyLens, seguimiento del obstáculo manteniéndolo centrado en cámara a partir de 50 cm, giro de evasión a partir de 30 cm, y protocolo de re-centrado de 10 frames al perder de vista el obstáculo (ver sección [Cambio de algoritmo de evasión de obstáculos](#cambio-de-algoritmo-de-evasión-de-obstáculos-de-pure-pursuit-a-seguimiento-reactivo-por-distancia)).
+### Decisión 11 — Validación: pruebas de evasión de obstáculos (7 de julio de 2026)
 
-🎥 **Video de evidencia:** [Ver corrida en YouTube](https://youtu.be/mim8iLk7CLE) — ver también sección [Videos de la Competencia](#videos-de-la-competencia).
-
-> **Estado actual:** esta prueba corresponde a un tramo recto de la pista. Continuamos con pruebas adicionales para validar la evasión de pilares en distintas posiciones y combinaciones de color a lo largo del circuito completo.
+- **Contexto:** validar en pista el esquema reactivo de la Decisión 10.
+- **Evidencia/Resultado:** en una sección recta, el robot evadió correctamente un pilar rojo (mantenido a su derecha) y un pilar verde (mantenido a su izquierda). Ver video en la sección [Obstacle Challenge](#obstacle-challenge).
+- **Estado actual:** esta prueba corresponde únicamente a un tramo recto de la pista. Continúan las pruebas para validar la evasión de pilares en distintas posiciones y combinaciones de color a lo largo del circuito completo.
 
 [⬆ Volver al índice](#índice)
 
