@@ -1,36 +1,42 @@
 # Equipo Bunker Romeo – WRO Future Engineers 2026
 
+<a id="indice"></a>
+ 
 ## Índice
  
 1.  [Acerca del Equipo](#acerca-del-equipo)
-2.  [Resumen del Vehículo (Estado Actual)](#resumen-del-vehículo-estado-actual)
-   - [Diseño Mecánico](#diseño-mecánico)
+2.  [Resumen del Vehículo (Estado Actual)](#resumen-del-vehiculo)
+   - [Diseño Mecánico](#diseno-mecanico)
    - [Potencia y Sensores](#potencia-y-sensores)
-   - [Software y Navegación](#software-y-navegación)
-   - [Fotos del Vehículo (rev.15 – Regional Mexicali)](#fotos-del-vehículo-rev15--regional-mexicali)
+   - [Software y Navegación](#software-y-navegacion)
+   - [Fotos del Vehículo (rev.15 – Regional Mexicali)](#fotos-del-vehiculo)
 3.  [Videos de la Competencia](#videos-de-la-competencia)
    - [Open Challenge](#open-challenge)
    - [Obstacle Challenge](#obstacle-challenge)
-4.  [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería)
-5.  [BOM (Bill of Materials)](#bom-bill-of-materials)
+4.  [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones)
+5.  [BOM (Bill of Materials)](#bom)
 ---
  
 ## Acerca del Equipo
  
 Somos un equipo de Baja California, México, compuesto por dos integrantes: Ian Fernando Rivera Armenta y Jacobo Arteaga Castañeda, de Bunker Robotics. Ambos miembros del equipo cuentan con experiencia en otras competencias, específicamente en la categoría Robomission, sumando un total de 10 años de experiencia combinada.
  
-Este es nuestro segundo año participando en la categoría Future Engineers. Comenzamos nuestra preparación al inicio del año (Enero de 2025) y, con el paso del tiempo, nuestro robot ha pasado por varias iteraciones y mejoras que se documentan a detalle en la [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería) de este documento.
+Este es nuestro segundo año participando en la categoría Future Engineers. Comenzamos nuestra preparación al inicio del año (enero de 2025) y, con el paso del tiempo, nuestro robot ha pasado por varias iteraciones y mejoras que se documentan a detalle en la [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones) de este documento.
  
 <div align="center">
 <img src="/t-photos/EQUIPOROMEO.jpeg" width="480" alt="Equipo Bunker Romeo">
 </div>
-[⬆ Volver al índice](#índice)
+[⬆ Volver al índice](#indice)
  
 ---
  
+<a id="resumen-del-vehiculo"></a>
+ 
 ## Resumen del Vehículo (Estado Actual)
  
-Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamiento detrás de cada decisión de diseño —qué alternativas se consideraron y por qué se eligió cada solución— se documenta a detalle en la [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería).
+Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamiento detrás de cada decisión de diseño —qué alternativas se consideraron y por qué se eligió cada solución— se documenta a detalle en la [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones).
+ 
+<a id="diseno-mecanico"></a>
  
 ### Diseño Mecánico
  
@@ -59,6 +65,8 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 > [!NOTE]
 > Los sensores laterales cambiaron de ultrasónico (HC-SR04P) a VL53L0X ToF, y el algoritmo de toma de curvas migró de alineación por giroscopio a seguimiento de muro. Razonamiento completo en la Bitácora, **Decisiones 8 y 9**.
  
+<a id="software-y-navegacion"></a>
+ 
 ### Software y Navegación
  
 - **Controlador:** Arduino Mega 2560 (único SBC/SBM del sistema desde el 21 de mayo de 2026).
@@ -67,6 +75,8 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 - **Evasión de obstáculos:** esquema reactivo basado en umbrales de distancia (seguimiento desde 50 cm, giro de evasión desde 30 cm, re-centrado de 10 frames). Este esquema reemplazó al algoritmo Pure Pursuit usado en versiones anteriores.
 > [!NOTE]
 > El sistema de evasión de obstáculos pasó de un enfoque basado en Pure Pursuit (generación de *waypoints* y trayectorias geométricas) a un esquema reactivo más simple. Razonamiento completo en la Bitácora, **Decisión 10**.
+ 
+<a id="fotos-del-vehiculo"></a>
  
 ### Fotos del Vehículo (rev.15 – Regional Mexicali)
  
@@ -82,7 +92,7 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 <td align="center"><img src="v-photos/VistaInferior.jpeg" width="200"><br><sub>Vista Inferior</sub></td>
 </tr>
 </table>
-[⬆ Volver al índice](#índice)
+[⬆ Volver al índice](#indice)
  
 ---
  
@@ -118,9 +128,11 @@ El video corresponde a la prueba de evasión de obstáculos realizada el **7 de 
 - **Pilar verde:** el robot lo mantiene de su lado izquierdo.
 **Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens, seguimiento del obstáculo manteniéndolo centrado en cámara a partir de 50 cm de distancia, giro de evasión a partir de 30 cm, y protocolo de re-centrado de 10 frames al perder de vista el obstáculo.
  
-[⬆ Volver al índice](#índice)
+[⬆ Volver al índice](#indice)
  
 ---
+ 
+<a id="bitacora-decisiones"></a>
  
 ## Bitácora de Decisiones de Ingeniería
  
@@ -213,9 +225,11 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 - **Contexto:** validar en pista el esquema reactivo de la Decisión 10.
 - **Evidencia/Resultado:** en una sección recta, el robot evadió correctamente un pilar rojo (mantenido a su derecha) y un pilar verde (mantenido a su izquierda). Ver video en la sección [Obstacle Challenge](#obstacle-challenge).
 - **Estado actual:** esta prueba corresponde únicamente a un tramo recto de la pista. Continúan las pruebas para validar la evasión de pilares en distintas posiciones y combinaciones de color a lo largo del circuito completo.
-[⬆ Volver al índice](#índice)
+[⬆ Volver al índice](#indice)
  
 ---
+ 
+<a id="bom"></a>
  
 ## BOM (Bill of Materials)
  
@@ -234,5 +248,4 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 | Sensor Infrarrojo (Line Tracking): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | <img src="schemes/MH.jpg" width="80"> | ≈ 1.50 Dlls* |
 | **Total** | | | **≈ 117.50 Dlls*** |
  
-[⬆ Volver al índice](#índice)
- 
+[⬆ Volver al índice](#indice)
