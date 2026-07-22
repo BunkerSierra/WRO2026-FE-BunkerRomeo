@@ -26,6 +26,7 @@ Este es nuestro segundo año participando en la categoría Future Engineers. Com
 <div align="center">
 <img src="/t-photos/EQUIPOROMEO.jpeg" width="480" alt="Equipo Bunker Romeo">
 </div>
+
 [⬆ Volver al índice](#indicleto)
  
 ---
@@ -92,6 +93,7 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 <td align="center"><img src="v-photos/VistaInferior.jpeg" width="200"><br><sub>Vista Inferior</sub></td>
 </tr>
 </table>
+
 [⬆ Volver al índice](#indicleto)
  
 ---
