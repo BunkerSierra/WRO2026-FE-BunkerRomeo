@@ -1,6 +1,6 @@
 # Equipo Bunker Romeo – WRO Future Engineers 2026
 
-<a id="indice"></a>
+<a id="indicleto"></a>
  
 ## Índice
  
@@ -26,7 +26,7 @@ Este es nuestro segundo año participando en la categoría Future Engineers. Com
 <div align="center">
 <img src="/t-photos/EQUIPOROMEO.jpeg" width="480" alt="Equipo Bunker Romeo">
 </div>
-[⬆ Volver al índice](#indice)
+[⬆ Volver al índice](#indicleto)
  
 ---
  
@@ -92,7 +92,7 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 <td align="center"><img src="v-photos/VistaInferior.jpeg" width="200"><br><sub>Vista Inferior</sub></td>
 </tr>
 </table>
-[⬆ Volver al índice](#indice)
+[⬆ Volver al índice](#indicleto)
  
 ---
  
@@ -128,7 +128,7 @@ El video corresponde a la prueba de evasión de obstáculos realizada el **7 de 
 - **Pilar verde:** el robot lo mantiene de su lado izquierdo.
 **Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens, seguimiento del obstáculo manteniéndolo centrado en cámara a partir de 50 cm de distancia, giro de evasión a partir de 30 cm, y protocolo de re-centrado de 10 frames al perder de vista el obstáculo.
  
-[⬆ Volver al índice](#indice)
+[⬆ Volver al índice](#indicleto)
  
 ---
  
@@ -225,7 +225,7 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 - **Contexto:** validar en pista el esquema reactivo de la Decisión 10.
 - **Evidencia/Resultado:** en una sección recta, el robot evadió correctamente un pilar rojo (mantenido a su derecha) y un pilar verde (mantenido a su izquierda). Ver video en la sección [Obstacle Challenge](#obstacle-challenge).
 - **Estado actual:** esta prueba corresponde únicamente a un tramo recto de la pista. Continúan las pruebas para validar la evasión de pilares en distintas posiciones y combinaciones de color a lo largo del circuito completo.
-[⬆ Volver al índice](#indice)
+[⬆ Volver al índice](#indicleto)
  
 ---
  
@@ -248,4 +248,4 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 | Sensor Infrarrojo (Line Tracking): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | <img src="schemes/MH.jpg" width="80"> | ≈ 1.50 Dlls* |
 | **Total** | | | **≈ 117.50 Dlls*** |
  
-[⬆ Volver al índice](#indice)
+[⬆ Volver al índice](#indicleto)
