@@ -1,12 +1,5 @@
 # Equipo Bunker Romeo – WRO Future Engineers 2026
- 
-<div align="center">
-![WRO](https://img.shields.io/badge/WRO-Future%20Engineers%202026-0057B7?style=for-the-badge)
-![Pais](https://img.shields.io/badge/Baja%20California-Mexico-006341?style=for-the-badge)
-![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow?style=for-the-badge)
-![Controlador](https://img.shields.io/badge/Controlador-Arduino%20Mega%202560-00979D?style=for-the-badge)
- 
-</div>
+
 ## Índice
  
 1.  [Acerca del Equipo](#acerca-del-equipo)
@@ -15,18 +8,18 @@
    - [Potencia y Sensores](#potencia-y-sensores)
    - [Software y Navegación](#software-y-navegación)
    - [Fotos del Vehículo (rev.15 – Regional Mexicali)](#fotos-del-vehículo-rev15--regional-mexicali)
-      [Videos de la Competencia](#videos-de-la-competencia)
+3.  [Videos de la Competencia](#videos-de-la-competencia)
    - [Open Challenge](#open-challenge)
    - [Obstacle Challenge](#obstacle-challenge)
-      [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería)
-5. 📦 [BOM (Bill of Materials)](#bom-bill-of-materials)
+4.  [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería)
+5.  [BOM (Bill of Materials)](#bom-bill-of-materials)
 ---
  
 ## Acerca del Equipo
  
 Somos un equipo de Baja California, México, compuesto por dos integrantes: Ian Fernando Rivera Armenta y Jacobo Arteaga Castañeda, de Bunker Robotics. Ambos miembros del equipo cuentan con experiencia en otras competencias, específicamente en la categoría Robomission, sumando un total de 10 años de experiencia combinada.
  
-Este es nuestro segundo año participando en la categoría Future Engineers. Comenzamos nuestra preparación al inicio del año (enero de 2025) y, con el paso del tiempo, nuestro robot ha pasado por varias iteraciones y mejoras que se documentan a detalle en la [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería) de este documento.
+Este es nuestro segundo año participando en la categoría Future Engineers. Comenzamos nuestra preparación al inicio del año (Enero de 2025) y, con el paso del tiempo, nuestro robot ha pasado por varias iteraciones y mejoras que se documentan a detalle en la [Bitácora de Decisiones de Ingeniería](#bitácora-de-decisiones-de-ingeniería) de este documento.
  
 <div align="center">
 <img src="/t-photos/EQUIPOROMEO.jpeg" width="480" alt="Equipo Bunker Romeo">
