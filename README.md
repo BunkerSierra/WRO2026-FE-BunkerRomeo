@@ -1,8 +1,6 @@
 # Equipo Bunker Romeo – WRO Future Engineers 2026
 
-![WRO](https://img.shields.io/badge/WRO-Future%20Engineers%202026-0057B7?style=for-the-badge)
-
-![Pais](https://img.shields.io/badge/Baja%20California-Mexico-006341?style=for-the-badge)
+![WRO](https://img.shields.io/badge/WRO-Future%20Engineers%202026-0057B7?style=for-the-badge) ![Pais](https://img.shields.io/badge/Baja%20California-Mexico-006341?style=for-the-badge)
 
 ![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow?style=for-the-badge)
 
