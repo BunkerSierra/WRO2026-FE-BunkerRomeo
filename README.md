@@ -67,6 +67,9 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
  
 > [!NOTE]
 > Los sensores laterales cambiaron de ultrasónico (HC-SR04P) a VL53L0X ToF, y el algoritmo de toma de curvas migró de alineación por giroscopio a seguimiento de muro. Razonamiento completo en la Bitácora, **Decisiones 8 y 9**.
+
+> [!WARNING]
+> Actualmente los soportes de montaje de los sensores laterales VL53L0X presentan un problema de alineación que afecta la lectura de distancia. Se está rediseñando el soporte para impresión 3D en PLA — ver Bitácora, **Decisión 12**.
  
 <a id="software-y-navegacion"></a>
  
@@ -160,6 +163,7 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 | 9 | 5 jul 2026 | Curvas: giroscopio → seguimiento de muro | Software | ![En pruebas](https://img.shields.io/badge/-En%20pruebas-yellow) |
 | 10 | Post-regional (s/f exacta) | Evasión: Pure Pursuit → reactivo por distancia | Software | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
 | 11 | 7 jul 2026 | Validación de evasión de obstáculos | Pruebas | ![Parcial](https://img.shields.io/badge/-Parcial-orange) (solo tramo recto) |
+| 12 | 26–29 jul 2026 | Falla de montaje en soportes MDF de sensores laterales → rediseño en PLA | Mecánico | ![En proceso](https://img.shields.io/badge/-En%20proceso-orange) |
  
 ### Decisión 1 — Arquitectura inicial de evasión de obstáculos: Raspberry Pi + Pure Pursuit
  
@@ -229,6 +233,13 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 - **Contexto:** validar en pista el esquema reactivo de la Decisión 10.
 - **Evidencia/Resultado:** en una sección recta, el robot evadió correctamente un pilar rojo (mantenido a su derecha) y un pilar verde (mantenido a su izquierda). Ver video en la sección [Obstacle Challenge](#obstacle-challenge).
 - **Estado actual:** esta prueba corresponde únicamente a un tramo recto de la pista. Continúan las pruebas para validar la evasión de pilares en distintas posiciones y combinaciones de color a lo largo del circuito completo.
+### Decisión 12 — Falla de montaje en soportes de sensores laterales y rediseño en PLA (26–29 de julio de 2026)
+
+- **Contexto/Restricción:** se detectó que los soportes de MDF de los sensores láser laterales (VL53L0X), al embonar con la base del chasis, quedan ligeramente chuecos con una leve inclinación hacia abajo. Esto provoca que el sensor no lea correctamente la distancia al muro, sino que detecte distancia al suelo.
+- **Opciones consideradas:** ajustar/calzar manualmente los soportes de MDF existentes vs. diseñar un soporte a la medida en CAD e imprimirlo en 3D con PLA.
+- **Decisión y justificación (28 de julio de 2026):** el equipo concluyó que la mejor solución es diseñar los soportes en digital e imprimirlos en 3D con PLA, para lograr un ángulo de montaje preciso y repetible, sustituyendo las piezas de MDF actuales.
+- **Estado actual (29 de julio de 2026):** en fase de diseño digital del nuevo soporte, previo a impresión y sustitución del soporte anterior.
+- **Riesgo mientras no se resuelve:** los sensores laterales VL53L0X pueden seguir reportando lecturas incorrectas (distancia al suelo en vez de al muro), afectando el seguimiento de muro (*wall-following*) en curvas.
 [⬆ Volver al índice](#indicleto)
  
 ---
