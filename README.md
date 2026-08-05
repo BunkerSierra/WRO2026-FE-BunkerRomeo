@@ -250,11 +250,13 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 - **Diagnóstico:** al probar el robot suspendido en el aire (sin contacto con el suelo), se observó que una de las llantas (lado izquierdo, visto desde atrás del robot) no giraba. La causa: el orificio del eje en la pieza impresa en 3D que sostiene el motor (soporte naranja, visible en la foto trasera del robot) era ligeramente más pequeño que la medida real del eje (*axle*) de Lego, generando un ajuste a presión excesivo. Esto provocaba que esa rueda solo girara cuando había contacto y fricción con el suelo, avanzando más lento que el lado contrario y generando la deriva.
 <div align="center">
 <img src="v-photos/VistaTrasera.jpeg" width="220" alt="Vista trasera del robot, soporte impreso del motor">
+ 
 <br><sub>Vista trasera — soporte impreso del motor (pieza naranja) donde se detectó el orificio del eje mal dimensionado.</sub>
 </div>
 - **Decisión y acción correctiva:** se agrandó el orificio del soporte impreso con una broca de taladro, permitiendo que el eje gire libremente en cualquier circunstancia, tanto suspendido en el aire como en contacto con la pista.
 - **Evidencia/Resultado:** la rueda ahora gira correctamente en ambas condiciones. La deriva del robot es **mucho menor** que antes de la corrección. Ese mismo día, el equipo también logró reducir el tiempo del Open Challenge de **75 s a 47 s**, resultado consistente con una trayectoria más recta y con menos correcciones necesarias durante el recorrido.
 - **Estado:** mejora confirmada; el equipo continúa dando seguimiento a la deriva restante para reducirla aún más.
+
 [⬆ Volver al índice](#indicleto)
  
 ---
