@@ -1,7 +1,7 @@
 # Equipo Bunker Romeo – WRO Future Engineers 2026
- 
+
 ![WRO](https://img.shields.io/badge/WRO-Future%20Engineers%202026-0057B7?style=for-the-badge) ![Pais](https://img.shields.io/badge/Baja%20California-Mexico-006341?style=for-the-badge) ![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow?style=for-the-badge) ![Controlador](https://img.shields.io/badge/Controlador-Arduino%20Mega%202560-00979D?style=for-the-badge)
- 
+
 <a id="indicleto"></a>
  
 ## Índice
@@ -28,6 +28,7 @@ Este es nuestro segundo año participando en la categoría Future Engineers. Com
 <div align="center">
 <img src="/t-photos/EQUIPOROMEO.jpeg" width="480" alt="Equipo Bunker Romeo">
 </div>
+
 [⬆ Volver al índice](#indicleto)
  
 ---
@@ -51,7 +52,7 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
  
 > [!NOTE]
 > El chasis fue rediseñado a partir de una versión anterior que usaba ruedas de 62.4 × 20 mm (altura 23.9 cm, ancho 15 cm). Razonamiento completo en la Bitácora, **Decisión 3**.
- 
+
 > [!NOTE]
 > Se corrigió un orificio de eje mal dimensionado en el soporte impreso del motor, que causaba una deriva excesiva (~45°) al avanzar en línea recta. La deriva se redujo considerablemente tras el ajuste, aunque persiste en menor grado. Razonamiento completo en la Bitácora, **Decisión 13**.
  
@@ -69,9 +70,9 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
  
 > [!NOTE]
 > Los sensores laterales cambiaron de ultrasónico (HC-SR04P) a VL53L0X ToF, y el algoritmo de toma de curvas migró de alineación por giroscopio a seguimiento de muro. Razonamiento completo en la Bitácora, **Decisiones 8 y 9**.
- 
+
 > [!WARNING]
-> Actualmente los soportes de montaje de los sensores laterales VL53L0X presentan un problema de alineación que afecta la lectura de distancia. Se está rediseñando el soporte para impresión 3D en PLA — ver Bitácora, **Decisión 12**.
+> Actualmente los soportes de montaje de los sensores laterales VL53L0X están en proceso de ajuste de altura para asegurar una lectura confiable respecto a los muros de la pista — ver Bitácora, **Decisión 12**.
  
 <a id="software-y-navegacion"></a>
  
@@ -100,6 +101,7 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 <td align="center"><img src="v-photos/VistaInferior.jpeg" width="200"><br><sub>Vista Inferior</sub></td>
 </tr>
 </table>
+
 [⬆ Volver al índice](#indicleto)
  
 ---
@@ -124,6 +126,7 @@ El video corresponde a la prueba de la ronda de vuelta abierta realizada el **28
 - Se estaciona en el **cuadrante de inicio** del recorrido, sin intervención manual.
 - Completa la totalidad del reto en **75 segundos**.
 **Sistemas involucrados durante la corrida:** seguimiento de muro (*wall-following*) mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
+
 > [!NOTE]
 > El video publicado corresponde a la corrida del 28 de junio (75 s). El **3 de agosto de 2026**, tras la corrección de deriva (ver Bitácora, **Decisión 13**), el equipo logró un tiempo de **47 s** en el Open Challenge. Pendiente grabar y publicar el video actualizado de esta corrida.
  
@@ -166,7 +169,7 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 | 9 | 5 jul 2026 | Curvas: giroscopio → seguimiento de muro | Software | ![En pruebas](https://img.shields.io/badge/-En%20pruebas-yellow) |
 | 10 | Post-regional (s/f exacta) | Evasión: Pure Pursuit → reactivo por distancia | Software | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
 | 11 | 7 jul 2026 | Validación de evasión de obstáculos | Pruebas | ![Parcial](https://img.shields.io/badge/-Parcial-orange) (solo tramo recto) |
-| 12 | 26–29 jul 2026 | Falla de montaje en soportes MDF de sensores laterales → rediseño en PLA | Mecánico | ![En proceso](https://img.shields.io/badge/-En%20proceso-orange) |
+| 12 | 26 jul – 9 ago 2026 | Falla de montaje en soportes de sensores laterales → reubicación temporal → rediseño alargado (en curso) | Mecánico | ![En proceso](https://img.shields.io/badge/-En%20proceso-orange) |
 | 13 | 3 ago 2026 | Corrección de deriva: orificio de eje mal dimensionado en soporte impreso del motor | Mecánico | ![Mejorado](https://img.shields.io/badge/-Mejorado-yellowgreen) |
  
 ### Decisión 1 — Arquitectura inicial de evasión de obstáculos: Raspberry Pi + Pure Pursuit
@@ -237,26 +240,30 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 - **Contexto:** validar en pista el esquema reactivo de la Decisión 10.
 - **Evidencia/Resultado:** en una sección recta, el robot evadió correctamente un pilar rojo (mantenido a su derecha) y un pilar verde (mantenido a su izquierda). Ver video en la sección [Obstacle Challenge](#obstacle-challenge).
 - **Estado actual:** esta prueba corresponde únicamente a un tramo recto de la pista. Continúan las pruebas para validar la evasión de pilares en distintas posiciones y combinaciones de color a lo largo del circuito completo.
-### Decisión 12 — Falla de montaje en soportes de sensores laterales y rediseño en PLA (26–29 de julio de 2026)
- 
+### Decisión 12 — Falla de montaje en soportes de sensores laterales: iteración de la solución (26 de julio – 9 de agosto de 2026)
+
 - **Contexto/Restricción:** se detectó que los soportes de MDF de los sensores láser laterales (VL53L0X), al embonar con la base del chasis, quedan ligeramente chuecos con una leve inclinación hacia abajo. Esto provoca que el sensor no lea correctamente la distancia al muro, sino que detecte distancia al suelo.
 - **Opciones consideradas:** ajustar/calzar manualmente los soportes de MDF existentes vs. diseñar un soporte a la medida en CAD e imprimirlo en 3D con PLA.
-- **Decisión y justificación (28 de julio de 2026):** el equipo concluyó que la mejor solución es diseñar los soportes en digital e imprimirlos en 3D con PLA, para lograr un ángulo de montaje preciso y repetible, sustituyendo las piezas de MDF actuales.
-- **Estado actual (29 de julio de 2026):** en fase de diseño digital del nuevo soporte, previo a impresión y sustitución del soporte anterior.
-- **Riesgo mientras no se resuelve:** los sensores laterales VL53L0X pueden seguir reportando lecturas incorrectas (distancia al suelo en vez de al muro), afectando el seguimiento de muro (*wall-following*) en curvas.
+- **Plan inicial (28 de julio de 2026):** el equipo concluyó que la mejor solución era diseñar soportes nuevos en digital e imprimirlos en 3D con PLA, con un ángulo de montaje corregido, para sustituir las piezas de MDF actuales.
+- **Iteración 1 — solución realmente implementada:** en la práctica, el equipo decidió **no fabricar soportes nuevos con otro ángulo**. En su lugar, se reutilizaron los mismos soportes de MDF ya existentes, reubicándolos pegados en la parte inferior del segundo piso del chasis, justo por encima de su posición original. Esto elevó a los sensores hasta aproximadamente **8 cm** sobre el suelo.
+- **Nuevo hallazgo (9 de agosto de 2026):** dado que los muros de la pista miden **10 cm** de altura, esta nueva posición (8 cm) deja poco margen respecto al borde superior del muro, generando incertidumbre sobre qué tan confiable es la lectura de distancia a esa altura.
+- **Iteración 2 — solución definitiva (en curso, desde el 9 de agosto de 2026):** el equipo diseñará soportes que conserven el mismo ángulo y simetría que los soportes actuales, pero de **mayor longitud**, y los regresará a la **posición de montaje original** (no a la ubicación temporal bajo el segundo piso). Así, los sensores quedarán más elevados que en su posición original, sin depender de la reubicación provisional.
+- **Riesgo mientras no se resuelve:** en la posición actual (8 cm), persiste la duda sobre si el sensor lee de forma confiable respecto al muro (10 cm de altura) en todas las condiciones de pista.
+- **Estado actual:** en fase de diseño de los soportes alargados; pendiente de fabricar e instalar.
 ### Decisión 13 — Corrección de deriva: orificio de eje mal dimensionado en soporte impreso del motor (3 de agosto de 2026)
- 
+
 - **Contexto/Restricción:** al medir el desempeño del robot en tramos rectos (~3 metros), se detectó una **deriva** (desviación angular) excesiva: en lugar de avanzar en línea recta, el robot se abría formando una trayectoria en forma de triángulo respecto a la línea ideal. La desviación medida era de aproximadamente **45°**.
 - **Diagnóstico:** al probar el robot suspendido en el aire (sin contacto con el suelo), se observó que una de las llantas (lado izquierdo, visto desde atrás del robot) no giraba. La causa: el orificio del eje en la pieza impresa en 3D que sostiene el motor (soporte naranja, visible en la foto trasera del robot) era ligeramente más pequeño que la medida real del eje (*axle*) de Lego, generando un ajuste a presión excesivo. Esto provocaba que esa rueda solo girara cuando había contacto y fricción con el suelo, avanzando más lento que el lado contrario y generando la deriva.
+
 <div align="center">
 <img src="v-photos/VistaTrasera.jpeg" width="220" alt="Vista trasera del robot, soporte impreso del motor">
- 
 <br><sub>Vista trasera — soporte impreso del motor (pieza naranja) donde se detectó el orificio del eje mal dimensionado.</sub>
 </div>
+
 - **Decisión y acción correctiva:** se agrandó el orificio del soporte impreso con una broca de taladro, permitiendo que el eje gire libremente en cualquier circunstancia, tanto suspendido en el aire como en contacto con la pista.
 - **Evidencia/Resultado:** la rueda ahora gira correctamente en ambas condiciones. La deriva del robot es **mucho menor** que antes de la corrección. Ese mismo día, el equipo también logró reducir el tiempo del Open Challenge de **75 s a 47 s**, resultado consistente con una trayectoria más recta y con menos correcciones necesarias durante el recorrido.
 - **Estado:** mejora confirmada; el equipo continúa dando seguimiento a la deriva restante para reducirla aún más.
-
+  
 [⬆ Volver al índice](#indicleto)
  
 ---
