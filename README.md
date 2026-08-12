@@ -81,7 +81,7 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 - **Controlador:** Arduino Mega 2560 (único SBC/SBM del sistema desde el 21 de mayo de 2026).
 - **Visión:** HuskyLens realiza la detección de color de los pilares (rojo/verde) y el seguimiento del obstáculo.
 - **Toma de curvas:** seguimiento de muro (*wall-following*) con los sensores laterales VL53L0X + lectura de líneas de esquina con el sensor infrarrojo trasero.
-- **Evasión de obstáculos:** esquema reactivo basado en umbrales de distancia (seguimiento desde 50 cm, giro de evasión desde 30 cm, re-centrado de 10 frames). Este esquema reemplazó al algoritmo Pure Pursuit usado en versiones anteriores.
+- **Evasión de obstáculos:** esquema reactivo basado en umbrales de distancia (seguimiento entre 60 y 30 cm, inicio de evasión entre 25 y 20 cm con desviación progresiva, re-centrado de 10 frames). Este esquema reemplazó al algoritmo Pure Pursuit usado en versiones anteriores.
 > [!NOTE]
 > El sistema de evasión de obstáculos pasó de un enfoque basado en Pure Pursuit (generación de *waypoints* y trayectorias geométricas) a un esquema reactivo más simple. Razonamiento completo en la Bitácora, **Decisión 10**.
  
@@ -113,7 +113,7 @@ Conforme al reglamento oficial WRO 2026 – Future Engineers, cada equipo debe p
 | Reto | Estado | Enlace | Duración del recorrido |
 |------|--------|--------|-------------------------|
 | **Open Challenge** (Vuelta Abierta) | ✅ Publicado | [Ver en YouTube](https://youtu.be/jBpTh44YIUg) | 75 s |
-| **Obstacle Challenge** (Vuelta con Obstáculos) | ✅ Publicado | [Ver en YouTube](https://youtu.be/mim8iLk7CLE) | Clip de prueba |
+| **Obstacle Challenge** (Vuelta con Obstáculos) | ✅ Publicado | [Ver en YouTube](https://youtube.com/shorts/EIXM7CX9vMc?feature=share) | ≈ 3/4 de vuelta |
  
 ### Open Challenge
  
@@ -133,13 +133,14 @@ El video corresponde a la prueba de la ronda de vuelta abierta realizada el **28
 ### Obstacle Challenge
  
 <div align="center">
-<a href="https://youtu.be/mim8iLk7CLE"><img src="https://img.youtube.com/vi/mim8iLk7CLE/0.jpg" width="320" alt="Video Obstacle Challenge"></a>
+<a href="https://youtube.com/shorts/EIXM7CX9vMc?feature=share"><img src="https://img.youtube.com/vi/EIXM7CX9vMc/0.jpg" width="320" alt="Video Obstacle Challenge"></a>
 </div>
-El video corresponde a la prueba de evasión de obstáculos realizada el **7 de julio de 2026**. El clip muestra al robot recorriendo una **sección recta de la pista** y evadiendo, en orden, un pilar **rojo** seguido de un pilar **verde**:
+El video corresponde a la prueba de evasión de obstáculos realizada el **9 de agosto de 2026**, y cubre aproximadamente **3/4 de una vuelta completa** de la pista (a diferencia de la prueba anterior del 7 de julio, limitada a un tramo recto). El robot detecta y evade los obstáculos según su color y distancia:
  
-- **Pilar rojo:** el robot lo mantiene de su lado derecho, conforme a la regla de tránsito del reto.
-- **Pilar verde:** el robot lo mantiene de su lado izquierdo.
-**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens, seguimiento del obstáculo manteniéndolo centrado en cámara a partir de 50 cm de distancia, giro de evasión a partir de 30 cm, y protocolo de re-centrado de 10 frames al perder de vista el obstáculo.
+- **Pilar verde:** se evade por la **izquierda**.
+- **Pilar rojo:** se evade por la **derecha**.
+
+**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens; seguimiento del obstáculo manteniéndolo centrado en cámara entre **60 y 30 cm** de distancia; inicio de la secuencia de evasión entre **25 y 20 cm**, con desviación progresiva conforme el robot se acerca; y protocolo de re-centrado de 10 frames al perder de vista el obstáculo (umbrales recalibrados respecto a la prueba anterior — ver Bitácora, **Decisión 14**).
  
 [⬆ Volver al índice](#indicleto)
  
@@ -171,6 +172,7 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 | 11 | 7 jul 2026 | Validación de evasión de obstáculos | Pruebas | ![Parcial](https://img.shields.io/badge/-Parcial-orange) (solo tramo recto) |
 | 12 | 26 jul – 9 ago 2026 | Falla de montaje en soportes de sensores laterales → reubicación temporal → rediseño alargado (en curso) | Mecánico | ![En proceso](https://img.shields.io/badge/-En%20proceso-orange) |
 | 13 | 3 ago 2026 | Corrección de deriva: orificio de eje mal dimensionado en soporte impreso del motor | Mecánico | ![Mejorado](https://img.shields.io/badge/-Mejorado-yellowgreen) |
+| 14 | 9 ago 2026 | Recalibración de umbrales de evasión + validación en ¾ de vuelta | Software/Pruebas | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
  
 ### Decisión 1 — Arquitectura inicial de evasión de obstáculos: Raspberry Pi + Pure Pursuit
  
@@ -263,7 +265,15 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 - **Decisión y acción correctiva:** se agrandó el orificio del soporte impreso con una broca de taladro, permitiendo que el eje gire libremente en cualquier circunstancia, tanto suspendido en el aire como en contacto con la pista.
 - **Evidencia/Resultado:** la rueda ahora gira correctamente en ambas condiciones. La deriva del robot es **mucho menor** que antes de la corrección. Ese mismo día, el equipo también logró reducir el tiempo del Open Challenge de **75 s a 47 s**, resultado consistente con una trayectoria más recta y con menos correcciones necesarias durante el recorrido.
 - **Estado:** mejora confirmada; el equipo continúa dando seguimiento a la deriva restante para reducirla aún más.
-  
+### Decisión 14 — Recalibración de umbrales de evasión y validación en ¾ de vuelta (9 de agosto de 2026)
+
+- **Contexto:** el esquema reactivo de evasión de obstáculos (Decisión 10) solo se había validado en un tramo recto de la pista (Decisión 11, 7 de julio de 2026), usando umbrales fijos de 50 cm (inicio de seguimiento) y 30 cm (inicio del giro de evasión).
+- **Decisión y cambio:** tras pruebas iterativas, se recalibraron los umbrales de distancia:
+  - **Seguimiento del obstáculo:** ahora entre **60 cm y 30 cm** (antes: umbral único de 50 cm).
+  - **Inicio de la secuencia de evasión:** ahora entre **25 cm y 20 cm** (antes: umbral único de 30 cm), con una **desviación progresiva** conforme el robot se acerca al obstáculo, en lugar de un giro más abrupto a partir de un solo umbral.
+  - **Regla de color (sin cambio):** pilar verde → evasión por la izquierda; pilar rojo → evasión por la derecha.
+- **Evidencia/Resultado:** se validó el esquema recalibrado en una prueba que cubre **≈3/4 de una vuelta completa** de la pista — una cobertura mucho mayor que la prueba anterior, limitada a un tramo recto (Decisión 11) — detectando y evadiendo obstáculos según su color y distancia de forma consistente. Ver video en la sección [Obstacle Challenge](#obstacle-challenge).
+- **Estado:** umbrales vigentes del sistema de evasión de obstáculos.
 [⬆ Volver al índice](#indicleto)
  
 ---
