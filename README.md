@@ -12,11 +12,23 @@
    - [Potencia y Sensores](#potencia-y-sensores)
    - [Software y Navegación](#software-y-navegacion)
    - [Fotos del Vehículo (rev.15 – Regional Mexicali)](#fotos-del-vehiculo)
-3.  [Videos de la Competencia](#videos-de-la-competencia)
+3.  [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos)
+   - [1. Marco del reto y objetivos de diseño](#marco-del-reto)
+   - [2. Arquitectura general: máquina de estados](#maquina-de-estados)
+   - [3. Conjunto de sensores y asignación de funciones](#sensores-obstaculos)
+   - [4. Control de rumbo recto](#control-rumbo-recto)
+   - [5. Seguimiento de pilares](#seguimiento-pilares)
+   - [6. Decisión de sorteo](#decision-sorteo)
+   - [7. Detección de esquinas](#deteccion-esquinas)
+   - [8. Giro de esquina](#giro-esquina)
+   - [9. Ingeniería defensiva](#ingenieria-defensiva)
+   - [10. Odometría y separación de contadores](#odometria)
+   - [11. Metodología y decisiones revertidas](#metodologia-decisiones-revertidas)
+4.  [Videos de la Competencia](#videos-de-la-competencia)
    - [Open Challenge](#open-challenge)
    - [Obstacle Challenge](#obstacle-challenge)
-4.  [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones)
-5.  [BOM (Bill of Materials)](#bom)
+5.  [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones)
+6.  [BOM (Bill of Materials)](#bom)
 ---
  
 ## Acerca del Equipo
@@ -65,7 +77,7 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 | Sensores laterales (muros) | 2 × VL53L0X (láser ToF) |
 | Sensor frontal | 1 × HC-SR04P (ultrasónico) |
 | Sensor de esquina (líneas) | 1 × MH Sensor Series (TCRT5000 + comparador LM393), extremo trasero inferior |
-| IMU / giroscopio | GY-9250 (en el BOM; ya no se usa para navegación en curvas — ver Bitácora, **Decisión 9**) |
+| IMU / giroscopio | GY-9250 — usado para control de rumbo recto y cierre de lazo en los giros de esquina del *Obstacle Challenge*; ya **no** se usa para el seguimiento continuo de muro en curvas del *Open Challenge* (reemplazado por VL53L0X) — ver Bitácora, **Decisión 9**, y sección [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos) |
 | Visión | HuskyLens PRO OV5640 |
  
 > [!NOTE]
@@ -80,7 +92,8 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
  
 - **Controlador:** Arduino Mega 2560 (único SBC/SBM del sistema desde el 21 de mayo de 2026).
 - **Visión:** HuskyLens realiza la detección de color de los pilares (rojo/verde) y el seguimiento del obstáculo.
-- **Toma de curvas:** seguimiento de muro (*wall-following*) con los sensores laterales VL53L0X + lectura de líneas de esquina con el sensor infrarrojo trasero.
+- **Toma de curvas (Open Challenge):** seguimiento de muro (*wall-following*) con los sensores laterales VL53L0X + lectura de líneas de esquina con el sensor infrarrojo trasero.
+- **Toma de esquinas (Obstacle Challenge):** máquina de estados con detección de apertura lateral (VL53L0X en modo de largo alcance) y giro de 90° en lazo cerrado con el giroscopio, disparado por odometría del encoder. Estrategia distinta a la del Open Challenge por la necesidad adicional de coordinar la esquina con el sorteo de pilares — ver detalle completo en [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos).
 - **Evasión de obstáculos:** esquema reactivo basado en umbrales de distancia (seguimiento entre 60 y 30 cm, inicio de evasión entre 25 y 20 cm con desviación progresiva, re-centrado de 10 frames). Este esquema reemplazó al algoritmo Pure Pursuit usado en versiones anteriores.
 > [!NOTE]
 > El sistema de evasión de obstáculos pasó de un enfoque basado en Pure Pursuit (generación de *waypoints* y trayectorias geométricas) a un esquema reactivo más simple. Razonamiento completo en la Bitácora, **Decisión 10**.
@@ -106,7 +119,139 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
  
 ---
  
+<a id="arquitectura-obstaculos"></a>
+
+## Arquitectura del Algoritmo: Obstacle Challenge
+
+> [!NOTE]
+> Esta sección cuenta, en nuestras propias palabras, **cómo y por qué** funciona el algoritmo del Obstacle Challenge: la arquitectura de control, qué sensor hace qué, y el razonamiento (y los tropiezos) detrás de cada subsistema. Complementa a la [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones), que lleva la línea de tiempo de los cambios de hardware/algoritmo a nivel de proyecto.
+
+<a id="marco-del-reto"></a>
+
+### 1. Marco del reto y objetivos de diseño
+
+El Obstacle Challenge de WRO Future Engineers 2026 le pide al vehículo recorrer, de forma completamente autónoma, tres vueltas a una pista de ocho secciones —cuatro esquinas y cuatro rectas— mientras esquiva señales de tráfico colocadas al azar antes de cada ronda. La regla es simple de decir pero exigente de cumplir: un pilar **rojo** obliga a pasar por su lado **derecho**, uno **verde** por el **izquierdo**, y en ningún caso se puede mover la señal. Como el sentido de la ronda (horario o antihorario) se decide al azar justo antes de arrancar, el algoritmo no puede asumir nada de entrada: tiene que averiguarlo por sí mismo apenas empieza a moverse. Y al final, después de las tres vueltas, hay que volver al estacionamiento.
+
+Desde el principio nos propusimos tres cosas al diseñar el sistema: que aguantara bien la aleatoriedad (posición de pilares, sentido de la ronda), que dependiera lo menos posible de la iluminación o de medidas exactas de la pista, y que se pudiera depurar por partes. Esta última terminó siendo casi la regla de oro del equipo: **medir antes de prescribir**. Cada valor que importaba lo dejamos como una constante ajustable, y cada subsistema lo probamos aislado en su propio programa antes de juntarlo con los demás — así, cuando algo fallaba, sabíamos exactamente en qué módulo buscar.
+
+<a id="maquina-de-estados"></a>
+
+### 2. Arquitectura general: máquina de estados
+
+El control del robot está organizado como una **máquina de estados** que, básicamente, calca la forma de la pista. En cada tramo recto, el vehículo pasa por cuatro estados:
+
+- **RECTO:** avanza manteniendo el rumbo.
+- **SEGUIR:** al detectar un pilar, lo centra en el cuadro de la cámara mientras se acerca.
+- **ESQUIVAR:** al llegar a cierta distancia, ejecuta la maniobra de esquive.
+- **REGRESAR:** retoma el rumbo recto.
+
+Por encima de todo esto, el robot también puede entrar en la maniobra de esquina — pero solo si está en estado RECTO. Esa restricción fue una decisión a propósito: así nos aseguramos de que el robot nunca intente doblar una esquina a la mitad de un esquive, resolviendo de una vez el conflicto entre "sortear el pilar" y "tomar la esquina" a favor de lo primero.
+
+Separar el control de esta manera nos permitió que cada tarea usara el sensor que mejor le quedaba, sin que se estorbaran entre sí: la cámara maneja SEGUIR y ESQUIVAR, el giroscopio se encarga del rumbo en RECTO y REGRESAR, los sensores de distancia detectan las esquinas, y el encoder le da la odometría a todas las maniobras.
+
+<a id="sensores-obstaculos"></a>
+
+### 3. Conjunto de sensores y asignación de funciones
+
+Sobre un Arduino Mega, el robot integra cuatro sistemas de percepción, la mayoría conectados por el mismo bus I2C:
+
+- **Cámara HuskyLens** (modo de reconocimiento de color): detecta los pilares y da su posición horizontal en el cuadro, además de su tamaño aparente, que usamos como estimador de distancia.
+- **Dos sensores de tiempo de vuelo VL53L0X** en los laterales: detectan cuándo se abre una esquina y, si hace falta, ayudan a centrar el robot entre los muros.
+- **Giroscopio (GY-9250):** calcula el rumbo (*yaw*) integrando la velocidad angular — es la base tanto del control en línea recta como de los giros de 90°.
+- **Encoder** de un canal en el eje de tracción: da la distancia recorrida para todas las maniobras basadas en odometría.
+
+Repartir las tareas entre sensores especializados, en vez de cargarle todo a la cámara, fue algo que aprendimos por las malas: la cámara ya tenía suficiente trabajo detectando pilares bajo luz variable, y si además le pedíamos distinguir las líneas del piso, se volvía poco confiable. Separar la percepción por dominio —color a la cámara, distancia lateral a los ToF, rumbo al giroscopio— hizo que todo el sistema fuera más robusto.
+
+<a id="control-rumbo-recto"></a>
+
+### 4. Control de rumbo recto
+
+Al principio pensamos que bastaba con "dejar el volante centrado" para que el robot avanzara recto. No es así: un volante centrado mecánicamente no garantiza una trayectoria recta, y cualquier desalineación —por mínima que sea— se va acumulando como deriva (de hecho, encontramos una causa mecánica concreta de esto; ver Bitácora, **Decisión 13**). Por eso cerramos el rumbo en lazo con el giroscopio: un controlador proporcional corrige el servo según el error entre el rumbo que queremos y el que el giroscopio está midiendo. Llegamos a esta solución después de comprobar, en la práctica, que sin ese control el robot derivaba de forma notoria.
+
+Como capa extra, opcional, también implementamos un centrado entre muros usando la diferencia de lecturas de los dos ToF (distancia izquierda menos distancia derecha). Lo bueno de este cálculo es que el ancho del robot se cancela solo, así que no hace falta meterlo en la ecuación. Este centrado se apaga automáticamente si un lado deja de ver muro, para no perseguir una pared que ya no está ahí, como pasa justo en las esquinas.
+
+<a id="seguimiento-pilares"></a>
+
+### 5. Seguimiento de pilares (estado SEGUIR)
+
+Cuando un pilar aparece lo suficientemente grande en el cuadro, el robot entra en SEGUIR y lo mantiene centrado con un controlador proporcional-derivativo que ajusta el servo según qué tan lejos está el pilar del centro real de la cámara (ya calibrado). Este comportamiento corresponde al tramo de **60 a 30 cm** descrito en la Bitácora, **Decisión 14**.
+
+- **Filtrado por tamaño:** las líneas naranjas del piso a veces se detectan como manchas pequeñas y rojizas, así que descartamos cualquier caja cuyo lado menor no supere un tamaño mínimo — de lo contrario, el robot terminaba persiguiendo una línea como si fuera un pilar. Entre las cajas que sí pasan el filtro, siempre seguimos la más grande, que es la del pilar más cercano.
+- **Un error de signo bastante instructivo:** en una primera versión, el robot se **alejaba** del pilar en vez de seguirlo. Visto desde afuera parecía que estaba esquivando la caja, y al perderla de vista se enderezaba solo — se veía exactamente como un esquive, pero en realidad era el seguidor corrigiendo al revés. Bastó con invertir el signo del lazo de la cámara para que empezara a converger correctamente hacia el centro.
+
+<a id="decision-sorteo"></a>
+
+### 6. Decisión de sorteo: votación de color y maniobra comprometida (estado ESQUIVAR)
+
+Esta fase concentró dos de las decisiones más importantes de todo el proyecto, y las dos salieron de fallos que vimos en pista y tuvimos que corregir. Este estado corresponde al tramo de **25 a 20 cm** descrito en la Bitácora, **Decisión 14**.
+
+**Votación de color durante la aproximación.** Al principio, el color del pilar se decidía justo en el momento en que el robot llegaba a la distancia de esquive. El problema es que, a quemarropa, el pilar llena toda la cámara y la clasificación de color se vuelve ruidosa. La solución fue ir acumulando "votos" de color durante toda la aproximación —cuando el pilar todavía se ve a media distancia y el color es confiable— y decidir por mayoría justo antes de esquivar. Así, una sola lectura mala cerca del pilar ya no arruina la decisión.
+
+**Comprometerse con una dirección, sin importar la posición.** El fallo más sutil de todos fue que el esquive seguía la *posición* del pilar en el cuadro en vez de comprometerse con una dirección fija: si el pilar entraba un poco cargado hacia un lado, el volante arrancaba hacia ese mismo lado, y terminábamos esquivando por el lado equivocado según dónde estuviera el pilar, no según su color. Lo arreglamos convirtiendo esta fase en una **decisión binaria, ciega a la posición**: si detecta rojo, el robot compromete el volante hacia el lado que marca el reglamento; si no, revisa si es verde y va hacia el lado contrario; y si no logra identificar ningún color válido, suena una alarma. Una vez tomada la decisión, el volante se queda fijo por el resto de la maniobra, **sin volver a mirar la posición del pilar** — esto eliminó por completo los esquives por el lado equivocado.
+
+La maniobra termina por distancia recorrida (odometría), por un ángulo máximo de giro (para evitar que el robot se quede dando vueltas) o por un tiempo límite de seguridad; después de eso, pasa a REGRESAR y se reincorpora al rumbo.
+
+<a id="deteccion-esquinas"></a>
+
+### 7. Detección de esquinas
+
+La detección de esquina se basa en algo simple: cuando el muro de un lado desaparece, el sensor de ese lado deja de leer una distancia corta y empieza a leer "abierto". En la práctica, este fue el subsistema que más vueltas nos dio.
+
+- **Cómo decide el robot de qué lado están las esquinas:** como el sentido de la ronda es aleatorio, el robot lo resuelve solo al arrancar: se pega a la barrera exterior y promedia varias lecturas de los dos ToF; el sensor que ve **más lejos** apunta hacia el interior de la pista, que es justo el lado por donde se van a abrir las esquinas. Ese lado queda fijo para toda la ronda, y así resolvimos de una sola vez la ambigüedad de horario/antihorario, sin necesitar leer ninguna línea del piso.
+- **El alcance del sensor nos hizo perder tiempo:** durante las pruebas la detección era intermitente — a veces funcionaba, a veces no, a veces tarde. Al investigar encontramos que el VL53L0X, en su modo por defecto, solo es confiable hasta unos **50 cm** — muy por debajo de los más de **100 cm** que hacen falta para distinguir una esquina. Eso explicaba por qué el mismo sensor funcionaba perfecto siguiendo pared de cerca en el Open Challenge, pero fallaba al detectar la apertura. La solución fue activar el **modo de largo alcance (~2 m)**, y confirmar cada lectura con varias mediciones seguidas para descartar picos raros.
+- **Y al final, el problema era mecánico:** incluso con el modo correcto, la detección seguía fallando en pista: el sensor del lado abierto reportaba 7–10 cm donde debía leer "abierto". Al revisar los datos con calma, notamos que los sensores estaban ligeramente inclinados hacia el suelo — a simple vista parecían perpendiculares, pero los números decían otra cosa, y el haz terminaba pegándole al piso a pocos centímetros. **Este es exactamente el mismo tipo de problema que documentamos en la Bitácora, Decisión 12/13** (soportes de sensores laterales desalineados). Lo arreglamos enderezando y elevando los sensores para que su cono de visión (~40°) no chocara con el piso ni pasara por encima de la barrera. Este episodio nos dejó una lección que repetimos seguido en el equipo: **no asumas, mide** — llevábamos días persiguiendo lo que creíamos un problema de software, y resultó ser de montaje.
+
+<a id="giro-esquina"></a>
+
+### 8. Giro de esquina
+
+Una vez confirmada la esquina, el giro se ejecuta en dos pasos: primero el robot avanza una distancia fija (por odometría) para meterse bien al vértice, y después gira 90°.
+
+- **Qué dispara el giro:** aquí tuvimos que dar marcha atrás en una decisión importante. Al principio usábamos un sensor ultrasónico frontal para detectar la pared y disparar el giro, pero lo abandonamos porque los ultrasónicos leen mal las superficies en ángulo: si el robot llegaba ligeramente torcido, el eco no regresaba y el disparo simplemente no ocurría. Lo cambiamos por un disparo basado en la distancia del encoder, confirmado por el ToF, y con eso dejamos de depender de un sensor tan sensible al ángulo.
+- **El giro por giroscopio, y el dolor de cabeza de los signos:** el giro se cierra en lazo con el giroscopio, y aquí vivimos la depuración más difícil de todo el proyecto: el volante tenía que girar físicamente hacia un lado mientras el giroscopio confirmaba esa misma rotación, y ambas cosas tenían que coincidir. Durante varias iteraciones, arreglar el sentido físico desajustaba el signo esperado del *yaw*, y viceversa — el resultado eran giros que terminaban en el sentido contrario, o que nunca terminaban y se cortaban por tiempo. La solución definitiva fue dejar de fijarnos en el signo y basar el fin del giro en el **cambio absoluto** de rumbo (la diferencia, en valor absoluto, entre el yaw actual y el inicial): así el giro termina en cuanto se rota el ángulo objetivo, sin importar el signo. Con eso, el problema se redujo a una sola variable —el sentido físico del volante— fácil de revisar y ajustar en una sola línea. Esta decisión eliminó de raíz toda una categoría de errores que nos había costado muchísimas pruebas.
+- **Compensar la deriva:** el rumbo objetivo se actualiza después de cada giro, y lo reiniciamos cada cuatro esquinas (una vuelta completa) para que la deriva del giroscopio no se vaya acumulando a lo largo de las tres vueltas.
+
+<a id="ingenieria-defensiva"></a>
+
+### 9. Ingeniería defensiva: tiempos de seguridad y protección del bus
+
+Después de varios episodios en los que el robot se quedaba trabado, adoptamos un principio simple: **ninguna fase debe poder atorarse para siempre**. Por eso el giro, el esquive y la reincorporación tienen temporizadores de seguridad que garantizan una salida aunque el sensor que normalmente cierra esa fase falle. Hicimos lo mismo con el bus I2C: le pusimos un tiempo límite, así que si algún dispositivo deja de responder, la comunicación simplemente corta la espera en vez de congelar todo el programa —nos pasó que un periférico se colgaba y se llevaba al resto del sistema con él—. Estas protecciones no arreglan la causa de fondo, pero sí evitan que un fallo se convierta en algo catastrófico (robot detenido o girando sin control) y lo dejan como algo acotado y recuperable.
+
+<a id="odometria"></a>
+
+### 10. Odometría y separación de contadores
+
+Calibramos la odometría midiendo, de forma empírica, los pulsos por centímetro del encoder — el valor correcto reemplazó a unas lecturas anteriores que estaban descuadrando las distancias.
+
+Algo que se nos ocurrió al integrar todo fue que necesitábamos **dos contadores de distancia separados**: uno para las distancias de cada fase (esquive, avance a la esquina, giro), que se reinicia en cada transición, y otro para la distancia acumulada desde la última esquina, que controla cuándo se vuelve a armar la detección — este último **no** se puede reiniciar si ocurre un esquive entre dos esquinas. Sin esa separación, un esquive a mitad de recta habría borrado la cuenta de re-armado y bloqueado la detección de la siguiente esquina.
+
+<a id="metodologia-decisiones-revertidas"></a>
+
+### 11. Metodología de desarrollo y decisiones revertidas
+
+Desarrollamos todo con una estrategia de **integración por capas**: cada subsistema (seguimiento, esquive, rumbo, esquinas, salida del estacionamiento) lo validamos aislado en su propio programa antes de juntarlo con el resto, así la depuración nunca tenía que resolver dos incógnitas al mismo tiempo.
+
+Este método nos salvó más de una vez, sobre todo para distinguir fallos reales de artefactos de la prueba: varios comportamientos "raros" que vimos con el robot suspendido en el aire resultaron ser, simplemente, que las ruedas giraban sin que el chasis rotara — lo cual invalidaba cualquier medición que dependiera del movimiento (un artefacto parecido al que describimos en la Bitácora, **Decisión 13**). La prueba correcta siempre había que hacerla sobre el piso.
+
+Como registro, estas son las principales decisiones que revertimos o reemplazamos durante el desarrollo de este algoritmo:
+
+| Decisión original | Reemplazada por | Motivo |
+|---|---|---|
+| Disparo de giro por ultrasónico frontal | Disparo por odometría (encoder) | Mal desempeño en aproximaciones anguladas |
+| Modo por defecto del VL53L0X | Modo de largo alcance (~2 m) | Alcance por defecto (~50 cm) insuficiente para detectar esquinas |
+| Determinación de color a quemarropa | Votación de color durante la aproximación | Ruido de clasificación a corta distancia |
+| Sorteo guiado por posición del pilar | Decisión binaria comprometida por color | Sorteos por el lado equivocado según posición, no color |
+| Sensor de color por fotorresistencia (líneas del piso) | Sensor RGB dedicado con iluminación propia | Incapacidad de separar tono (*pendiente de integración*) |
+| Fin de giro basado en el signo del yaw | Fin de giro basado en el cambio absoluto de rumbo | Errores de signo que impedían completar el giro |
+
+Cada una de estas reversiones nació de una observación concreta de algo que estaba fallando, y la resolvimos atacando la **causa raíz**, no el síntoma — esa fue, en el fondo, la filosofía que guio todo el proyecto.
+
+[⬆ Volver al índice](#indicleto)
+ 
+---
+ 
 ## Videos de la Competencia
+
  
 Conforme al reglamento oficial WRO 2026 – Future Engineers, cada equipo debe publicar un video en YouTube (público o accesible mediante enlace) que documente el manejo autónomo del vehículo para cada reto, con una duración mínima de 30 segundos por video.
  
