@@ -74,14 +74,14 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 |---|---|
 | Alimentación principal | 2 × baterías 7.8 V, 2200 mAh |
 | Alimentación en evaluación | 2 × baterías 7.4 V, 3000 mAh (pruebas comparativas en curso) |
-| Sensores laterales (muros) | 2 × VL53L0X (láser ToF) |
 | Sensor frontal | 1 × HC-SR04P (ultrasónico) |
+| Sensores laterales (muros) | 2 × VL53L0X (láser ToF) |
 | Sensor de esquina (líneas) | 1 × MH Sensor Series (TCRT5000 + comparador LM393), extremo trasero inferior |
-| IMU / giroscopio | GY-9250 — usado para control de rumbo recto y cierre de lazo en los giros de esquina del *Obstacle Challenge*; ya **no** se usa para el seguimiento continuo de muro en curvas del *Open Challenge* (reemplazado por VL53L0X) — ver Bitácora, **Decisión 9**, y sección [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos) |
-| Visión | HuskyLens PRO OV5640 |
+| Visión | 1 × HuskyLens PRO OV5640 |
+| IMU / giroscopio | 1 × GY-9250 |
  
 > [!NOTE]
-> Los sensores laterales cambiaron de ultrasónico (HC-SR04P) a VL53L0X ToF, y el algoritmo de toma de curvas migró de alineación por giroscopio a seguimiento de muro. Razonamiento completo en la Bitácora, **Decisiones 8 y 9**.
+> **Por qué cada sensor** (de adelante hacia atrás, y de ahí a los sistemas internos): el **frontal** (HC-SR04P) detecta muros y obstáculos de frente. Los **laterales** (VL53L0X) reemplazaron un par de ultrasónicos por ofrecer lecturas más estables a corta distancia — Bitácora, **Decisión 8**. El de **esquina** (MH Sensor Series) se agregó para leer las líneas de esquina al tomar una curva — Bitácora, **Decisión 7**. La **visión** (HuskyLens) reemplazó a una Raspberry Pi + cámara por simplicidad y menor carga de procesamiento — Bitácora, **Decisión 2**. Y el **giroscopio** (GY-9250) ya no gobierna la toma de curvas del Open Challenge (reemplazado por los VL53L0X — Bitácora, **Decisión 9**), pero sigue activo en el Obstacle Challenge para el rumbo recto y el cierre de lazo de los giros de esquina — ver [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos).
 
 > [!WARNING]
 > Actualmente los soportes de montaje de los sensores laterales VL53L0X están en proceso de ajuste de altura para asegurar una lectura confiable respecto a los muros de la pista — ver Bitácora, **Decisión 12**.
@@ -92,11 +92,11 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
  
 - **Controlador:** Arduino Mega 2560 (único SBC/SBM del sistema desde el 21 de mayo de 2026).
 - **Visión:** HuskyLens realiza la detección de color de los pilares (rojo/verde) y el seguimiento del obstáculo.
-- **Toma de curvas (Open Challenge):** seguimiento de muro (*wall-following*) con los sensores laterales VL53L0X + lectura de líneas de esquina con el sensor infrarrojo trasero.
+- **Toma de curvas (Open Challenge):** seguimiento de muro con los sensores laterales VL53L0X + lectura de líneas de esquina con el sensor infrarrojo trasero.
 - **Toma de esquinas (Obstacle Challenge):** máquina de estados con detección de apertura lateral (VL53L0X en modo de largo alcance) y giro de 90° en lazo cerrado con el giroscopio, disparado por odometría del encoder. Estrategia distinta a la del Open Challenge por la necesidad adicional de coordinar la esquina con el sorteo de pilares — ver detalle completo en [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos).
-- **Evasión de obstáculos:** esquema reactivo basado en umbrales de distancia (seguimiento entre 60 y 30 cm, inicio de evasión entre 25 y 20 cm con desviación progresiva, re-centrado de 10 frames). Este esquema reemplazó al algoritmo Pure Pursuit usado en versiones anteriores.
+- **Evasión de obstáculos:** esquema reactivo basado en umbrales de distancia (seguimiento entre 60 y 30 cm, inicio de evasión entre 25 y 20 cm con desviación progresiva, re-centrado de 10 cuadros). Este esquema reemplazó al algoritmo Pure Pursuit usado en versiones anteriores.
 > [!NOTE]
-> El sistema de evasión de obstáculos pasó de un enfoque basado en Pure Pursuit (generación de *waypoints* y trayectorias geométricas) a un esquema reactivo más simple. Razonamiento completo en la Bitácora, **Decisión 10**.
+> El sistema de evasión de obstáculos pasó de un enfoque basado en Pure Pursuit (generación de puntos de trayectoria y cálculo geométrico) a un esquema reactivo más simple. Razonamiento completo en la Bitácora, **Decisión 10**.
  
 <a id="fotos-del-vehiculo"></a>
  
@@ -270,7 +270,7 @@ El video corresponde a la prueba de la ronda de vuelta abierta realizada el **28
 - Ejecuta de forma autónoma **3 vueltas consecutivas** sobre la pista.
 - Se estaciona en el **cuadrante de inicio** del recorrido, sin intervención manual.
 - Completa la totalidad del reto en **75 segundos**.
-**Sistemas involucrados durante la corrida:** seguimiento de muro (*wall-following*) mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
+**Sistemas involucrados durante la corrida:** seguimiento de muro mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
 
 > [!NOTE]
 > El video publicado corresponde a la corrida del 28 de junio (75 s). El **3 de agosto de 2026**, tras la corrección de deriva (ver Bitácora, **Decisión 13**), el equipo logró un tiempo de **47 s** en el Open Challenge. Pendiente grabar y publicar el video actualizado de esta corrida.
@@ -285,7 +285,7 @@ El video corresponde a la prueba de evasión de obstáculos realizada el **9 de 
 - **Pilar verde:** se evade por la **izquierda**.
 - **Pilar rojo:** se evade por la **derecha**.
 
-**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens; seguimiento del obstáculo manteniéndolo centrado en cámara entre **60 y 30 cm** de distancia; inicio de la secuencia de evasión entre **25 y 20 cm**, con desviación progresiva conforme el robot se acerca; y protocolo de re-centrado de 10 frames al perder de vista el obstáculo (umbrales recalibrados respecto a la prueba anterior — ver Bitácora, **Decisión 14**).
+**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens; seguimiento del obstáculo manteniéndolo centrado en cámara entre **60 y 30 cm** de distancia; inicio de la secuencia de evasión entre **25 y 20 cm**, con desviación progresiva conforme el robot se acerca; y protocolo de re-centrado de 10 cuadros al perder de vista el obstáculo (umbrales recalibrados respecto a la prueba anterior — ver Bitácora, **Decisión 14**).
  
 [⬆ Volver al índice](#indicleto)
  
@@ -322,7 +322,7 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 ### Decisión 1 — Arquitectura inicial de evasión de obstáculos: Raspberry Pi + Pure Pursuit
  
 - **Contexto/Restricción:** el sistema de evasión de obstáculos dependía inicialmente de maniobras preprogramadas y casos específicos, lo cual limitaba la adaptabilidad del robot ante distintas posiciones de obstáculos.
-- **Decisión:** implementar un sistema de seguimiento de trayectoria basado en **Pure Pursuit**, usando la cámara Raspberry Pi Rev 1.3 como sensor principal de percepción. El algoritmo detectaba la posición del obstáculo, generaba *waypoints* alrededor de este y seleccionaba continuamente un punto adelantado (*lookahead point*) sobre la trayectoria para calcular el ángulo de dirección necesario.
+- **Decisión:** implementar un sistema de seguimiento de trayectoria basado en **Pure Pursuit**, usando la cámara Raspberry Pi Rev 1.3 como sensor principal de percepción. El algoritmo detectaba la posición del obstáculo, generaba puntos de trayectoria alrededor de este y seleccionaba continuamente un punto adelantado sobre la trayectoria para calcular el ángulo de dirección necesario.
 - **Resultado:** el enfoque generó movimientos más suaves que las maniobras fijas, pero incrementó la complejidad y la carga de procesamiento del sistema (ver Decisión 2 y Decisión 10).
 ### Decisión 2 — Cambio de plataforma de visión: Raspberry Pi → HuskyLens (21 de mayo de 2026)
  
@@ -367,19 +367,19 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 ### Decisión 9 — Navegación en curvas: de giroscopio a seguimiento de muro
  
 - **Contexto:** el robot dependía del sensor giroscópico (GY-9250) para alinearse durante el giro, usando la orientación angular para corregir la trayectoria.
-- **Decisión y justificación:** el cambio de hardware de la Decisión 8 (VL53L0X en los laterales) permitió migrar a un esquema de **seguimiento de muro** (*wall-following*): el sistema mide constantemente la distancia entre el robot y el muro exterior y ajusta la dirección para mantenerla constante durante la curva, sin depender del giroscopio.
+- **Decisión y justificación:** el cambio de hardware de la Decisión 8 (VL53L0X en los laterales) permitió migrar a un esquema de **seguimiento de muro**: el sistema mide constantemente la distancia entre el robot y el muro exterior y ajusta la dirección para mantenerla constante durante la curva, sin depender del giroscopio.
 - **Estado:** en fase de pruebas, ajustando parámetros de control para lograr un seguimiento estable en diferentes configuraciones de pista.
 - **Nota de pensamiento sistémico:** este cambio de algoritmo fue posible *gracias* a la decisión de hardware anterior (Decisión 8) — un ejemplo de cómo una decisión de sensado habilitó directamente una simplificación en el software de navegación.
 ### Decisión 10 — Evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia
  
-- **Contexto/Restricción:** Pure Pursuit requería generar *waypoints* y recalcular constantemente una trayectoria geométrica alrededor de cada obstáculo, lo cual añadía complejidad de cómputo y de diseño.
+- **Contexto/Restricción:** Pure Pursuit requería generar puntos de trayectoria y recalcular constantemente una trayectoria geométrica alrededor de cada obstáculo, lo cual añadía complejidad de cómputo y de diseño.
 - **Opciones consideradas:** mantener y refinar Pure Pursuit vs. adoptar un esquema reactivo más simple basado en umbrales de distancia.
 - **Decisión y justificación:** se eliminó Pure Pursuit para la evasión de obstáculos y se adoptó un esquema reactivo:
   1. El robot avanza en línea recta.
   2. Al detectar un obstáculo a 50 cm, inicia su seguimiento manteniéndolo centrado en el campo de visión de la HuskyLens.
   3. A 30 cm, comienza a girar para esquivarlo.
   4. El giro continúa hasta perder de vista el obstáculo.
-  5. Se ejecuta un protocolo de re-centrado de 10 frames respecto al carril antes de continuar recto.
+  5. Se ejecuta un protocolo de re-centrado de 10 cuadros respecto al carril antes de continuar recto.
   **Este cambio afecta únicamente al sistema de evasión de obstáculos**; los sensores y el algoritmo de seguimiento de muro (Decisión 9) no se modificaron.
 - **Evidencia/Resultado:** validado en las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver Decisión 11).
 ### Decisión 11 — Validación: pruebas de evasión de obstáculos (7 de julio de 2026)
@@ -439,7 +439,7 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 | LED x4 | 0.264W | <img src="schemes/LED.png" width="80"> | ≈ 0.44 Dlls |
 | Buzzer | N/A | <img src="schemes/BUZ.jpg" width="80"> | ≈ 0.27 Dlls |
 | SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | <img src="schemes/HUSKY.webp" width="80"> | ≈ 40.65 Dlls |
-| Sensor Infrarrojo (Line Tracking): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | <img src="schemes/MH.jpg" width="80"> | ≈ 1.50 Dlls* |
+| Sensor Infrarrojo (Seguimiento de Línea): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | <img src="schemes/MH.jpg" width="80"> | ≈ 1.50 Dlls* |
 | **Total** | | | **≈ 117.50 Dlls*** |
  
 [⬆ Volver al índice](#indicleto)
