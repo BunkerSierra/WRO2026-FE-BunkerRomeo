@@ -12,7 +12,8 @@
    - [Potencia y Sensores](#potencia-y-sensores)
    - [Software y Navegación](#software-y-navegacion)
    - [Fotos del Vehículo (rev.15 – Regional Mexicali)](#fotos-del-vehiculo)
-3.  [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos)
+3.  [Arquitectura de Potencia y Sensores](#arquitectura-potencia)
+4.  [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos)
    - [1. Marco del reto y objetivos de diseño](#marco-del-reto)
    - [2. Arquitectura general: máquina de estados](#maquina-de-estados)
    - [3. Conjunto de sensores y asignación de funciones](#sensores-obstaculos)
@@ -24,11 +25,11 @@
    - [9. Ingeniería defensiva](#ingenieria-defensiva)
    - [10. Odometría y separación de contadores](#odometria)
    - [11. Metodología y decisiones revertidas](#metodologia-decisiones-revertidas)
-4.  [Videos de la Competencia](#videos-de-la-competencia)
+5.  [Videos de la Competencia](#videos-de-la-competencia)
    - [Open Challenge](#open-challenge)
    - [Obstacle Challenge](#obstacle-challenge)
-5.  [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones)
-6.  [BOM (Bill of Materials)](#bom)
+6.  [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones)
+7.  [BOM (Bill of Materials)](#bom)
 ---
  
 ## Acerca del Equipo
@@ -60,6 +61,7 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 | Ruedas | 57 × 14 mm (Lego Spike Prime) |
 | Altura total | 20.3 cm |
 | Ancho total | 14.6 cm |
+| Peso total | 817 g |
 | Controlador principal | Arduino Mega 2560 |
  
 > [!NOTE]
@@ -76,12 +78,14 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 | Alimentación en evaluación | 2 × baterías 7.4 V, 3000 mAh (pruebas comparativas en curso) |
 | Sensor frontal | 1 × HC-SR04P (ultrasónico) |
 | Sensores laterales (muros) | 2 × VL53L0X (láser ToF) |
-| Sensor de esquina (líneas) | 1 × MH Sensor Series (TCRT5000 + comparador LM393), extremo trasero inferior |
 | Visión | 1 × HuskyLens PRO OV5640 |
 | IMU / giroscopio | 1 × GY-9250 |
  
 > [!NOTE]
-> **Por qué cada sensor** (de adelante hacia atrás, y de ahí a los sistemas internos): el **frontal** (HC-SR04P) detecta muros y obstáculos de frente. Los **laterales** (VL53L0X) reemplazaron un par de ultrasónicos por ofrecer lecturas más estables a corta distancia — Bitácora, **Decisión 8**. El de **esquina** (MH Sensor Series) se agregó para leer las líneas de esquina al tomar una curva — Bitácora, **Decisión 7**. La **visión** (HuskyLens) reemplazó a una Raspberry Pi + cámara por simplicidad y menor carga de procesamiento — Bitácora, **Decisión 2**. Y el **giroscopio** (GY-9250) ya no gobierna la toma de curvas del Open Challenge (reemplazado por los VL53L0X — Bitácora, **Decisión 9**), pero sigue activo en el Obstacle Challenge para el rumbo recto y el cierre de lazo de los giros de esquina — ver [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos).
+> **Por qué cada sensor** (de adelante hacia atrás, y de ahí a los sistemas internos): el **frontal** (HC-SR04P) detecta muros y obstáculos de frente. Los **laterales** (VL53L0X) reemplazaron un par de ultrasónicos por ofrecer lecturas más estables a corta distancia — Bitácora, **Decisión 8**. La **visión** (HuskyLens) reemplazó a una Raspberry Pi + cámara por simplicidad y menor carga de procesamiento — Bitácora, **Decisión 2**. Y el **giroscopio** (GY-9250) ya no gobierna la toma de curvas del Open Challenge (reemplazado por los VL53L0X — Bitácora, **Decisión 9**), pero sigue activo en el Obstacle Challenge para el rumbo recto y el cierre de lazo de los giros de esquina — ver [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos).
+
+> [!NOTE]
+> El sensor de esquina (MH Sensor Series), usado entre el 28 de junio y el 9 de agosto de 2026 para leer las líneas de esquina, **se descontinuó el 10 de agosto de 2026** y ya no forma parte de la arquitectura actual del robot. Ver Bitácora, **Decisión 15**.
 
 > [!WARNING]
 > Actualmente los soportes de montaje de los sensores laterales VL53L0X están en proceso de ajuste de altura para asegurar una lectura confiable respecto a los muros de la pista — ver Bitácora, **Decisión 12**.
@@ -92,7 +96,7 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
  
 - **Controlador:** Arduino Mega 2560 (único SBC/SBM del sistema desde el 21 de mayo de 2026).
 - **Visión:** HuskyLens realiza la detección de color de los pilares (rojo/verde) y el seguimiento del obstáculo.
-- **Toma de curvas (Open Challenge):** seguimiento de muro con los sensores laterales VL53L0X + lectura de líneas de esquina con el sensor infrarrojo trasero.
+- **Toma de curvas (Open Challenge):** seguimiento de muro con los sensores laterales VL53L0X. *(Hasta el 9 de agosto de 2026 se complementaba con lectura de líneas de esquina vía sensor infrarrojo trasero, descontinuado desde el 10 de agosto — ver Bitácora, **Decisión 15**.)*
 - **Toma de esquinas (Obstacle Challenge):** máquina de estados con detección de apertura lateral (VL53L0X en modo de largo alcance) y giro de 90° en lazo cerrado con el giroscopio, disparado por odometría del encoder. Estrategia distinta a la del Open Challenge por la necesidad adicional de coordinar la esquina con el sorteo de pilares — ver detalle completo en [Arquitectura del Algoritmo: Obstacle Challenge](#arquitectura-obstaculos).
 - **Evasión de obstáculos:** esquema reactivo basado en umbrales de distancia (seguimiento entre 60 y 30 cm, inicio de evasión entre 25 y 20 cm con desviación progresiva, re-centrado de 10 cuadros). Este esquema reemplazó al algoritmo Pure Pursuit usado en versiones anteriores.
 > [!NOTE]
@@ -114,6 +118,43 @@ Esta sección describe **el estado actual (rev.15)** del vehículo. El razonamie
 <td align="center"><img src="v-photos/VistaInferior.jpeg" width="200"><br><sub>Vista Inferior</sub></td>
 </tr>
 </table>
+
+[⬆ Volver al índice](#indicleto)
+ 
+---
+ 
+<a id="arquitectura-potencia"></a>
+
+## Arquitectura de Potencia y Sensores
+
+> [!NOTE]
+> Esta sección detalla cómo se reparte la energía dentro del robot —de la batería a cada sensor y actuador— y el presupuesto de corriente que resulta de esa distribución.
+
+### Topología de alimentación
+
+El robot se alimenta de una sola batería de **15 V**, que pasa primero por un **switch** general y de ahí se reparte entre **dos módulos reguladores step-down**:
+
+- **Regulador a 11.1 V:** su salida alimenta directamente al **motor de tracción**, y esos mismos 11.1 V también entran al **Arduino Mega** por su entrada Vin. De los **5 V** que el propio Arduino regula internamente se alimentan, a su vez, los sensores: los **dos sensores láser** (VL53L0X), el **girosensor** (GY-9250), la **cámara** (HuskyLens) y el **sensor ultrasónico** (HC-SR04P).
+- **Regulador a 6 V:** su salida alimenta **únicamente al servomotor**, en una línea dedicada, sin compartirla con nada más. Le dimos esa prioridad porque consideramos que el servomotor es la variable principal de posicionamiento para resolver los retos: si no tiene la corriente disponible en el momento exacto, toda la precisión de dirección se ve comprometida.
+
+```
+Batería 15 V → Switch ─┬─ Regulador 11.1 V ─┬─ Motor de tracción
+                        │                    └─ Arduino Mega → (5 V) → VL53L0X ×2, GY-9250, HuskyLens, HC-SR04P
+                        └─ Regulador 6 V ────── Servomotor (línea dedicada)
+```
+
+### Presupuesto de corriente
+
+| Componente | Imagen | Voltaje de uso | Consumo de corriente |
+|---|---|---|---|
+| Sensor láser VL53L0X | <img src="schemes/laser.jpg" width="80"> | 5 V | ≈ 10 mA (x2) |
+| Sensor ultrasónico HC-SR04P | <img src="schemes/ULTRASONICO.webp" width="80"> | 5 V | ≈ 15 mA |
+| Girosensor GY-9250 | <img src="schemes/GIRO.jpg" width="80"> | 5 V | ≈ 6.6 mA |
+| Servomotor MG90S | <img src="schemes/SERVO.webp" width="80"> | 6 V | ≈ 83–417 mA |
+| Motor de tracción GA37-520 | <img src="schemes/MOTORDC.jpg" width="80"> | 11.1 V | ≈ 500–1500 mA |
+| Cámara HuskyLens | <img src="schemes/HUSKY.webp" width="80"> | 5 V | ≈ 320 mA* |
+| Arduino Mega 2560 | <img src="schemes/ArduinoMega.jpg" width="80"> | 11.1 V | ≈ 22.5–45 mA |
+| **Total** | | | **≈ 967 mA – 2.32 A** |
 
 [⬆ Volver al índice](#indicleto)
  
@@ -318,6 +359,7 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 | 12 | 26 jul – 9 ago 2026 | Falla de montaje en soportes de sensores laterales → reubicación temporal → rediseño alargado (en curso) | Mecánico | ![En proceso](https://img.shields.io/badge/-En%20proceso-orange) |
 | 13 | 3 ago 2026 | Corrección de deriva: orificio de eje mal dimensionado en soporte impreso del motor | Mecánico | ![Mejorado](https://img.shields.io/badge/-Mejorado-yellowgreen) |
 | 14 | 9 ago 2026 | Recalibración de umbrales de evasión + validación en ¾ de vuelta | Software/Pruebas | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
+| 15 | 10 ago 2026 | Descontinuación del sensor infrarrojo de esquina | Sensores | ![Retirado](https://img.shields.io/badge/-Retirado-lightgrey) |
  
 ### Decisión 1 — Arquitectura inicial de evasión de obstáculos: Raspberry Pi + Pure Pursuit
  
@@ -419,6 +461,12 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
   - **Regla de color (sin cambio):** pilar verde → evasión por la izquierda; pilar rojo → evasión por la derecha.
 - **Evidencia/Resultado:** se validó el esquema recalibrado en una prueba que cubre **≈3/4 de una vuelta completa** de la pista — una cobertura mucho mayor que la prueba anterior, limitada a un tramo recto (Decisión 11) — detectando y evadiendo obstáculos según su color y distancia de forma consistente. Ver video en la sección [Obstacle Challenge](#obstacle-challenge).
 - **Estado:** umbrales vigentes del sistema de evasión de obstáculos.
+### Decisión 15 — Descontinuación del sensor infrarrojo de esquina (10 de agosto de 2026)
+
+- **Contexto:** el sensor infrarrojo MH Sensor Series, agregado el 28 de junio de 2026 para leer las líneas de esquina y complementar los sensores laterales VL53L0X (Decisión 7), estuvo activo hasta el 9 de agosto de 2026.
+- **Decisión:** se dejó de utilizar a partir del **10 de agosto de 2026**. Se retiró del BOM y de las especificaciones actuales del vehículo (tabla "Potencia y Sensores").
+- **Nota:** las entradas de la Bitácora y el video de Open Challenge que documentan pruebas anteriores a esta fecha (Decisión 7, 28 de junio de 2026) se conservan sin cambios, ya que describen correctamente el estado del robot en ese momento.
+- **Pendiente:** documentar el motivo específico de la descontinuación y si se reemplazó por otro mecanismo de detección de esquina en el Open Challenge.
 [⬆ Volver al índice](#indicleto)
  
 ---
@@ -439,7 +487,9 @@ Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consid
 | LED x4 | 0.264W | <img src="schemes/LED.png" width="80"> | ≈ 0.44 Dlls |
 | Buzzer | N/A | <img src="schemes/BUZ.jpg" width="80"> | ≈ 0.27 Dlls |
 | SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | <img src="schemes/HUSKY.webp" width="80"> | ≈ 40.65 Dlls |
-| Sensor Infrarrojo (Seguimiento de Línea): MH Sensor Series x1 (trasero inferior) | 0.05-0.075W | <img src="schemes/MH.jpg" width="80"> | ≈ 1.50 Dlls* |
-| **Total** | | | **≈ 117.50 Dlls*** |
+| **Total** | | | **≈ 115.51 Dlls** |
+
+> [!NOTE]
+> El sensor infrarrojo (MH Sensor Series) se retiró de este BOM porque se dejó de usar a partir del **10 de agosto de 2026** — ver Bitácora, **Decisión 15**.
  
 [⬆ Volver al índice](#indicleto)
