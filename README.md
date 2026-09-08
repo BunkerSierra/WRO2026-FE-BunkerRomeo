@@ -155,8 +155,8 @@ El soporte impreso en 3D de los sensores láser VL53L0X se rediseñó para eleva
 #### Enlace de dirección y soporte del servomotor
 
 Durante nuestras pruebas encontramos que el barreno de conexión entre el servomotor y el enlace de dirección no estaba centrado: se hallaba desplazado unos milímetros hacia la izquierda. Esto no impedía que el robot funcionara, pero sí desfasaba el ángulo real de las ruedas respecto al ángulo que el servomotor reportaba como centro — es decir, "centro de servo" y "ruedas alineadas" ya no eran el mismo punto. Corregimos la posición del barreno y, aprovechando el rediseño, modificamos también el soporte del servomotor para alojar nuestro nuevo servomotor **ST3215-HS** (ver [Arquitectura de Software](#arquitectura-software) y [Arquitectura de Potencia](#arquitectura-potencia)).
-
-- **Archivo:** [`R26_EnlaceDireccion_Rev7.STL`](cad/R26_EnlaceDireccion_Rev7.STL)
+cad/S25_Soporte_Servo_Rev_8.STL
+- **Archivo:** [`R26_EnlaceDireccion_Rev7.STL`](cad/R26_EnlaceDireccion_Rev7.STL)[`S25_Soporte_Servo_Rev_8.STL`](cad/S25_Soporte_Servo_Rev_8.STL)
 - **Material:** corte en material plano (el enlace en sí no es impreso; el soporte del servomotor que lo acompaña sí es impreso en 3D con PLA)
 - **Dimensiones (caja delimitadora):** 116.4 × 3.1 × 17.4 mm
 
