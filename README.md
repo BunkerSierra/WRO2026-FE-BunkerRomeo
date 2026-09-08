@@ -1,305 +1,305 @@
-# Equipo Bunker Romeo – WRO Future Engineers 2026
+# Bunker Romeo Team – WRO Future Engineers 2026
 
-![WRO](https://img.shields.io/badge/WRO-Future%20Engineers%202026-0057B7?style=for-the-badge) ![Pais](https://img.shields.io/badge/Baja%20California-Mexico-006341?style=for-the-badge) ![Estado](https://img.shields.io/badge/Estado-En%20desarrollo-yellow?style=for-the-badge) ![Controlador](https://img.shields.io/badge/Controlador-Arduino%20Mega%202560-00979D?style=for-the-badge)
+![WRO](https://img.shields.io/badge/WRO-Future%20Engineers%202026-0057B7?style=for-the-badge) ![Country](https://img.shields.io/badge/Baja%20California-Mexico-006341?style=for-the-badge) ![Status](https://img.shields.io/badge/Status-In%20development-yellow?style=for-the-badge) ![Controller](https://img.shields.io/badge/Controller-Arduino%20Mega%202560-00979D?style=for-the-badge)
 
 <a id="indicleto"></a>
  
-## Índice
+## Table of Contents
  
-1.  [Acerca del Equipo](#acerca-del-equipo)
-2.  [Resumen del Proyecto](#resumen-proyecto)
-3.  [1. Movilidad y Diseño Mecánico](#movilidad-mecanico)
-   - [Piezas de Diseño Mecánico (CAD)](#piezas-cad)
-   - [Fotos del Vehículo (Estado Actual)](#fotos-del-vehiculo)
-4.  [2. Arquitectura de Potencia y Sensores](#arquitectura-potencia)
-5.  [3. Arquitectura de Software y Estrategia de Obstáculos](#arquitectura-software)
+1.  [About the Team](#about-the-team)
+2.  [Project Overview](#resumen-proyecto)
+3.  [1. Mobility and Mechanical Design](#movilidad-mecanico)
+   - [Mechanical Design Parts (CAD)](#piezas-cad)
+   - [Vehicle Photos (Current State)](#fotos-del-vehiculo)
+4.  [2. Power and Sensor Architecture](#arquitectura-potencia)
+5.  [3. Software Architecture and Obstacle Strategy](#arquitectura-software)
    - [3.1 Open Challenge](#open-challenge-sw)
    - [3.2 Obstacle Challenge](#obstacle-challenge-sw)
-     - [1. Marco del reto y objetivos de diseño](#marco-del-reto)
-     - [2. Arquitectura general: máquina de estados](#maquina-de-estados)
-     - [3. Conjunto de sensores y asignación de funciones](#sensores-obstaculos)
-     - [4. Control de rumbo recto](#control-rumbo-recto)
-     - [5. Seguimiento de pilares](#seguimiento-pilares)
-     - [6. Decisión de sorteo](#decision-sorteo)
-     - [7. Detección de esquinas](#deteccion-esquinas)
-     - [8. Giro de esquina](#giro-esquina)
-     - [9. Auto-ajuste por perfil de servo](#auto-ajuste-servo)
-     - [10. Ingeniería defensiva](#ingenieria-defensiva)
-     - [11. Odometría y separación de contadores](#odometria)
-     - [12. Metodología y decisiones revertidas](#metodologia-decisiones-revertidas)
-6.  [4. Pensamiento Sistémico y Decisiones de Ingeniería](#bitacora-decisiones)
-7.  [5. Reproducibilidad y Estructura del Repositorio](#reproducibilidad)
-8.  [Videos de la Competencia](#videos-de-la-competencia)
+     - [1. Challenge framework and design goals](#marco-del-reto)
+     - [2. General architecture: state machine](#maquina-de-estados)
+     - [3. Sensor suite and role assignment](#sensores-obstaculos)
+     - [4. Straight-heading control](#control-rumbo-recto)
+     - [5. Pillar tracking](#seguimiento-pilares)
+     - [6. Dodge decision](#decision-sorteo)
+     - [7. Corner detection](#deteccion-esquinas)
+     - [8. Corner turn](#giro-esquina)
+     - [9. Self-adjustment from the servo profile](#auto-ajuste-servo)
+     - [10. Defensive engineering](#ingenieria-defensiva)
+     - [11. Odometry and counter separation](#odometria)
+     - [12. Methodology and reversed decisions](#metodologia-decisiones-revertidas)
+6.  [4. Systems Thinking and Engineering Decisions](#bitacora-decisiones)
+7.  [5. Reproducibility and Repository Structure](#reproducibilidad)
+8.  [Competition Videos](#competition-videos)
    - [Open Challenge](#open-challenge)
    - [Obstacle Challenge](#obstacle-challenge)
 9.  [BOM (Bill of Materials)](#bom)
 ---
  
-## Acerca del Equipo
+## About the Team
 
-Somos **Equipo Bunker Romeo**, de Bunker Robotics, en Baja California, México. Este es nuestro segundo año participando en la categoría Future Engineers, y comenzamos la preparación de esta temporada en enero de 2025. Entre los dos sumamos experiencia en las categorías Robomission Junior, Robomission Senior y Future Engineers.
+We are **Bunker Romeo Team**, from Bunker Robotics, in Baja California, Mexico. This is our second year competing in the Future Engineers category, and we started preparing for this season in January 2025. Between the two of us we bring experience from the Robomission Junior, Robomission Senior and Future Engineers categories.
 
 <div align="center">
-<img src="/t-photos/EQUIPOROMEO.jpeg" width="480" alt="Equipo Bunker Romeo">
+<img src="/t-photos/EQUIPOROMEO.jpeg" width="480" alt="Bunker Romeo Team">
 </div>
 
 ### Jacobo Arteaga Castañeda
 
-**Edad:** 21 años
-**Rol:** Operación y desempeño del robot
+**Age:** 21
+**Role:** Robot operation and performance
 
-Compito en WRO desde los 13 años, pasando por las categorías Robomission Junior, Robomission Senior y, desde la temporada 2025, Future Engineers. He tenido la oportunidad de representar a México en la Final Internacional en dos ocasiones: 2021 y 2025. Dentro del equipo soy el responsable de la operación del robot en pista — la puesta a punto antes de cada ronda, el manejo del vehículo durante las corridas de prueba y la lectura del comportamiento real del robot, que es de donde salen la mayoría de los ajustes documentados en la bitácora de este repositorio.
+I have competed in WRO since I was 13, going through the Robomission Junior and Robomission Senior categories and, since the 2025 season, Future Engineers. I have had the opportunity to represent Mexico at the International Final twice: in 2021 and 2025. Within the team I am responsible for operating the robot on the track — the setup before each round, handling the vehicle during test runs, and reading the robot's real behavior, which is where most of the adjustments documented in this repository's decision log come from.
 
 ### Ian Fernando Rivera Armenta
 
-**Edad:** 18 años
-**Rol:** Documentación y repositorio
+**Age:** 18
+**Role:** Documentation and repository
 
-Llevo un año en la competencia. Me preparé para Robomission Senior en la temporada 2024 y debuté en Future Engineers, donde en mi primer regional obtuvimos el reconocimiento como mejor equipo. Dentro del equipo soy el responsable del repositorio y de la documentación de ingeniería: mantener el registro de cada decisión de diseño, su justificación y la evidencia que la respalda, además de la organización del código y los archivos técnicos que se publican aquí.
+I have been in the competition for one year. I prepared for Robomission Senior in the 2024 season and debuted in Future Engineers, where in my first regional we were recognized as the best team. Within the team I am responsible for the repository and the engineering documentation: keeping a record of every design decision, its rationale and the evidence that backs it up, as well as organizing the code and technical files published here.
 
-[⬆ Volver al índice](#indicleto)
+[⬆ Back to top](#indicleto)
  
 ---
  
 <a id="resumen-proyecto"></a>
 
-## Resumen del Proyecto
+## Project Overview
 
-Vehículo autónomo desarrollado para la categoría **WRO Future Engineers 2026**, construido sobre un Arduino Mega 2560 con tracción trasera por motor único y dirección por servomotor. El robot resuelve los dos retos con estrategias de navegación distintas: seguimiento de muro por PID en el Open Challenge, y una máquina de estados con visión por color en el Obstacle Challenge.
+Autonomous vehicle developed for the **WRO Future Engineers 2026** category, built on an Arduino Mega 2560 with single-motor rear-wheel drive and servo-actuated steering. The robot solves the two challenges with different navigation strategies: PID wall following in the Open Challenge, and a state machine with color vision in the Obstacle Challenge.
 
 | | |
 |---|---|
-| **Dimensiones** | 18.8 × 14.6 × 20.3 cm (largo × ancho × alto) — límite reglamentario: 30 × 20 × 30 cm |
-| **Peso** | 817 g — límite reglamentario: 1.5 kg |
-| **Tracción** | Motor GA37-520 (300 RPM) con transmisión 1:1 a las ruedas |
-| **Percepción** | 2 × VL53L0X (ToF lateral), HC-SR04P (frontal), MPU9250 (rumbo), HuskyLens (color), encoder (odometría) |
-| **Mejor tiempo Open Challenge** | **75 s** (3 vueltas + detención en sección de inicio) |
-| **Corrida Obstacle Challenge** | **2 min 18 s** completos, autónomos, sin desplazar señales |
+| **Dimensions** | 18.8 × 14.6 × 20.3 cm (length × width × height) — regulation limit: 30 × 20 × 30 cm |
+| **Weight** | 817 g — regulation limit: 1.5 kg |
+| **Drivetrain** | GA37-520 motor (300 RPM) with 1:1 transmission to the wheels |
+| **Perception** | 2 × VL53L0X (lateral ToF), HC-SR04P (front), MPU9250 (heading), HuskyLens (color), encoder (odometry) |
+| **Best Open Challenge time** | **75 s** (3 laps + stop in the starting section) |
+| **Obstacle Challenge run** | **2 min 18 s** complete, autonomous, without displacing any traffic sign |
 
-**Resultados medidos que respaldan las decisiones de diseño:**
+**Measured results that back up the design decisions:**
 
-- Reducción del tiempo de Open Challenge de **95 s → 75 s** (≈21 %) al migrar la navegación de rumbo por giroscopio a seguimiento de muro con sensores láser, lo que permitió subir la velocidad del robot sin perder precisión de trayectoria (Decisión 9).
-- Corrección de una fuente mecánica de deriva que desviaba la trayectoria recta, eliminando las autocorrecciones constantes del robot en tramo largo (Decisión 13).
-- Reducción del footprint del chasis en 2 cm de largo y 2 cm de ancho respecto a la temporada anterior (Decisión 3).
-- Altura total reducida de 23.9 cm a **20.3 cm** con el cambio de ruedas (Decisión 3).
+- Open Challenge time reduced from **95 s → 75 s** (≈21 %) by migrating navigation from gyroscope heading to wall following with laser sensors, which allowed us to raise the robot's speed without losing trajectory accuracy (Decision 9).
+- Correction of a mechanical source of drift that pushed the straight-line trajectory off course, eliminating the robot's constant self-corrections on long stretches (Decision 13).
+- Chassis footprint reduced by 2 cm in length and 2 cm in width compared with the previous season (Decision 3).
+- Total height reduced from 23.9 cm to **20.3 cm** with the wheel change (Decision 3).
 
-[⬆ Volver al índice](#indicleto)
+[⬆ Back to top](#indicleto)
  
 ---
  
 <a id="movilidad-mecanico"></a>
 
-## 1. Movilidad y Diseño Mecánico
+## 1. Mobility and Mechanical Design
 
 > [!NOTE]
-> El razonamiento detrás de cada decisión mecánica —qué alternativas se consideraron y por qué se eligió cada solución— se documenta a detalle en la [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones).
+> The reasoning behind each mechanical decision —what alternatives were considered and why each solution was chosen— is documented in detail in the [Engineering Decision Log](#bitacora-decisiones).
 
-| Aspecto | Especificación actual |
+| Aspect | Current specification |
 |---|---|
-| Ruedas | 57 × 14 mm (Lego Spike Prime) |
-| Altura total | 20.3 cm |
-| Largo total | 18.8 cm |
-| Ancho total | 14.6 cm |
-| Peso total | 817 g |
-| Controlador principal | Arduino Mega 2560 |
+| Wheels | 57 × 14 mm (Lego Spike Prime) |
+| Total height | 20.3 cm |
+| Total length | 18.8 cm |
+| Total width | 14.6 cm |
+| Total weight | 817 g |
+| Main controller | Arduino Mega 2560 |
 
 > [!NOTE]
-> El chasis fue rediseñado a partir de una versión anterior que usaba ruedas de 62.4 × 20 mm (altura 23.9 cm, ancho 15 cm). Razonamiento completo en la Bitácora, **Decisión 3**.
+> The chassis was redesigned from an earlier version that used 62.4 × 20 mm wheels (height 23.9 cm, width 15 cm). Full reasoning in the Decision Log, **Decision 3**.
 
 > [!NOTE]
-> Se corrigió un orificio de eje mal dimensionado en el soporte impreso del motor, que causaba una deriva excesiva (~45°) al avanzar en línea recta. La deriva se redujo considerablemente tras el ajuste, aunque persiste en menor grado. Razonamiento completo en la Bitácora, **Decisión 13**.
+> We corrected an undersized axle hole in the printed motor mount, which caused excessive drift (~45°) when driving in a straight line. The drift was considerably reduced after the fix, although it still persists to a lesser degree. Full reasoning in the Decision Log, **Decision 13**.
 
-### Análisis de velocidad y par en rueda
+### Wheel speed and torque analysis
 
-La transmisión entre el motor y las ruedas usa engranes de **1:1** (mismo número de dientes en ambos, por lo que giran a la misma velocidad angular) — es decir, las RPM de la rueda son las mismas que las RPM del motor, sin reducción ni multiplicación.
+The transmission between the motor and the wheels uses **1:1** gears (the same number of teeth on both, so they turn at the same angular speed) — that is, the wheel RPM is the same as the motor RPM, with no reduction or multiplication.
 
-**Velocidad lineal teórica.** Con el motor **GA37-520** a **300 RPM** (ficha) y ruedas de **57 mm de diámetro**:
+**Theoretical linear speed.** With the **GA37-520** motor at **300 RPM** (datasheet) and 57 mm diameter wheels:
 
 ```
-v = π × D_rueda × RPM / 60
+v = π × D_wheel × RPM / 60
 v = π × 0.057 m × 300 / 60
 v ≈ 0.895 m/s  (≈ 89.5 cm/s ≈ 3.22 km/h)
 ```
 
-Esta es la velocidad lineal máxima teórica sin carga; en pista, la velocidad real es menor por la fricción, el peso del robot y el control por PWM.
+This is the maximum theoretical linear speed with no load; on the track, the real speed is lower because of friction, the robot's weight and PWM control.
 
-**Par en la rueda.** El BOM reporta un rango de potencia del motor de **5.55–16.65 W**. A 300 RPM, la velocidad angular es ω = 2π × 300/60 ≈ 31.42 rad/s. Con τ = P/ω:
+**Wheel torque.** The BOM reports a motor power range of **5.55–16.65 W**. At 300 RPM, the angular speed is ω = 2π × 300/60 ≈ 31.42 rad/s. With τ = P/ω:
 
-| | Potencia | Par (τ = P/ω) | Fuerza en el suelo (F = τ / r, r = 28.5 mm) |
+| | Power | Torque (τ = P/ω) | Force at the ground (F = τ / r, r = 28.5 mm) |
 |---|---|---|---|
-| Mínimo | 5.55 W | ≈ 0.177 N·m (≈ 1.80 kgf·cm) | ≈ 6.2 N (≈ 0.63 kgf) |
-| Máximo | 16.65 W | ≈ 0.530 N·m (≈ 5.40 kgf·cm) | ≈ 18.6 N (≈ 1.90 kgf) |
+| Minimum | 5.55 W | ≈ 0.177 N·m (≈ 1.80 kgf·cm) | ≈ 6.2 N (≈ 0.63 kgf) |
+| Maximum | 16.65 W | ≈ 0.530 N·m (≈ 5.40 kgf·cm) | ≈ 18.6 N (≈ 1.90 kgf) |
 
-Como la relación de transmisión es 1:1, el par disponible en la rueda es el mismo que el par de salida del motor — no hay ganancia ni pérdida mecánica por relación de engranes, a diferencia de una transmisión reductora.
+Since the gear ratio is 1:1, the torque available at the wheel is the same as the motor's output torque — there is no mechanical gain or loss from a gear ratio, unlike a reduction gearbox.
 
-**Relación con el resultado empírico.** La velocidad teórica de arriba solo se aprovecha si el robot puede correr cerca de ella sin perder el rumbo, y ahí es donde el análisis mecánico se conecta con las decisiones de navegación. Con una transmisión 1:1 no existe una reducción que amortigüe los errores de trayectoria: cada grado de deriva se traduce directamente en distancia recorrida de más y en tiempo perdido autocorrigiendo. Por eso, mientras la navegación dependía del rumbo por giroscopio, la velocidad tenía que mantenerse baja para que el error acumulado no creciera — y el recorrido tomaba **95 segundos**. Al pasar a seguimiento de muro (Bitácora, **Decisión 9**), la referencia dejó de acumular error y pudimos subir la velocidad hasta **75 segundos**. La corrección de deriva mecánica posterior (**Decisión 13**) atacó el mismo problema desde el lado del hardware, permitiendo que esa velocidad se sostuviera en línea recta.
+**Relationship with the empirical result.** The theoretical speed above can only be exploited if the robot can run close to it without losing its heading, and that is where the mechanical analysis connects with the navigation decisions. With a 1:1 transmission there is no reduction to damp out trajectory errors: every degree of drift translates directly into extra distance travelled and time lost self-correcting. That is why, as long as navigation relied on gyroscope heading, the speed had to be kept low so the accumulated error would not grow — and the run took **95 seconds**. When we moved to wall following (Decision Log, **Decision 9**), the reference stopped accumulating error and we were able to raise the speed and bring the run down to **75 seconds**. The later mechanical drift correction (**Decision 13**) attacked the same problem from the hardware side, allowing that speed to be sustained in a straight line.
 
 <a id="piezas-cad"></a>
 
-### Piezas de Diseño Mecánico (CAD)
+### Mechanical Design Parts (CAD)
 
 > [!NOTE]
-> Todos los archivos `.STL` referenciados aquí están disponibles en la carpeta [`/cad`](cad/) del repositorio. Las dimensiones de cada pieza (caja delimitadora) se obtuvieron directamente del archivo 3D, no son estimaciones.
+> All the `.STL` files referenced here are available in the repository's [`/cad`](cad/) folder. The dimensions of each part (bounding box) were taken directly from the 3D file; they are not estimates.
 
-#### Soporte del sensor láser (VL53L0X)
+#### Laser sensor mount (VL53L0X)
 
-El soporte impreso en 3D de los sensores láser VL53L0X se rediseñó para elevar al sensor **casi 4 cm por encima** del soporte anterior de MDF. Esta corrección de altura resuelve directamente el hallazgo documentado en la Bitácora (**Decisión 12/13**): el soporte de MDF dejaba al sensor con una leve inclinación hacia el piso, lo que producía falsas lecturas de cercanía (el sensor "veía" el suelo en lugar del muro lateral). Con la nueva geometría, el sensor mide de forma más constante y confiable.
+The 3D-printed mount for the VL53L0X laser sensors was redesigned to raise the sensor **almost 4 cm above** the previous MDF mount. This height correction directly resolves the finding documented in the Decision Log (**Decision 12/13**): the MDF mount left the sensor with a slight downward tilt, which produced false close-range readings (the sensor "saw" the floor instead of the side wall). With the new geometry, the sensor measures more consistently and reliably.
 
-- **Archivo:** [`SoporteLaser.STL`](cad/SoporteLaser.STL)
-- **Material:** impreso en 3D (PLA)
-- **Dimensiones (caja delimitadora):** 33.9 × 3.1 × 58.6 mm
+- **File:** [`SoporteLaser.STL`](cad/SoporteLaser.STL)
+- **Material:** 3D printed (PLA)
+- **Dimensions (bounding box):** 33.9 × 3.1 × 58.6 mm
 
 > [!NOTE]
-> Con esta pieza, la falla de montaje que documentamos como "en proceso" en la Bitácora (**Decisión 12**) queda **resuelta** — lo actualizamos en esa entrada.
+> With this part, the mounting fault we documented as "in progress" in the Decision Log (**Decision 12**) is now **resolved** — we updated that entry accordingly.
 
-#### Enlace de dirección y soporte del servomotor
+#### Steering linkage and servo mount
 
-Durante nuestras pruebas encontramos que el barreno de conexión entre el servomotor y el enlace de dirección no estaba centrado: se hallaba desplazado unos milímetros hacia la izquierda. Esto no impedía que el robot funcionara, pero sí desfasaba el ángulo real de las ruedas respecto al ángulo que el servomotor reportaba como centro — es decir, "centro de servo" y "ruedas alineadas" ya no eran el mismo punto. Corregimos la posición del barreno y, aprovechando el rediseño, modificamos también el soporte del servomotor para alojar nuestro nuevo servomotor **ST3215-HS** (ver [Arquitectura de Software](#arquitectura-software) y [Arquitectura de Potencia](#arquitectura-potencia)).
+During our tests we found that the connecting hole between the servo and the steering linkage was not centered: it was offset a few millimeters to the left. This did not prevent the robot from working, but it did shift the real wheel angle with respect to the angle the servo reported as center — that is, "servo center" and "wheels aligned" were no longer the same point. We corrected the hole position and, taking advantage of the redesign, we also modified the servo mount to house our new **ST3215-HS** servo (see [Software Architecture](#arquitectura-software) and [Power Architecture](#arquitectura-potencia)).
 cad/S25_Soporte_Servo_Rev_8.STL
-- **Archivo:** [`R26_EnlaceDireccion_Rev7.STL`](cad/R26_EnlaceDireccion_Rev7.STL)[`S25_Soporte_Servo_Rev_8.STL`](cad/S25_Soporte_Servo_Rev_8.STL)
-- **Material:** corte en material plano (el enlace en sí no es impreso; el soporte del servomotor que lo acompaña sí es impreso en 3D con PLA)
-- **Dimensiones (caja delimitadora):** 116.4 × 3.1 × 17.4 mm
+- **File:** [`R26_EnlaceDireccion_Rev7.STL`](cad/R26_EnlaceDireccion_Rev7.STL)[`S25_Soporte_Servo_Rev_8.STL`](cad/S25_Soporte_Servo_Rev_8.STL)
+- **Material:** cut from flat sheet material (the linkage itself is not printed; the accompanying servo mount is 3D printed in PLA)
+- **Dimensions (bounding box):** 116.4 × 3.1 × 17.4 mm
 
-#### Mangueta de dirección
+#### Steering knuckle
 
-La mangueta es la pieza que se ubica en cada extremo del sistema de dirección y conecta la rueda con el enlace de dirección. Funciona como un pivote: por un lado sostiene el eje/buje de la rueda, y por el otro se articula tanto con el chasis (definiendo el eje de giro de la dirección) como con el enlace de dirección, que es el que recibe el movimiento del servomotor. Cuando el servomotor mueve el enlace de dirección, este empuja o jala la mangueta, haciéndola rotar sobre su propio pivote — y como la rueda está montada directamente en la mangueta, ese giro se traduce en el cambio de ángulo de la rueda. En otras palabras, la mangueta es la que convierte el movimiento lineal/angular del enlace de dirección en el giro real de la rueda.
+The steering knuckle is the part located at each end of the steering system, connecting the wheel to the steering linkage. It works as a pivot: on one side it holds the wheel axle/bushing, and on the other it articulates both with the chassis (defining the steering axis) and with the steering linkage, which is what receives the movement from the servo. When the servo moves the steering linkage, the linkage pushes or pulls the knuckle, making it rotate about its own pivot — and since the wheel is mounted directly on the knuckle, that rotation translates into the change in wheel angle. In other words, the knuckle is what converts the linear/angular movement of the steering linkage into the wheel's actual turn.
 
-- **Archivo:** [`S25_Mangueta_Rev_2.STL`](cad/S25_Mangueta_Rev_2.STL)
-- **Material:** impreso en 3D (PLA)
-- **Dimensiones (caja delimitadora):** 14.4 × 31.9 × 21.0 mm
+- **File:** [`S25_Mangueta_Rev_2.STL`](cad/S25_Mangueta_Rev_2.STL)
+- **Material:** 3D printed (PLA)
+- **Dimensions (bounding box):** 14.4 × 31.9 × 21.0 mm
 
-#### Soporte de motor y transmisión
+#### Motor mount and transmission
 
-El eje de salida del motor de tracción está acoplado a ejes Lego, que a su vez conectan directamente con las ruedas. Un soporte personalizado mantiene estos ejes alineados a **180°** entre sí, evitando que se flexionen. Esto es importante por dos razones: evita que se genere una fuerza adicional no deseada sobre el eje Z del motor (que reduciría su vida útil y afectaría la transmisión de potencia), y mantiene un comportamiento consistente y predecible en cada prueba. Esta pieza es de la misma familia que la que corregimos en la Bitácora (**Decisión 13**, orificio de eje mal dimensionado que causaba deriva); esta revisión (**Rev 4B**) es la versión actual, con los ejes correctamente alineados y sin problemas de flexión reportados.
+The drive motor's output shaft is coupled to Lego axles, which in turn connect directly to the wheels. A custom mount keeps these axles aligned at **180°** with respect to each other, preventing them from flexing. This matters for two reasons: it avoids generating an additional unwanted force on the motor's Z axis (which would shorten its life and affect power transmission), and it keeps behavior consistent and predictable in every test. This part belongs to the same family as the one we corrected in the Decision Log (**Decision 13**, undersized axle hole causing drift); this revision (**Rev 4B**) is the current version, with the axles correctly aligned and no reported flexing problems.
 
-- **Archivo:** [`S25_Soporte_de_motor_y_transmision_Rev_4B.STL`](cad/S25_Soporte_de_motor_y_transmision_Rev_4B.STL)
-- **Material:** impreso en 3D (PLA)
-- **Dimensiones (caja delimitadora):** 44.5 × 51.8 × 63.5 mm
+- **File:** [`S25_Soporte_de_motor_y_transmision_Rev_4B.STL`](cad/S25_Soporte_de_motor_y_transmision_Rev_4B.STL)
+- **Material:** 3D printed (PLA)
+- **Dimensions (bounding box):** 44.5 × 51.8 × 63.5 mm
 
-#### Plataforma / soporte superior
+#### Platform / upper deck
 
-Primer piso del chasis, donde se monta parte de la electrónica del robot.
+First deck of the chassis, where part of the robot's electronics is mounted.
 
-- **Archivo:** [`R26_piso_1_rev2.STL`](cad/R26_piso_1_rev2.STL)
-- **Dimensiones (caja delimitadora):** 114.9 × 3.1 × 26.8 mm
+- **File:** [`R26_piso_1_rev2.STL`](cad/R26_piso_1_rev2.STL)
+- **Dimensions (bounding box):** 114.9 × 3.1 × 26.8 mm
 
-#### Chasis
+#### Chassis
 
-El chasis se modificó a inicios de esta temporada con el objetivo de reducir el tamaño total del robot y optimizar el acomodo interno de los componentes electrónicos. Como resultado, el chasis actual es **2 cm más corto y 2 cm más angosto** que la versión anterior.
+The chassis was modified at the beginning of this season with the goal of reducing the robot's total size and optimizing the internal layout of the electronic components. As a result, the current chassis is **2 cm shorter and 2 cm narrower** than the previous version.
 
-- **Archivo:** [`S25_chasis_rev18.STL`](cad/S25_chasis_rev18.STL)
-- **Dimensiones (caja delimitadora):** 177.8 × 3.1 × 135.7 mm
+- **File:** [`S25_chasis_rev18.STL`](cad/S25_chasis_rev18.STL)
+- **Dimensions (bounding box):** 177.8 × 3.1 × 135.7 mm
 
 > [!NOTE]
-> Material confirmado: la **Mangueta**, el **Soporte de motor y transmisión**, el **Soporte del sensor láser** y el **soporte del servomotor** (parte de la pieza "Enlace de dirección y soporte del servomotor") son impresos en 3D con **PLA**. El **Enlace de dirección** (la barra en sí) es de corte en material plano, no PLA. El **Chasis** y la **Plataforma/Soporte** tienen un espesor uniforme de 3.1 mm en el archivo, consistente con corte en material plano (MDF/acrílico).
+> Confirmed materials: the **steering knuckle**, the **motor mount and transmission**, the **laser sensor mount** and the **servo mount** (part of the "Steering linkage and servo mount" piece) are 3D printed in **PLA**. The **steering linkage** (the bar itself) is cut from flat sheet material, not PLA. The **chassis** and the **platform/deck** have a uniform thickness of 3.1 mm in the file, consistent with flat sheet cutting (MDF/acrylic).
 
 <a id="fotos-del-vehiculo"></a>
 
-### Fotos del Vehículo (Estado Actual)
+### Vehicle Photos (Current State)
 
 <table align="center">
 <tr>
-<td align="center"><img src="v-photos/frontView.jpeg" width="200"><br><sub>Vista Frontal</sub></td>
-<td align="center"><img src="v-photos/leftView.jpeg" width="200"><br><sub>Vista Lateral Izquierda</sub></td>
-<td align="center"><img src="v-photos/rearView.jpeg" width="200"><br><sub>Vista Trasera</sub></td>
+<td align="center"><img src="v-photos/frontView.jpeg" width="200"><br><sub>Front View</sub></td>
+<td align="center"><img src="v-photos/leftView.jpeg" width="200"><br><sub>Left Side View</sub></td>
+<td align="center"><img src="v-photos/rearView.jpeg" width="200"><br><sub>Rear View</sub></td>
 </tr>
 <tr>
-<td align="center"><img src="v-photos/rightView.jpeg" width="200"><br><sub>Vista Lateral Derecha</sub></td>
-<td align="center"><img src="v-photos/upperView.jpeg" width="200"><br><sub>Vista Superior</sub></td>
-<td align="center"><img src="v-photos/lowerView.jpeg" width="200"><br><sub>Vista Inferior</sub></td>
+<td align="center"><img src="v-photos/rightView.jpeg" width="200"><br><sub>Right Side View</sub></td>
+<td align="center"><img src="v-photos/upperView.jpeg" width="200"><br><sub>Top View</sub></td>
+<td align="center"><img src="v-photos/lowerView.jpeg" width="200"><br><sub>Bottom View</sub></td>
 </tr>
 </table>
 
-[⬆ Volver al índice](#indicleto)
+[⬆ Back to top](#indicleto)
  
 ---
  
 <a id="arquitectura-potencia"></a>
 
-## 2. Arquitectura de Potencia y Sensores
+## 2. Power and Sensor Architecture
 
 > [!NOTE]
-> Esta sección detalla cómo se reparte la energía dentro del robot —de la batería a cada sensor y actuador— y el presupuesto de corriente que resulta de esa distribución.
+> This section details how energy is distributed inside the robot —from the battery to each sensor and actuator— and the current budget that results from that distribution.
 
-### Topología de alimentación
+### Power topology
 
-El robot se alimenta de una sola batería de **15 V**, que pasa primero por un **switch** general y de ahí se reparte entre **dos ramas de regulación step-down**: una hacia control y tracción, y otra dedicada en exclusiva a la dirección.
+The robot is powered by a single **15 V** battery, which first passes through a main **switch** and from there is split between **two step-down regulation branches**: one for control and traction, and another dedicated exclusively to steering.
 
-- **Regulador a 11.1 V:** su salida alimenta directamente al **motor de tracción** (a través del puente H TB6612FNG) y al **Arduino Mega** por su entrada Vin. De los **5 V** que el propio Arduino regula internamente se alimentan los sensores: los **dos sensores láser** (VL53L0X), el **girosensor** (MPU9250/GY-9250), la **cámara** (HuskyLens) y el **sensor ultrasónico** (HC-SR04P).
-- **Regulador a 6 V:** alimenta, en línea dedicada, al **servomotor del Open Challenge (MG90S)**.
-- **Regulador a 7.5 V:** alimenta, también en línea dedicada, al **servomotor del Obstacle Challenge (Waveshare ST3215-HS)**.
+- **11.1 V regulator:** its output directly powers the **drive motor** (through the TB6612FNG H-bridge) and the **Arduino Mega** through its Vin input. The **5 V** that the Arduino itself regulates internally powers the sensors: the **two laser sensors** (VL53L0X), the **gyro sensor** (MPU9250/GY-9250), the **camera** (HuskyLens) and the **ultrasonic sensor** (HC-SR04P).
+- **6 V regulator:** powers, on a dedicated line, the **Open Challenge servo (MG90S)**.
+- **7.5 V regulator:** powers, also on a dedicated line, the **Obstacle Challenge servo (Waveshare ST3215-HS)**.
 
-Ambos servos tienen su propia línea de alimentación exclusiva (no comparten regulador con ningún otro componente) porque consideramos que el servomotor es la variable principal de posicionamiento para resolver los retos: si no tiene la corriente disponible en el momento exacto, toda la precisión de dirección se ve comprometida.
+Both servos have their own exclusive supply line (they do not share a regulator with any other component) because we consider the servo to be the main positioning variable for solving the challenges: if it does not have the current available at the exact moment, all the steering accuracy is compromised.
 
 <div align="center">
-<img src="schemes/diagrama_topologia_potencia.jpeg" width="620" alt="Diagrama de topología de alimentación">
-<br><sub>Topología de alimentación: batería → switch → tres ramas de regulación (11.1 V control/tracción, 6 V servo Open Challenge, 7.5 V servo Obstacle Challenge).</sub>
+<img src="schemes/diagrama_topologia_potencia.jpeg" width="620" alt="Power topology diagram">
+<br><sub>Power topology: battery → switch → three regulation branches (11.1 V control/traction, 6 V Open Challenge servo, 7.5 V Obstacle Challenge servo).</sub>
 </div>
 
 ```
-Batería 15 V → Switch ─┬─ Regulador 11.1 V ─┬─ Motor de tracción (vía TB6612FNG)
+15 V battery → Switch ─┬─ 11.1 V regulator ─┬─ Drive motor (via TB6612FNG)
                         │                    └─ Arduino Mega → (5 V) → VL53L0X ×2, GY-9250, HuskyLens, HC-SR04P
-                        ├─ Regulador 6 V   ──── Servomotor MG90S (Open Challenge, línea dedicada)
-                        └─ Regulador 7.5 V ──── Servo ST3215-HS (Obstacle Challenge, línea dedicada)
+                        ├─ 6 V regulator   ──── MG90S servo (Open Challenge, dedicated line)
+                        └─ 7.5 V regulator ──── ST3215-HS servo (Obstacle Challenge, dedicated line)
 ```
 
-### Diagrama de conexiones (pines)
+### Wiring diagram (pins)
 
 <div align="center">
-<img src="schemes/diagrama_conexiones_pines.jpeg" width="680" alt="Diagrama de conexiones y pines del Arduino Mega">
-<br><sub>Conexión de cada componente a los pines del Arduino Mega 2560: PWMA/AIN1/AIN2/STBY (12, 10, 11, 8) al driver TB6612; XSHUT (7, 6) y bus I2C (20 SDA, 21 SCL) para los VL53L0X, MPU9250 y HuskyLens; encoder en el pin 3; HC-SR04P en TRIG/ECHO (5, 4); Serial1 (18 TX1, 19 RX1) para el servo ST3215-HS; botón en el pin 23; buzzer en el pin 49.</sub>
+<img src="schemes/diagrama_conexiones_pines.jpeg" width="680" alt="Arduino Mega wiring and pin diagram">
+<br><sub>Connection of each component to the Arduino Mega 2560 pins: PWMA/AIN1/AIN2/STBY (12, 10, 11, 8) to the TB6612 driver; XSHUT (7, 6) and I2C bus (20 SDA, 21 SCL) for the VL53L0X, MPU9250 and HuskyLens; encoder on pin 3; HC-SR04P on TRIG/ECHO (5, 4); Serial1 (18 TX1, 19 RX1) for the ST3215-HS servo; button on pin 23; buzzer on pin 49.</sub>
 </div>
 
-### Presupuesto de corriente
+### Current budget
 
-| Componente | Imagen | Voltaje de uso | Consumo de corriente |
+| Component | Image | Operating voltage | Current draw |
 |---|---|---|---|
-| Sensor láser VL53L0X | <img src="schemes/laser.jpg" width="80"> | 5 V | ≈ 10 mA (x2) |
-| Sensor ultrasónico HC-SR04P | <img src="schemes/ULTRASONICO.webp" width="80"> | 5 V | ≈ 15 mA |
-| Girosensor GY-9250 | <img src="schemes/GIRO.jpg" width="80"> | 5 V | ≈ 6.6 mA |
-| Servomotor MG90S (Open Challenge) | <img src="schemes/SERVO.webp" width="80"> | 6 V | ≈ 83–417 mA |
-| Servo ST3215-HS (Obstacle Challenge) | <img src="schemes/ST3215.jpg" width="80"> | 7.5 V | ≈ 100–900 mA |
-| Motor de tracción GA37-520 | <img src="schemes/MOTORDC.jpg" width="80"> | 11.1 V | ≈ 500–1500 mA |
-| Cámara HuskyLens | <img src="schemes/HUSKY.webp" width="80"> | 5 V | ≈ 320 mA |
+| VL53L0X laser sensor | <img src="schemes/laser.jpg" width="80"> | 5 V | ≈ 10 mA (x2) |
+| HC-SR04P ultrasonic sensor | <img src="schemes/ULTRASONICO.webp" width="80"> | 5 V | ≈ 15 mA |
+| GY-9250 gyro sensor | <img src="schemes/GIRO.jpg" width="80"> | 5 V | ≈ 6.6 mA |
+| MG90S servo (Open Challenge) | <img src="schemes/SERVO.webp" width="80"> | 6 V | ≈ 83–417 mA |
+| ST3215-HS servo (Obstacle Challenge) | <img src="schemes/ST3215.jpg" width="80"> | 7.5 V | ≈ 100–900 mA |
+| GA37-520 drive motor | <img src="schemes/MOTORDC.jpg" width="80"> | 11.1 V | ≈ 500–1500 mA |
+| HuskyLens camera | <img src="schemes/HUSKY.webp" width="80"> | 5 V | ≈ 320 mA |
 | Arduino Mega 2560 | <img src="schemes/ArduinoMega.jpg" width="80"> | 11.1 V | ≈ 22.5–45 mA |
 | **Total (Open Challenge)** | | | **≈ 967 mA – 2.32 A** |
 | **Total (Obstacle Challenge)** | | | **≈ 984 mA – 2.80 A** |
 
 > [!NOTE]
-> Cada consumo se obtuvo de la ficha técnica del componente, referido al voltaje real al que opera en este circuito. Los totales suman corriente de rieles distintos (5 V, 6 V/7.5 V y 11.1 V) según el reto; la corriente que efectivamente entrega la batería es menor y depende de la eficiencia de cada regulador step-down.
+> Each current draw was taken from the component's datasheet, referred to the actual voltage at which it operates in this circuit. The totals add up current from different rails (5 V, 6 V/7.5 V and 11.1 V) depending on the challenge; the current the battery actually delivers is lower and depends on the efficiency of each step-down regulator.
 
-[⬆ Volver al índice](#indicleto)
+[⬆ Back to top](#indicleto)
  
 ---
  
 <a id="arquitectura-software"></a>
 
-## 3. Arquitectura de Software y Estrategia de Obstáculos
+## 3. Software Architecture and Obstacle Strategy
 
 > [!NOTE]
-> Esta sección cuenta, en nuestras propias palabras, **cómo y por qué** funciona el software del robot en cada reto: la arquitectura de control, qué sensor hace qué, el código real que corre en el Arduino, y el razonamiento (y los tropiezos) detrás de cada subsistema. Complementa a la [Bitácora de Decisiones de Ingeniería](#bitacora-decisiones), que lleva la línea de tiempo de los cambios de hardware/algoritmo a nivel de proyecto.
+> This section explains, in our own words, **how and why** the robot's software works in each challenge: the control architecture, which sensor does what, the actual code running on the Arduino, and the reasoning (and the stumbles) behind each subsystem. It complements the [Engineering Decision Log](#bitacora-decisiones), which keeps the timeline of hardware/algorithm changes at the project level.
 
 <a id="open-challenge-sw"></a>
 
 ### 3.1 Open Challenge
 
-En el Open Challenge no hay pilares que sortear, así que el problema se reduce a completar 3 vueltas (12 esquinas en total) manteniendo una distancia constante a un muro y girando con precisión en cada esquina. Por eso este programa es más simple que el del Obstacle Challenge: no usa cámara de color, y el servo de dirección es un **MG90S** estándar controlado con la librería `Servo` de Arduino (a diferencia del servo de bus serial que usamos en el Obstacle Challenge).
+In the Open Challenge there are no pillars to dodge, so the problem reduces to completing 3 laps (12 corners in total) while keeping a constant distance to a wall and turning accurately at each corner. That is why this program is simpler than the Obstacle Challenge one: it does not use the color camera, and the steering servo is a standard **MG90S** controlled with the Arduino `Servo` library (unlike the serial bus servo we use in the Obstacle Challenge).
 
-**Hardware que usa este programa:** servomotor MG90S (dirección), sensor ultrasónico HC-SR04P (frontal), dos VL53L0X laterales (seguimiento de muro), giroscopio MPU6050 vía librería `MPU6050_light` (rumbo y giros), encoder (tramo final), y el puente H TB6612FNG (motor de tracción).
+**Hardware used by this program:** MG90S servo (steering), HC-SR04P ultrasonic sensor (front), two lateral VL53L0X (wall following), MPU6050 gyroscope via the `MPU6050_light` library (heading and turns), encoder (final stretch), and the TB6612FNG H-bridge (drive motor).
 
-**Detección de esquina y sentido de giro.** El robot avanza hasta que el ultrasónico frontal detecta una pared a **30 cm o menos** (`TD = 30`). En la primerísima esquina de toda la ronda, y solo ahí, compara las dos lecturas laterales VL53L0X (`decideSentido()`): el lado que ve más lejos es el interior de la pista, y ese es el sentido de giro que se usa durante **las 12 esquinas** de la ronda, sin volver a recalcularlo.
+**Corner detection and turn direction.** The robot moves forward until the front ultrasonic sensor detects a wall at **30 cm or less** (`TD = 30`). At the very first corner of the whole round, and only there, it compares the two lateral VL53L0X readings (`decideSentido()`): the side that sees farther is the inside of the track, and that is the turn direction used for **all 12 corners** of the round, without recomputing it again.
 
-**Tramo recto.** Antes de la primera esquina el robot todavía no tiene un muro "conocido" que seguir, así que avanza en línea recta usando el giroscopio (`conduceRectoGiro()`: un control proporcional que corrige el volante para mantener el rumbo en 0°). De la segunda esquina en adelante, cada tramo recto se recorre con **seguimiento de muro por PID** (`Kp=17, Ki=0.5, Kd=35`, punto de ajuste de **15 cm**, función `Wallfolowing()`), siempre sobre el lado **exterior** de la pista — el sensor contrario al lado de giro — porque el muro exterior es continuo, mientras que el interior tiene aberturas en cada esquina.
+**Straight stretch.** Before the first corner the robot does not yet have a "known" wall to follow, so it drives straight using the gyroscope (`conduceRectoGiro()`: a proportional controller that corrects the steering to hold the heading at 0°). From the second corner onward, each straight stretch is driven with **PID wall following** (`Kp=17, Ki=0.5, Kd=35`, setpoint of **15 cm**, function `Wallfolowing()`), always on the **outer** side of the track — the sensor opposite the turning side — because the outer wall is continuous, while the inner one has openings at every corner.
 
 > [!NOTE]
-> **Método de calibración de las ganancias PID:** las tres ganancias se ajustaron de forma empírica y en este orden: primero **Kp**, subiéndola hasta que el robot oscilara visiblemente contra el muro y luego bajándola un escalón; después **Kd**, para amortiguar esa oscilación sin perder capacidad de reacción; y por último **Ki**, en un valor bajo, solo para corregir el desvío sostenido que quedaba en tramos largos. El punto de ajuste de 15 cm se eligió porque deja margen suficiente tanto en el corredor angosto (600 mm) como en el ancho (1000 mm) que define el reglamento para el Open Challenge, sin acercar demasiado al robot al muro interior en el corredor angosto.
+> **PID gain tuning method:** the three gains were tuned empirically and in this order: first **Kp**, raising it until the robot visibly oscillated against the wall and then backing it off one step; then **Kd**, to damp that oscillation without losing responsiveness; and finally **Ki**, at a low value, only to correct the sustained offset that remained on long stretches. The 15 cm setpoint was chosen because it leaves enough margin both in the narrow corridor (600 mm) and in the wide one (1000 mm) defined by the Open Challenge rules, without bringing the robot too close to the inner wall in the narrow corridor.
 
-**Maniobra de giro.** Al detectar la pared frontal, el robot cierra el giro en lazo con el giroscopio hasta alcanzar un ángulo objetivo (`Giros()`). Estos ángulos se calibraron de forma empírica y son acumulativos dentro de cada vuelta (se reinician cada 4 esquinas): **60°** en la 1ª esquina de la vuelta, **120°** en la 2ª, **182°** en la 3ª y **241°** en la 4ª. Al terminar, el robot reduce su velocidad y continua siguiendo la pared hasta contar cierta cantidad de pulsos con el encoder, y el robot se detiene.
+**Turning maneuver.** Upon detecting the front wall, the robot closes the turn in a loop with the gyroscope until it reaches a target angle (`Giros()`). These angles were calibrated empirically and are cumulative within each lap (they reset every 4 corners): **60°** at the 1st corner of the lap, **120°** at the 2nd, **182°** at the 3rd and **241°** at the 4th. When it finishes, the robot reduces its speed and keeps following the wall until it counts a certain number of encoder pulses, and then the robot stops.
 
-**Cierre de la ronda.** Tras completar las 12 esquinas, el robot reduce la velocidad y continúa con seguimiento de muro por una distancia fija adicional (2555 pulsos de encoder) antes de detenerse — este tramo final lo acerca a la zona de estacionamiento.
+**Closing the round.** After completing the 12 corners, the robot reduces speed and continues wall following for an additional fixed distance (2555 encoder pulses) before stopping — this final stretch brings it close to the parking zone.
 
 <details>
-<summary>📄 Ver código completo — Open Challenge (<code>abierto.ino</code>)</summary>
+<summary>📄 View full code — Open Challenge (<code>abierto.ino</code>)</summary>
 
 ```cpp
 #include <Adafruit_VL53L0X.h>  // ToF sensor Library
@@ -308,12 +308,12 @@ En el Open Challenge no hay pilares que sortear, así que el problema se reduce 
 #include <MPU6050_light.h>     // MPU Library
 MPU6050 mpu(Wire);
 
-// Variables para el yaw
+// Yaw variables
 float yaw = 0.0;
 unsigned long lastTime = 0;
 float gyroZOffset = 0.0;
 
-// Para calibración
+// For calibration
 bool calibrated = false;
 const int CALIBRATION_SAMPLES = 510;
 
@@ -326,17 +326,17 @@ float global = 0;
 
 //PID Wall Follower variables
 float P, I, D, error, L_error, Servo_OUT, DeltaError, SumError, PID;
-float setpoint = 15;  //Centimetros
+float setpoint = 15;  // Centimeters
 float Kp = 17, Ki = 0.5, Kd = 35;
-float Ts = 0.5;  // Tiempo de sampleo para la suma de la integral
+float Ts = 0.5;  // Sampling time for the integral sum
 
-//Trasnmision Motor
+// Motor drive
 const int STBY = 8;
 const int PWMA = 12;
 const int AIN1 = 10;
 const int AIN2 = 11;
 
-//Servo Direccion
+// Steering servo
 Servo SvD;
 
 //Ultrasonic Frontal Sensor
@@ -358,8 +358,8 @@ bool Orientation = false;
 bool Giro = false;
 int CV;
 
-int sentidoGiro = 2;     // se decide solo en el 1er corner: 1=derecha, 2=izquierda
-float Kp_rumbo = 3.0;    // ganancia del rumbo recto por giroscopio (1er tramo)
+int sentidoGiro = 2;     // decided only at the 1st corner: 1=right, 2=left
+float Kp_rumbo = 3.0;    // gain for the gyro straight-heading control (1st stretch)
 
 void setup() {
   Serial.begin(115200);
@@ -397,25 +397,25 @@ void setup() {
   byte status = mpu.begin();
   while (status != 0) {}
 
-  mpu.calcOffsets();  // Calibración interna de la librería
-  calibrateGyroZ();   // Calibración adicional específica para Z
+  mpu.calcOffsets();  // Library's internal calibration
+  calibrateGyroZ();   // Additional Z-specific calibration
 
   lastTime = millis();
   calibrated = true;
 
   tone(49, 1000, 125);
 
-  // Apagar los tres sensores
+  // Turn off all the sensors
   digitalWrite(XSHUT1, LOW);
   digitalWrite(XSHUT2, LOW);
   delay(10);
 
-  // Encender sensor 1 y darle dirección 0x30
+  // Power up sensor 1 and give it address 0x30
   digitalWrite(XSHUT1, HIGH);
   delay(10);
   sensor1.begin(0x30);
 
-  // Encender sensor 2 y darle dirección 0x31
+  // Power up sensor 2 and give it address 0x31
   digitalWrite(XSHUT2, HIGH);
   delay(10);
   sensor2.begin(0x31);
@@ -430,7 +430,7 @@ void loop() {
     delay(20);
 
     if (distanceF <= TD) {
-      if (CV == 0) decideSentido();     // 1er corner: decide el sentido de TODAS las vueltas
+      if (CV == 0) decideSentido();     // 1st corner: decides the direction for ALL the laps
       Giros(sentidoGiro, 175, 60);
       tone(49, 290, 75);
       distanceF = TD + 100;
@@ -443,7 +443,7 @@ void loop() {
       SvD.write(105);
     } else {
       if (CV == 0) {
-        conduceRectoGiro();             // antes del 1er corner: avanza recto por giroscopio (sin seguir pared)
+        conduceRectoGiro();             // before the 1st corner: drive straight by gyro (no wall following)
         moverMotor(200);
       } else {
         Wallfolowing();
@@ -462,31 +462,31 @@ void loop() {
 
 
 
-// ===== Decide el sentido de giro en el 1er corner: lee ambos ToF, gira al lado mas abierto =====
+// ===== Decides the turn direction at the 1st corner: reads both ToF, turns toward the more open side =====
 void decideSentido() {
   VL53L0X_RangingMeasurementData_t m1, m2;
   sensor1.rangingTest(&m1, false);
   sensor2.rangingTest(&m2, false);
-  float izq = m1.RangeMilliMeter / 10.0;   // sensor1 = lado IZQUIERDO (medidaI)
-  float der = m2.RangeMilliMeter / 10.0;   // sensor2 = lado DERECHO  (medidaD)
+  float izq = m1.RangeMilliMeter / 10.0;   // sensor1 = LEFT side (medidaI)
+  float der = m2.RangeMilliMeter / 10.0;   // sensor2 = RIGHT side (medidaD)
   Serial.print("izq="); Serial.print(izq);
   Serial.print("  der="); Serial.println(der);
-  // El lado que mide MAS es el mas abierto -> se gira hacia ese lado.
-  // Si decide al reves en tu robot, invierte esta comparacion (cambia > por <).
+  // The side that reads MORE is the more open one -> turn toward that side.
+  // If it decides the other way around on your robot, invert this comparison (change > for <).
   if (izq > der) {
-    Orientation = false; sentidoGiro = 2;              // abierto IZQUIERDA -> gira izquierda
+    Orientation = false; sentidoGiro = 2;              // open on the LEFT -> turn left
     tone(49, 1200, 120); delay(160); tone(49, 1200, 120);
   } else {
-    Orientation = true;  sentidoGiro = 1;              // abierto DERECHA -> gira derecha
+    Orientation = true;  sentidoGiro = 1;              // open on the RIGHT -> turn right
     tone(49, 700, 250);
   }
   delay(150);
 }
 
-// ===== Avance recto por giroscopio (rumbo objetivo = 0), sin seguir pared =====
+// ===== Straight driving by gyro (target heading = 0), without wall following =====
 void conduceRectoGiro() {
-  GradoZ();                                // actualiza yaw
-  float err = 0 - yaw;                      // mantiene el rumbo inicial (yaw = 0)
+  GradoZ();                                // updates yaw
+  float err = 0 - yaw;                      // holds the initial heading (yaw = 0)
   int salida = 105 + (int)(Kp_rumbo * err);
   salida = constrain(salida, 35, 160);
   SvD.write(salida);
@@ -502,7 +502,7 @@ void SUSF() {
   distanceF = durationF / 58;
 }
 void Wallfolowing() {
-  //Obtencion del dato del sensor.
+  // Get the sensor reading.
   if (Orientation == true) {
     VL53L0X_RangingMeasurementData_t medida1;
     sensor1.rangingTest(&medida1, false);
@@ -594,18 +594,18 @@ void GradoZ() {
 
   if (calibrated) {
     unsigned long currentTime = millis();
-    float deltaTime = (currentTime - lastTime) / 1000.0;  // Tiempo en segundos
+    float deltaTime = (currentTime - lastTime) / 1000.0;  // Time in seconds
     lastTime = currentTime;
 
-    if (deltaTime > 0.1) deltaTime = 0.01;  // Limitar deltaTime máximo
+    if (deltaTime > 0.1) deltaTime = 0.01;  // Limit the maximum deltaTime
 
-    // Obtener velocidad angular Z (grados/segundo) y aplicar offset
+    // Get the Z angular rate (degrees/second) and apply the offset
     float gyroZRate = mpu.getGyroZ() - gyroZOffset;
 
-    // INTEGRAR para obtener el ángulo: ángulo = velocidad angular × tiempo
+    // INTEGRATE to get the angle: angle = angular rate × time
     yaw += gyroZRate * deltaTime;
 
-    // Mantener el yaw en el rango 0-360 grados
+    // Keep yaw within the 0-360 degree range
     if (yaw <= -360) yaw = 0;
     if (yaw >= 360) yaw = 0;
     Serial.println(yaw);
@@ -677,7 +677,7 @@ void dir(int Vi, int Vf, int T) {
 
 </details>
 
-[⬆ Volver al índice](#indicleto)
+[⬆ Back to top](#indicleto)
 
 ---
 
@@ -687,130 +687,130 @@ void dir(int Vi, int Vf, int T) {
 
 <a id="marco-del-reto"></a>
 
-#### 1. Marco del reto y objetivos de diseño
+#### 1. Challenge framework and design goals
 
-El Obstacle Challenge de WRO Future Engineers 2026 le pide al vehículo recorrer, de forma completamente autónoma, tres vueltas a una pista de ocho secciones —cuatro esquinas y cuatro rectas— mientras esquiva señales de tráfico colocadas al azar antes de cada ronda. La regla es simple de decir pero exigente de cumplir: un pilar **rojo** obliga a pasar por su lado **derecho**, uno **verde** por el **izquierdo**, y en ningún caso se puede mover la señal. Como el sentido de la ronda (horario o antihorario) se decide al azar justo antes de arrancar, el algoritmo no puede asumir nada de entrada: tiene que averiguarlo por sí mismo apenas empieza a moverse. Y al final, después de las tres vueltas, hay que volver al estacionamiento.
+The WRO Future Engineers 2026 Obstacle Challenge asks the vehicle to drive, fully autonomously, three laps around an eight-section track —four corners and four straights— while avoiding traffic signs placed at random before each round. The rule is simple to state but demanding to satisfy: a **red** pillar forces the robot to pass on its **right** side, a **green** one on the **left**, and under no circumstances may the sign be moved. Since the direction of the round (clockwise or counterclockwise) is decided at random right before the start, the algorithm cannot assume anything up front: it has to figure it out by itself as soon as it starts moving. And at the end, after the three laps, it has to return to the parking lot.
 
-Desde el principio nos propusimos tres cosas al diseñar el sistema: que aguantara bien la aleatoriedad (posición de pilares, sentido de la ronda), que dependiera lo menos posible de la iluminación o de medidas exactas de la pista, y que se pudiera depurar por partes. Esta última terminó siendo casi la regla de oro del equipo: **medir antes de prescribir**. Cada valor que importaba lo dejamos como una constante ajustable, y cada subsistema lo probamos aislado en su propio programa antes de juntarlo con los demás — así, cuando algo fallaba, sabíamos exactamente en qué módulo buscar.
+From the beginning we set ourselves three goals when designing the system: that it would cope well with randomness (pillar positions, direction of the round), that it would depend as little as possible on lighting or on exact track measurements, and that it could be debugged piece by piece. That last one ended up being almost the team's golden rule: **measure before prescribing**. Every value that mattered was left as an adjustable constant, and every subsystem was tested in isolation in its own program before being combined with the rest — that way, when something failed, we knew exactly which module to look in.
 
 <a id="maquina-de-estados"></a>
 
-#### 2. Arquitectura general: máquina de estados
+#### 2. General architecture: state machine
 
-El control del robot está organizado como una **máquina de estados** que, básicamente, calca la forma de la pista. En cada tramo recto, el vehículo pasa por cuatro estados:
+The robot's control is organized as a **state machine** that basically mirrors the shape of the track. On each straight stretch, the vehicle goes through four states:
 
-- **RECTO:** avanza manteniendo el rumbo.
-- **SEGUIR:** al detectar un pilar, lo centra en el cuadro de la cámara mientras se acerca.
-- **ESQUIVAR:** al llegar a cierta distancia, ejecuta la maniobra de esquive.
-- **REGRESAR:** retoma el rumbo recto.
+- **STRAIGHT (`RECTO`):** drives forward holding the heading.
+- **TRACK (`SEGUIR`):** upon detecting a pillar, keeps it centered in the camera frame while approaching.
+- **DODGE (`ESQUIVAR`):** at a certain distance, executes the avoidance maneuver.
+- **RETURN (`REGRESAR`):** resumes the straight heading.
 
-Por encima de todo esto, el robot también puede entrar en la maniobra de esquina — pero solo si está en estado RECTO. Esa restricción fue una decisión a propósito: así nos aseguramos de que el robot nunca intente doblar una esquina a la mitad de un esquive, resolviendo de una vez el conflicto entre "sortear el pilar" y "tomar la esquina" a favor de lo primero.
+On top of all this, the robot can also enter the corner maneuver — but only if it is in the STRAIGHT state. That restriction was a deliberate decision: it guarantees that the robot never tries to take a corner in the middle of a dodge, settling once and for all the conflict between "dodge the pillar" and "take the corner" in favor of the former.
 
-Separar el control de esta manera nos permitió que cada tarea usara el sensor que mejor le quedaba, sin que se estorbaran entre sí: la cámara maneja SEGUIR y ESQUIVAR, el giroscopio se encarga del rumbo en RECTO y REGRESAR (y del giro de esquina), los sensores de distancia detectan las esquinas, y el encoder le da la odometría a todas las maniobras.
+Splitting the control this way let each task use the sensor best suited to it, without them getting in each other's way: the camera handles TRACK and DODGE, the gyroscope takes care of the heading in STRAIGHT and RETURN (and of the corner turn), the distance sensors detect the corners, and the encoder provides odometry for all the maneuvers.
 
 <a id="sensores-obstaculos"></a>
 
-#### 3. Conjunto de sensores y asignación de funciones
+#### 3. Sensor suite and role assignment
 
-Sobre un Arduino Mega, el robot integra cinco sistemas de percepción/actuación, la mayoría conectados por el mismo bus I2C:
+On an Arduino Mega, the robot integrates five perception/actuation systems, most of them connected over the same I2C bus:
 
-- **Cámara HuskyLens** (modo de reconocimiento de color): detecta los pilares y da su posición horizontal en el cuadro, además de su alto aparente en píxeles, que usamos como estimador de qué tan cerca está el pilar (no usamos un sensor de distancia dedicado para los pilares).
-- **Dos sensores de tiempo de vuelo VL53L0X**, en **modo de largo alcance**: detectan cuándo se abre una esquina y, si hace falta, sirven para decidir si conviene un giro hacia adelante o en reversa. La altura de montaje no es arbitraria: el soporte rediseñado (ver [Piezas de Diseño Mecánico](#piezas-cad)) eleva al sensor casi 4 cm respecto al soporte anterior, lo que lo deja apuntando dentro de la franja de los **100 mm de altura** que especifica el reglamento para los muros de la pista (regla 13.3/13.5) — ni tan bajo que lea el piso, ni tan alto que pase por encima del muro.
-- **Giroscopio (GY-9250, vía MPU6050):** calcula el rumbo (*yaw*) integrando la velocidad angular — es la base tanto del control en línea recta como de los giros.
-- **Encoder** de un canal en el eje de tracción: da la distancia recorrida para todas las maniobras basadas en odometría.
-- **Servomotor de dirección Waveshare ST3215:** a diferencia del Open Challenge (que usa un MG90S estándar), aquí usamos un servo de **bus serial** (protocolo half-duplex por `Serial1`, librería `SCServo`), que permite fijar posición, velocidad y aceleración de forma independiente. Esto nos deja calcular cuánto tarda el volante en llegar a cada ángulo y **compensar ese retraso** al calcular las distancias de esquive, giro y frenado (ver punto 9, más abajo) — algo que un servo PWM normal no nos permitiría hacer con la misma precisión.
+- **HuskyLens camera** (color recognition mode): detects the pillars and gives their horizontal position in the frame, plus their apparent height in pixels, which we use as an estimator of how close the pillar is (we do not use a dedicated distance sensor for the pillars).
+- **Two VL53L0X time-of-flight sensors**, in **long range mode**: detect when a corner opens up and, if needed, help decide whether a forward or a reverse turn is preferable. The mounting height is not arbitrary: the redesigned mount (see [Mechanical Design Parts](#piezas-cad)) raises the sensor almost 4 cm compared with the previous mount, which leaves it aiming within the **100 mm height** band that the rules specify for the track walls (rule 13.3/13.5) — neither so low that it reads the floor, nor so high that it passes over the wall.
+- **Gyroscope (GY-9250, via MPU6050):** computes the heading (*yaw*) by integrating the angular rate — it is the basis of both the straight-line control and the turns.
+- **Single-channel encoder** on the drive axle: provides the distance travelled for all odometry-based maneuvers.
+- **Waveshare ST3215 steering servo:** unlike the Open Challenge (which uses a standard MG90S), here we use a **serial bus** servo (half-duplex protocol over `Serial1`, `SCServo` library), which allows position, speed and acceleration to be set independently. This lets us compute how long the steering takes to reach each angle and **compensate for that delay** when computing the dodge, turn and braking distances (see point 9 below) — something a normal PWM servo would not let us do with the same precision.
 
-Repartir las tareas entre sensores especializados, en vez de cargarle todo a la cámara, fue algo que aprendimos por las malas: la cámara ya tenía suficiente trabajo detectando pilares bajo luz variable, y si además le pedíamos distinguir las líneas del piso, se volvía poco confiable. Separar la percepción por dominio —color a la cámara, distancia lateral a los ToF, rumbo al giroscopio— hizo que todo el sistema fuera más robusto.
+Distributing the tasks among specialized sensors, instead of loading everything onto the camera, was something we learned the hard way: the camera already had enough work detecting pillars under variable light, and if we also asked it to distinguish the floor lines, it became unreliable. Separating perception by domain —color to the camera, lateral distance to the ToF sensors, heading to the gyroscope— made the whole system more robust.
 
 <a id="control-rumbo-recto"></a>
 
-#### 4. Control de rumbo recto
+#### 4. Straight-heading control
 
-Al principio pensamos que bastaba con "dejar el volante centrado" para que el robot avanzara recto. No es así: un volante centrado mecánicamente no garantiza una trayectoria recta, y cualquier desalineación —por mínima que sea— se va acumulando como deriva (de hecho, encontramos una causa mecánica concreta de esto; ver Bitácora, **Decisión 13**). Por eso cerramos el rumbo en lazo con el giroscopio: un controlador proporcional corrige el servo según el error entre el rumbo que queremos (`targetYaw`) y el que el giroscopio está midiendo. El movimiento del servo hacia esa corrección se hace de forma gradual (`servoSuave()`, con una velocidad de cambio limitada — `SERVO_SLEW`), para evitar bandazos bruscos en la dirección.
+At first we thought it was enough to "leave the steering centered" for the robot to drive straight. It is not: a mechanically centered steering does not guarantee a straight trajectory, and any misalignment —however small— accumulates as drift (in fact, we found a concrete mechanical cause of this; see Decision Log, **Decision 13**). That is why we closed the heading loop with the gyroscope: a proportional controller corrects the servo according to the error between the heading we want (`targetYaw`) and the one the gyroscope is measuring. The servo's movement toward that correction is made gradually (`servoSuave()`, with a limited rate of change — `SERVO_SLEW`), to avoid abrupt jerks in the steering.
 
 <a id="seguimiento-pilares"></a>
 
-#### 5. Seguimiento de pilares (estado SEGUIR)
+#### 5. Pillar tracking (TRACK state)
 
-Cuando un pilar aparece con un tamaño mínimo en el cuadro (filtro `TAM_MIN`, para no perseguir manchas chiquitas o líneas del piso), el robot entra en SEGUIR y lo mantiene centrado con un controlador **proporcional-derivativo** que ajusta el servo según qué tan lejos está el pilar del centro real de la cámara (`CENTRO_IMG`, ya calibrado). El robot pasa de SEGUIR a la maniobra de esquive cuando el **alto del pilar en píxeles** supera un umbral (`H_ESQUIVAR`) — es decir, la señal de "ya está lo bastante cerca" viene del tamaño aparente en la cámara, no de un sensor de distancia dedicado.
+When a pillar appears with a minimum size in the frame (`TAM_MIN` filter, so as not to chase small blobs or floor lines), the robot enters TRACK and keeps it centered with a **proportional-derivative** controller that adjusts the servo according to how far the pillar is from the camera's real center (`CENTRO_IMG`, already calibrated). The robot moves from TRACK to the dodge maneuver when the **pillar's height in pixels** exceeds a threshold (`H_ESQUIVAR`) — that is, the "it is close enough now" signal comes from the apparent size in the camera, not from a dedicated distance sensor.
 
-- **Un error de signo bastante instructivo:** en una primera versión, el robot se **alejaba** del pilar en vez de seguirlo. Visto desde afuera parecía que estaba esquivando la caja, y al perderla de vista se enderezaba solo — se veía exactamente como un esquive, pero en realidad era el seguidor corrigiendo al revés. Bastó con invertir el signo del lazo de la cámara para que empezara a converger correctamente hacia el centro.
-- Si el robot pierde de vista el pilar varios cuadros seguidos (`FRAMES_PERDIDO`) sin haber llegado a esquivar, regresa al estado RECTO.
+- **A rather instructive sign error:** in an early version, the robot **moved away** from the pillar instead of tracking it. From the outside it looked like it was dodging the box, and when it lost sight of it, it straightened out on its own — it looked exactly like a dodge, but it was really the tracker correcting backwards. Simply inverting the sign of the camera loop was enough for it to start converging correctly toward the center.
+- If the robot loses sight of the pillar for several consecutive frames (`FRAMES_PERDIDO`) without having reached the dodge, it returns to the STRAIGHT state.
 
 <a id="decision-sorteo"></a>
 
-#### 6. Decisión de sorteo: votación de color y maniobra comprometida (estado ESQUIVAR)
+#### 6. Dodge decision: color voting and a committed maneuver (DODGE state)
 
-Esta fase concentró dos de las decisiones más importantes de todo el proyecto, y las dos salieron de fallos que vimos en pista y tuvimos que corregir.
+This phase concentrated two of the most important decisions in the whole project, and both came out of failures we saw on the track and had to correct.
 
-**Votación de color durante la aproximación.** Al principio, el color del pilar se decidía justo en el momento en que el robot llegaba a la distancia de esquive. El problema es que, a quemarropa, el pilar llena toda la cámara y la clasificación de color se vuelve ruidosa. La solución fue ir acumulando "votos" de color durante toda la aproximación (`votosRojo`, `votosVerde`) —cuando el pilar todavía se ve a media distancia y el color es confiable— y decidir por mayoría justo antes de esquivar. Así, una sola lectura mala cerca del pilar ya no arruina la decisión.
+**Color voting during the approach.** At first, the pillar's color was decided right at the moment the robot reached the dodge distance. The problem is that, at point-blank range, the pillar fills the whole camera frame and the color classification becomes noisy. The solution was to accumulate color "votes" throughout the approach (`votosRojo`, `votosVerde`) —when the pillar is still seen at medium distance and the color is reliable— and decide by majority right before dodging. That way, a single bad reading near the pillar no longer ruins the decision.
 
-**Comprometerse con una dirección, sin importar la posición.** El fallo más sutil de todos fue que el esquive seguía la *posición* del pilar en el cuadro en vez de comprometerse con una dirección fija: si el pilar entraba un poco cargado hacia un lado, el volante arrancaba hacia ese mismo lado, y terminábamos esquivando por el lado equivocado según dónde estuviera el pilar, no según su color. Lo arreglamos convirtiendo esta fase en una **decisión binaria, ciega a la posición** (`decideEsquive()`): si detecta rojo, el volante se compromete hacia la **derecha**; si es verde, hacia la **izquierda**; y si no logra identificar ningún color válido, suena una alarma. Una vez tomada la decisión, el volante se queda fijo por el resto de la maniobra, **sin volver a mirar la posición del pilar** — esto eliminó por completo los esquives por el lado equivocado.
+**Committing to a direction, regardless of position.** The subtlest failure of all was that the dodge followed the pillar's *position* in the frame instead of committing to a fixed direction: if the pillar came in slightly biased toward one side, the steering started off toward that same side, and we ended up dodging on the wrong side according to where the pillar was, not according to its color. We fixed it by turning this phase into a **binary decision that is blind to position** (`decideEsquive()`): if it detects red, the steering commits to the **right**; if green, to the **left**; and if it cannot identify any valid color, an alarm sounds. Once the decision is made, the steering stays fixed for the rest of the maneuver, **without looking at the pillar's position again** — this completely eliminated the wrong-side dodges.
 
-La maniobra termina por distancia recorrida (odometría), por un ángulo máximo respecto al rumbo (`MAX_DODGE_ANGLE`, para evitar que el robot se quede dando vueltas) o por un tiempo límite de seguridad (`MAX_ESQUIVE_MS`); después de eso, pasa a REGRESAR, retoma el rumbo con `conduceRecto()` hasta alinearse dentro de una tolerancia (`TOL_RUMBO`) y vuelve a RECTO.
+The maneuver ends by distance travelled (odometry), by a maximum angle with respect to the heading (`MAX_DODGE_ANGLE`, to keep the robot from spinning around) or by a safety time limit (`MAX_ESQUIVE_MS`); after that, it moves to RETURN, resumes the heading with `conduceRecto()` until it is aligned within a tolerance (`TOL_RUMBO`) and goes back to STRAIGHT.
 
 <a id="deteccion-esquinas"></a>
 
-#### 7. Detección de esquinas
+#### 7. Corner detection
 
-La detección de esquina se basa en algo simple: cuando el muro de un lado desaparece, el sensor de ese lado deja de leer una distancia corta y empieza a leer "abierto" (`LADO_LIBRE_CM`). Esta detección **solo se arma en estado RECTO**, y solo después de haberse alejado lo suficiente de la esquina anterior (`REARM_CM`), para no disparar dos veces por la misma esquina. En la práctica, este fue el subsistema que más vueltas nos dio.
+Corner detection is based on something simple: when the wall on one side disappears, the sensor on that side stops reading a short distance and starts reading "open" (`LADO_LIBRE_CM`). This detection is **only armed in the STRAIGHT state**, and only after the robot has moved far enough away from the previous corner (`REARM_CM`), so that it does not trigger twice on the same corner. In practice, this was the subsystem that gave us the most trouble.
 
-- **Cómo decide el robot de qué lado están las esquinas:** como el sentido de la ronda es aleatorio, el robot lo resuelve solo al arrancar: se pega a la barrera exterior y promedia varias lecturas de los dos ToF; el sensor que ve **más lejos** apunta hacia el interior de la pista, que es justo el lado por donde se van a abrir las esquinas. Ese lado (`esquinaIzq`) queda fijo para toda la ronda, y así resolvimos de una sola vez la ambigüedad de horario/antihorario, sin necesitar leer ninguna línea del piso.
-- **El alcance del sensor nos hizo perder tiempo:** durante las pruebas la detección era intermitente — a veces funcionaba, a veces no, a veces tarde. Al investigar encontramos que el VL53L0X, en su modo por defecto, solo es confiable hasta unos **50 cm** — muy por debajo de los más de **100 cm** que hacen falta para distinguir una esquina. Eso explicaba por qué el mismo sensor funcionaba perfecto siguiendo pared de cerca en el Open Challenge, pero fallaba al detectar la apertura. La solución fue activar el **modo de largo alcance** al inicializar el sensor, y confirmar la apertura con **varias lecturas seguidas** (`PROT_TOF`) antes de darla por buena, para descartar picos raros.
-- **Y en su momento, el problema fue mecánico:** incluso con el modo correcto, la detección llegó a fallar en pista porque el sensor del lado abierto reportaba unos pocos centímetros donde debía leer "abierto". Encontramos que los sensores estaban ligeramente inclinados hacia el suelo — a simple vista parecían perpendiculares, pero los números decían otra cosa. **Este es el mismo tipo de problema que documentamos en la Bitácora, Decisión 12/13** (soportes de sensores laterales desalineados).
+- **How the robot decides which side the corners are on:** since the direction of the round is random, the robot works it out by itself at start-up: it hugs the outer barrier and averages several readings from both ToF sensors; the sensor that sees **farther** points toward the inside of the track, which is exactly the side where the corners will open up. That side (`esquinaIzq`) is fixed for the whole round, and that is how we resolved the clockwise/counterclockwise ambiguity in one go, without needing to read any floor line.
+- **The sensor's range cost us time:** during testing the detection was intermittent — sometimes it worked, sometimes it did not, sometimes it was late. On investigating we found that the VL53L0X, in its default mode, is only reliable up to about **50 cm** — well below the more than **100 cm** needed to distinguish a corner. That explained why the same sensor worked perfectly following a wall up close in the Open Challenge, but failed to detect the opening. The solution was to enable **long range mode** when initializing the sensor, and to confirm the opening with **several consecutive readings** (`PROT_TOF`) before accepting it, in order to discard odd spikes.
+- **And at one point, the problem was mechanical:** even with the correct mode, detection sometimes failed on the track because the sensor on the open side reported a few centimeters where it should have read "open". We found that the sensors were slightly tilted toward the floor — to the naked eye they looked perpendicular, but the numbers said otherwise. **This is the same type of problem we documented in the Decision Log, Decision 12/13** (misaligned lateral sensor mounts).
 
 <a id="giro-esquina"></a>
 
-#### 8. Giro de esquina
+#### 8. Corner turn
 
-Una vez armada y confirmada la apertura, el robot entra en modo "avanzando a la esquina": sigue derecho (con `conduceRecto()`) mientras decide, sensor en mano, **cómo y cuándo** ejecutar el giro.
+Once the opening is armed and confirmed, the robot enters "approaching the corner" mode: it keeps driving straight (with `conduceRecto()`) while deciding, sensor in hand, **how and when** to execute the turn.
 
-- **Giro hacia adelante o en reversa.** Al confirmar la esquina, el robot mide la distancia al muro **exterior** (el lado contrario al de la esquina). Si ese muro está más lejos de lo normal (`DIST_REVERSA_CM`), el robot ejecuta la esquina **en reversa** (`giraEsquinaReversa()`: volante al lado contrario, motor hacia atrás, ángulo objetivo propio) en vez del giro normal hacia adelante (`giraEsquina()`). La lógica: cuando hay más espacio libre respecto al muro exterior, girar en reversa le da al robot un radio de giro efectivo más cerrado para tomar la esquina, en vez de necesitar el espacio adicional que exige un giro hacia adelante.
-- **Qué dispara el momento exacto de girar.** Mientras avanza hacia el vértice, el robot revisa el sensor **ultrasónico frontal**: si detecta la pared dentro de una distancia calculada (que ya incluye el retraso propio del servo — ver punto 9), inicia el giro. Este es el método **principal**; si el ultrasónico no llega a dispararlo, hay un tope de seguridad por distancia recorrida (encoder) que fuerza el giro de todas formas, para que el robot nunca se quede avanzando indefinidamente hacia un muro que el ultrasónico no detectó a tiempo.
-- **El giro por giroscopio, y el dolor de cabeza de los signos.** El giro se cierra en lazo con el giroscopio, y aquí vivimos la depuración más difícil de todo el proyecto: el volante tenía que girar físicamente hacia un lado mientras el giroscopio confirmaba esa misma rotación, y ambas cosas tenían que coincidir. La solución definitiva fue basar el fin del giro en el **cambio absoluto** de rumbo (la diferencia, en valor absoluto, entre el yaw actual y el inicial), sin importar el signo. Esta decisión eliminó de raíz toda una categoría de errores de signo que nos había costado muchísimas pruebas.
-- **Retroceso después del giro.** Al terminar de girar, el robot retrocede un poco para recentrarse antes de seguir. Esta distancia puede ser **fija** (18 cm tras un giro normal, 13 cm tras uno en reversa) o, si se activa el modo adaptativo, calculada según qué tan lejos quedó el muro exterior después del giro — este segundo modo está implementado pero **desactivado** por ahora en el código.
-- **Rumbo local por esquina.** Después de cada giro, el rumbo objetivo se reinicia a 0° — es decir, cada arista nueva "empieza de cero" en vez de acumular el rumbo de toda la vuelta, lo que evita que la deriva del giroscopio se acumule a lo largo de las tres vueltas.
+- **Forward or reverse turn.** On confirming the corner, the robot measures the distance to the **outer** wall (the side opposite the corner). If that wall is farther away than normal (`DIST_REVERSA_CM`), the robot takes the corner **in reverse** (`giraEsquinaReversa()`: steering to the opposite side, motor backwards, its own target angle) instead of the normal forward turn (`giraEsquina()`). The logic: when there is more free space with respect to the outer wall, turning in reverse gives the robot a tighter effective turning radius to take the corner, instead of needing the extra space a forward turn demands.
+- **What triggers the exact moment to turn.** While approaching the vertex, the robot checks the **front ultrasonic sensor**: if it detects the wall within a computed distance (which already includes the servo's own delay — see point 9), it starts the turn. This is the **primary** method; if the ultrasonic sensor does not end up triggering it, there is a safety cap by distance travelled (encoder) that forces the turn anyway, so the robot never keeps driving indefinitely toward a wall the ultrasonic sensor did not detect in time.
+- **The gyroscope turn, and the headache of signs.** The turn is closed in a loop with the gyroscope, and here we went through the hardest debugging of the whole project: the steering had to physically turn toward one side while the gyroscope confirmed that same rotation, and both things had to match. The definitive solution was to base the end of the turn on the **absolute change** of heading (the difference, in absolute value, between the current and the initial yaw), regardless of sign. This decision eliminated at the root a whole category of sign errors that had cost us a great many tests.
+- **Backing up after the turn.** After finishing the turn, the robot backs up a little to re-center itself before continuing. This distance can be **fixed** (18 cm after a normal turn, 13 cm after a reverse one) or, if adaptive mode is enabled, computed according to how far the outer wall ended up after the turn — this second mode is implemented but currently **disabled** in the code.
+- **Local heading per corner.** After each turn, the target heading is reset to 0° — that is, each new edge "starts from zero" instead of accumulating the heading over the whole lap, which prevents the gyroscope's drift from building up over the three laps.
 
 <a id="auto-ajuste-servo"></a>
 
-#### 9. Auto-ajuste por perfil de servo
+#### 9. Self-adjustment from the servo profile
 
-Como el servo de dirección del Obstacle Challenge (ST3215) permite fijar velocidad y aceleración, el código incluye un pequeño modelo del volante: a partir de las revoluciones por minuto de ficha del servo y el voltaje real con el que lo alimentamos, calcula cuántos grados por segundo gira realmente, y con eso, cuánto tarda (en milisegundos) en llegar a cualquier ángulo. Esa demora se traduce después a **centímetros que el robot ya avanzó mientras el volante todavía se estaba moviendo**, y esa distancia se le suma a los umbrales de esquive, de detección de esquina y de frenado — así, si en el futuro cambiamos de servomotor, basta con actualizar tres constantes (RPM de ficha, voltaje de ficha, voltaje real) y el resto de las distancias se recalculan solas. El propio programa además avisa por buzzer si, con el servo montado, el robot va demasiado rápido para el tiempo de reacción del volante.
+Since the Obstacle Challenge steering servo (ST3215) allows speed and acceleration to be set, the code includes a small model of the steering: from the servo's datasheet RPM and the actual voltage we feed it, it computes how many degrees per second it really turns, and from that, how long (in milliseconds) it takes to reach any angle. That delay is then translated into **centimeters the robot has already travelled while the steering was still moving**, and that distance is added to the dodge, corner detection and braking thresholds — so if we change the servo in the future, we only need to update three constants (datasheet RPM, datasheet voltage, actual voltage) and the rest of the distances recompute themselves. The program also warns through the buzzer if, with the mounted servo, the robot is going too fast for the steering's reaction time.
 
 <a id="ingenieria-defensiva"></a>
 
-#### 10. Ingeniería defensiva: tiempos de seguridad y protección del bus
+#### 10. Defensive engineering: safety timeouts and bus protection
 
-Un principio que adoptamos tras varios episodios de bloqueo fue que **ninguna fase debe poder quedar atrapada indefinidamente**. En consecuencia, el giro, el esquive y la reincorporación disponen de **temporizadores de seguridad** que garantizan una salida aunque el sensor que normalmente cierra la fase falle. Del mismo modo, se le puso un **tiempo límite al bus I2C**: si un dispositivo compartido deja de responder, la comunicación corta la espera en lugar de congelar todo el programa. También la cámara HuskyLens tiene su propio chequeo al arrancar (varios intentos de conexión antes de darse por vencida y avisar por zumbador). Estas salvaguardas no sustituyen la corrección de la causa de fondo, pero convierten un fallo catastrófico (vehículo detenido o girando sin control) en una degradación acotada y recuperable.
+A principle we adopted after several lock-up episodes is that **no phase should be able to get stuck indefinitely**. Accordingly, the turn, the dodge and the recovery all have **safety timers** that guarantee an exit even if the sensor that normally ends the phase fails. Likewise, a **timeout was set on the I2C bus**: if a shared device stops responding, the communication cuts the wait short instead of freezing the whole program. The HuskyLens camera also has its own check at start-up (several connection attempts before giving up and warning through the buzzer). These safeguards do not replace fixing the underlying cause, but they turn a catastrophic failure (a stopped vehicle or one spinning out of control) into a bounded, recoverable degradation.
 
 <a id="odometria"></a>
 
-#### 11. Odometría y separación de contadores
+#### 11. Odometry and counter separation
 
-La odometría se calibró midiendo empíricamente los pulsos por centímetro del encoder. Un detalle de diseño surgido de la integración fue la necesidad de **dos contadores de distancia independientes**: uno para las distancias por fase (sorteo, avance a la esquina, giro), que se reinicia en cada transición, y otro para la distancia acumulada desde la última esquina, que gobierna el re-armado de la detección y que **no** debe reiniciarse cuando ocurre un sorteo entre dos esquinas. Sin esta separación, un sorteo a mitad de arista habría borrado la cuenta de re-armado y bloqueado la detección de la siguiente esquina.
+Odometry was calibrated by empirically measuring the encoder's pulses per centimeter. One design detail that emerged from integration was the need for **two independent distance counters**: one for the per-phase distances (dodge, approach to the corner, turn), which resets at every transition, and another for the distance accumulated since the last corner, which governs the re-arming of the detection and which must **not** be reset when a dodge occurs. Without this separation, a dodge in the middle of an edge would have erased the re-arming count and blocked the detection of the next corner.
 
 <a id="metodologia-decisiones-revertidas"></a>
 
-#### 12. Metodología de desarrollo y decisiones revertidas
+#### 12. Development methodology and reversed decisions
 
-El desarrollo siguió una estrategia de **integración por capas**: cada subsistema (seguimiento, sorteo, rumbo, esquinas, salida de estacionamiento) se validó de forma aislada en su propio programa antes de unirse al conjunto, de manera que la depuración nunca enfrentara dos incógnitas a la vez.
+Development followed a **layered integration** strategy: each subsystem (tracking, dodging, heading, corners, exiting the parking lot) was validated in isolation in its own program before being merged into the whole, so that debugging never faced two unknowns at once.
 
-Este método demostró su valor repetidamente, sobre todo al distinguir fallos reales de artefactos de prueba: varios comportamientos "erróneos" observados con el vehículo suspendido en el aire resultaron ser consecuencia inevitable de que las ruedas giraran sin que el chasis rotara (un artefacto de prueba análogo al descrito en la Bitácora, **Decisión 13**); la prueba correcta debía hacerse sobre el piso.
+This method proved its worth repeatedly, especially in telling real failures apart from test artifacts: several "wrong" behaviors observed with the vehicle suspended in the air turned out to be the unavoidable consequence of the wheels spinning without the chassis rotating (a test artifact analogous to the one described in the Decision Log, **Decision 13**); the correct test had to be done on the floor.
 
-A modo de registro, las principales **decisiones revertidas o reemplazadas** durante el desarrollo de este algoritmo fueron:
+For the record, the main **decisions reversed or replaced** during the development of this algorithm were:
 
-| Decisión original | Reemplazada por | Motivo |
+| Original decision | Replaced by | Reason |
 |---|---|---|
-| Disparo de giro exclusivamente por odometría (encoder) | Disparo por ultrasónico frontal, con tope de seguridad por encoder | El encoder solo no distinguía con precisión el momento exacto de girar en aproximaciones distintas; el ultrasónico frontal, con el umbral ya compensado por el retraso del servo, es más preciso, y el encoder queda como respaldo de seguridad |
-| Modo por defecto del VL53L0X | Modo de largo alcance (~2 m) | Alcance por defecto (~50 cm) insuficiente para detectar esquinas |
-| Determinación de color a quemarropa | Votación de color durante la aproximación | Ruido de clasificación a corta distancia |
-| Sorteo guiado por posición del pilar | Decisión binaria comprometida por color | Sorteos por el lado equivocado según posición, no color |
-| Fin de giro basado en el signo del yaw | Fin de giro basado en el cambio absoluto de rumbo | Errores de signo que impedían completar el giro |
+| Turn triggered exclusively by odometry (encoder) | Trigger by front ultrasonic sensor, with an encoder safety cap | The encoder alone did not accurately distinguish the exact moment to turn across different approaches; the front ultrasonic sensor, with its threshold already compensated for the servo delay, is more precise, and the encoder remains as a safety backup |
+| VL53L0X default mode | Long range mode (~2 m) | Default range (~50 cm) insufficient for detecting corners |
+| Point-blank color determination | Color voting during the approach | Classification noise at short range |
+| Dodge guided by the pillar's position | Binary decision committed by color | Dodges on the wrong side according to position, not color |
+| End of turn based on the sign of yaw | End of turn based on the absolute change of heading | Sign errors that prevented the turn from completing |
 
-Cada una de estas reversiones se originó en una observación concreta de fallo y se resolvió atacando la **causa raíz** en lugar del síntoma, en línea con la filosofía de ingeniería que guio todo el proyecto.
+Each of these reversals originated in a concrete observation of a failure and was solved by attacking the **root cause** instead of the symptom, in line with the engineering philosophy that guided the whole project.
 
 <details>
-<summary>📄 Ver código completo — Obstacle Challenge (<code>obstaculos.ino</code>)</summary>
+<summary>📄 View full code — Obstacle Challenge (<code>obstaculos.ino</code>)</summary>
 
 ```cpp
 #include <Adafruit_VL53L0X.h>
@@ -821,12 +821,12 @@ Cada una de estas reversiones se originó en una observación concreta de fallo 
 
 MPU6050 mpu(Wire);
 HUSKYLENS camara;
-Adafruit_VL53L0X tofIzq = Adafruit_VL53L0X();   // IZQUIERDO  (0x31)
-Adafruit_VL53L0X tofDer = Adafruit_VL53L0X();   // DERECHO    (0x30)
+Adafruit_VL53L0X tofIzq = Adafruit_VL53L0X();   // LEFT   (0x31)
+Adafruit_VL53L0X tofDer = Adafruit_VL53L0X();   // RIGHT  (0x30)
 
 struct Blob { bool visto; int color; int x; int w; int h; };
 
-// ---- Pines ----
+// ---- Pins ----
 const int STBY = 8, PWMA = 12, AIN1 = 10, AIN2 = 11;
 const int ENC_PIN = 3;
 const int XSHUT_IZQ = 7, XSHUT_DER = 6;
@@ -834,13 +834,13 @@ const int BUZZER = 49;
 const int BOTON = 23;
 const int TRIG_US = 5, ECHO_US = 4;
 
-// ---- Servo direccion: Waveshare ST3215 (TTL en Serial1, pines 18/19) ----
+// ---- Steering servo: Waveshare ST3215 (TTL on Serial1, pins 18/19) ----
 SMS_STS st;
 const int SERVO_ID   = 1;
-int   VEL_SERVO  = 4095;   // velocidad del servo (max 4095)
-int   ACEL_SERVO = 150;    // aceleracion (0-254)
-const bool INVERTIR_DIR = true;   // el ST3215 gira al REVES del MG90S
-// OJO: MIN debe ser SIEMPRE menor que MAX o constrain() se rompe
+int   VEL_SERVO  = 4095;   // servo speed (max 4095)
+int   ACEL_SERVO = 150;    // acceleration (0-254)
+const bool INVERTIR_DIR = true;   // the ST3215 turns the OPPOSITE way to the MG90S
+// NOTE: MIN must ALWAYS be lower than MAX or constrain() breaks
 const int SERVO_CENTRO = 90, SERVO_MIN = 0, SERVO_MAX = 180;
 
 int gradosApasos(float g) { return (int)(g * 4096.0 / 360.0 + 0.5); }
@@ -849,30 +849,30 @@ void mueveDir(float grados) {
   st.WritePosEx(SERVO_ID, gradosApasos(g), VEL_SERVO, ACEL_SERVO);
 }
 
-// ========= PERFIL DEL SERVO: lo UNICO que cambias al cambiar de servomotor =========
-float SERVO_RPM_SPEC = 52.0;   // RPM de ficha. C001=52 | C046=110 | MG90S=110
-float SERVO_V_SPEC   = 7.4;    // voltaje al que aplica ese RPM (ficha)
-float SERVO_V_REAL   = 7.5;    // voltaje con el que TU lo alimentas
+// ========= SERVO PROFILE: the ONLY thing you change when swapping servos =========
+float SERVO_RPM_SPEC = 52.0;   // datasheet RPM. C001=52 | C046=110 | MG90S=110
+float SERVO_V_SPEC   = 7.4;    // voltage at which that RPM applies (datasheet)
+float SERVO_V_REAL   = 7.5;    // voltage YOU actually feed it
 
-// ========= PERFIL DEL ROBOT =========
-float VEL_CM_S_REF = 29.0;     // cm/s MEDIDOS a PWM_REF (medido con el sketch de 100 cm)
+// ========= ROBOT PROFILE =========
+float VEL_CM_S_REF = 29.0;     // cm/s MEASURED at PWM_REF (measured with the 100 cm sketch)
 int   PWM_REF      = 80;
-bool  MIDE_VELOCIDAD = false;  // true = corre la medicion de velocidad y se detiene
+bool  MIDE_VELOCIDAD = false;  // true = runs the speed measurement and stops
 
-// Fraccion de velocidad que realmente se le pide al ST3215
+// Fraction of speed actually requested from the ST3215
 float fracVelServo() { return constrain((float)VEL_SERVO / 4095.0, 0.05, 1.0); }
-// Velocidad angular efectiva del volante (grados/segundo)
+// Effective angular speed of the steering (degrees/second)
 float gradosPorSeg() { return SERVO_RPM_SPEC * (SERVO_V_REAL / SERVO_V_SPEC) * 6.0 * fracVelServo(); }
-// Tiempo (ms) que tarda el volante en recorrer 'grados' (+30 ms de arranque)
+// Time (ms) the steering takes to sweep 'grados' (+30 ms of start-up)
 unsigned long msServo(float grados) {
   return (unsigned long)((fabs(grados) / gradosPorSeg()) * 1000.0) + 30;
 }
-// Velocidad del robot (cm/s) a un PWM dado
+// Robot speed (cm/s) at a given PWM
 float velRobot(int pwm) { return VEL_CM_S_REF * (float)pwm / (float)PWM_REF; }
-// Distancia (cm) que avanza el robot MIENTRAS el volante llega al angulo
+// Distance (cm) the robot travels WHILE the steering reaches the angle
 float lagCm(float grados, int pwm) { return velRobot(pwm) * msServo(grados) / 1000.0; }
 
-// =================== CALIBRAR ===================
+// =================== CALIBRATE ===================
 const int ID_ROJO = 1, ID_ROJO_2 = 3;
 const int ID_VERDE = 2, ID_VERDE_2 = 4;
 bool esRojo(int id)  { return id == ID_ROJO  || id == ID_ROJO_2;  }
@@ -884,7 +884,7 @@ float Kd_seguir  = 1;
 int   TAM_MIN    = 30;
 int   MAX_ESQUIVE_STEER = 25;
 
-// -- Esquive --
+// -- Dodge --
 int   H_ESQUIVAR = 67;
 int   ESQUIVE_STEER = 45;
 float MAX_DODGE_ANGLE = 45;
@@ -892,64 +892,64 @@ int   FRAMES_PERDIDO = 4;
 float MAX_ESQUIVE_MS = 4000;
 float MAX_REGRESO_MS = 4000;
 
-// -- Rumbo / regreso --
+// -- Heading / return --
 int   SIGNO_RUMBO = 1;
 float Kp_head     = 2.0;
-float TOL_RUMBO   = 1;   // NO poner 0: fabs()<0 nunca se cumple y bloquea la salida de REGRESAR
+float TOL_RUMBO   = 1;   // DO NOT set to 0: fabs()<0 is never true and blocks the exit from REGRESAR
 int   SERVO_SLEW  = 6;
 
 // -- Corners --
 float LADO_LIBRE_CM  = 180;
 int   PROT_TOF       = 3;
-float AVANCE_CORNER_CM = 80;   // TOPE de seguridad por encoder (giro normal)
+float AVANCE_CORNER_CM = 80;   // safety CAP by encoder (normal turn)
 float REARM_CM = 140;
 float RETROCESO_POST_GIRO_CM = 18;
 bool  CORNER_POR_ULTRASONICO = true;
 
-// -- Retroceso adaptativo --
+// -- Adaptive backing up --
 bool  RETRO_ADAPTATIVO = false;
 float DIST_MURO_REF = 28;
 float K_RETRO       = 0.8;
 float RETRO_MAX_CM  = 25;
 
-// -- Giro en REVERSA --
+// -- REVERSE turn --
 bool  GIRO_REVERSA_ON = true;
 float DIST_REVERSA_CM = 80;
-float AVANCE_MAX_REVERSA_CM = 130;   // TOPE de seguridad por encoder (giro en reversa)
+float AVANCE_MAX_REVERSA_CM = 130;   // safety CAP by encoder (reverse turn)
 float RETROCESO_POST_REVERSA_CM = 13;
-float ANGULO_GIRO_REVERSA = 86;      // manual: depende de la inercia, NO del servo
+float ANGULO_GIRO_REVERSA = 86;      // manual: depends on inertia, NOT on the servo
 
-float ANGULO_GIRO = 88;              // manual: depende de la inercia, NO del servo
+float ANGULO_GIRO = 88;              // manual: depends on inertia, NOT on the servo
 int   VEL_GIRO    = 60;
 int   VEL_ESPACIO = 110;
 int   PULSOS_ESPACIO = 13;
 float MAX_GIRO_MS = 3000;
 
-// -- Arranque --
+// -- Start-up --
 long  ROT_RETROCESO_INICIAL = 400;
 int   VEL_RETROCESO_INI = 80;
 
-// -- Odometria / velocidad / meta --
+// -- Odometry / speed / goal --
 float PULSOS_POR_CM = 20.0;
 int   VEL       = 80;
 int   VEL_RECUP = 75;
 int   TOTAL_GIROS = 12;
 
-// ===== DISTANCIAS BASE (valor si el servo fuera instantaneo) =====
-// Estas NO se tocan al cambiar de servo: el lag se suma solo.
+// ===== BASE DISTANCES (value if the servo were instantaneous) =====
+// These are NOT touched when swapping servos: the lag is added automatically.
 float ESQUIVE_CM_BASE           = 25;
 float DIST_FRONTAL_CORNER_BASE  = 55;
 float DIST_FRONTAL_REVERSA_BASE = 15;
 float DIST_RECUP_BASE           = 8;
 
-// ===== DISTANCIAS EFECTIVAS (se recalculan solas segun el servo montado) =====
+// ===== EFFECTIVE DISTANCES (recomputed automatically for the mounted servo) =====
 float esquiveCm()          { return ESQUIVE_CM_BASE           + lagCm(ESQUIVE_STEER, VEL); }
 float distFrontalCorner()  { return DIST_FRONTAL_CORNER_BASE  + lagCm(SERVO_MAX - SERVO_CENTRO, VEL); }
 float distFrontalReversa() { return DIST_FRONTAL_REVERSA_BASE + lagCm(SERVO_CENTRO - SERVO_MIN, VEL); }
 float distRecupCm()        { return DIST_RECUP_BASE           + lagCm(ESQUIVE_STEER, VEL_RECUP); }
 // ===============================================
 
-// --------- Estado ---------
+// --------- State ---------
 volatile long encCount = 0;
 volatile long encCorner = 0;
 float yaw = 0, gyroZoffset = 0, targetYaw = 0;
@@ -994,7 +994,7 @@ void setup() {
   mueveDir(SERVO_CENTRO); servoPos = SERVO_CENTRO;
   delay(msServo(90));
 
-  // ---- Medicion de velocidad (opcional) ----
+  // ---- Speed measurement (optional) ----
   if (MIDE_VELOCIDAD) {
     Serial.println(F("MIDIENDO VELOCIDAD: 3 s a VEL. Deja pista libre."));
     delay(2000);
@@ -1004,7 +1004,7 @@ void setup() {
     while (true) {}
   }
 
-  // ---- Reporte del auto-ajuste ----
+  // ---- Self-adjustment report ----
   Serial.println(F("===== AUTO-AJUSTE ====="));
   Serial.print(F("servo: ")); Serial.print(SERVO_RPM_SPEC, 0); Serial.print(F(" RPM -> "));
   Serial.print(gradosPorSeg(), 0); Serial.println(F(" deg/s"));
@@ -1024,14 +1024,14 @@ void setup() {
   calibraGiroZ();
   lastYawUs = micros();
 
-  // ToF en LARGO ALCANCE
+  // ToF in LONG RANGE mode
   digitalWrite(XSHUT_IZQ, LOW); digitalWrite(XSHUT_DER, LOW); delay(10);
   digitalWrite(XSHUT_DER, HIGH); delay(10);
   tofDer.begin(0x30, false, &Wire, Adafruit_VL53L0X::VL53L0X_SENSE_LONG_RANGE);
   digitalWrite(XSHUT_IZQ, HIGH); delay(10);
   tofIzq.begin(0x31, false, &Wire, Adafruit_VL53L0X::VL53L0X_SENSE_LONG_RANGE);
 
-  // Camara
+  // Camera
   while (!camara.begin(Wire)) {
     Serial.println(F("No conecta la HuskyLens (Protocol Type = I2C)"));
     delay(200);
@@ -1048,7 +1048,7 @@ void setup() {
   yaw = 0; targetYaw = 0;
   delay(400);
 
-  // ---- Lado de esquina: el que ve mas lejos al arrancar ----
+  // ---- Corner side: whichever sensor sees farther at start-up ----
   float sumI = 0, sumD = 0;
   for (int i = 0; i < 10; i++) { leeTof(); sumI += lastI; sumD += lastD; delay(30); }
   esquinaIzq = (sumI >= sumD);
@@ -1062,7 +1062,7 @@ void setup() {
 
   yaw = 0; targetYaw = 0;
 
-  // ---- Espera el boton de arranque ----
+  // ---- Wait for the start button ----
   Serial.println(F("Listo. Esperando boton de arranque..."));
   while (digitalRead(BOTON) == LOW) { delay(10); }
   delay(50);
@@ -1079,7 +1079,7 @@ void loop() {
   if (millis() - lastCamMs > 33) { blobActual = leeCamara(); lastCamMs = millis(); }
   Blob b = blobActual;
 
-  // fase: 0=RECTO 1=SEGUIR 2=ESQUIVAR 3=REGRESAR 9=girando
+  // phase: 0=RECTO 1=SEGUIR 2=ESQUIVAR 3=REGRESAR 9=turning
   if (millis() - lastLog > 300) {
     lastLog = millis();
     Serial.print(F("fase=")); Serial.print(avanzandoGiro ? 9 : (int)fase);
@@ -1091,7 +1091,7 @@ void loop() {
     Serial.print(F("  giros=")); Serial.println(giros);
   }
 
-  // ===== CORNER en curso: avanzar y girar (maxima prioridad) =====
+  // ===== CORNER in progress: drive forward and turn (highest priority) =====
   if (avanzandoGiro) {
     conduceRecto();
     motor(VEL);
@@ -1113,7 +1113,7 @@ void loop() {
         if (giroEnReversa) { tone(BUZZER, 2200, 60); delay(70); tone(BUZZER, 2200, 60); }
         else               { tone(BUZZER, 1800, 90); }
       } else {
-        tone(BUZZER, 350, 200);   // tope por encoder: el ultrasonico NO vio la pared
+        tone(BUZZER, 350, 200);   // encoder cap: the ultrasonic sensor did NOT see the wall
       }
       if (giroEnReversa) giraEsquinaReversa(esquinaIzq);
       else               giraEsquina(esquinaIzq);
@@ -1125,7 +1125,7 @@ void loop() {
     return;
   }
 
-  // ===== Deteccion de esquina: SOLO en RECTO =====
+  // ===== Corner detection: ONLY in RECTO =====
   if (fase == RECTO && millis() - lastTofMs > 50) {
     lastTofMs = millis();
     ladoEsqCm = leeTofEsquina();
@@ -1144,7 +1144,7 @@ void loop() {
     } else cntEsq = 0;
   }
 
-  // ===== Maquina de estados del esquive =====
+  // ===== Dodge state machine =====
   switch (fase) {
 
     case RECTO:
@@ -1193,14 +1193,14 @@ void loop() {
   }
 }
 
-// ===== Decision binaria =====
+// ===== Binary decision =====
 void decideEsquive() {
   if (colorEsquive == ID_ROJO) {
-    servoDodge = SERVO_CENTRO + ESQUIVE_STEER;      // rojo -> DERECHA
+    servoDodge = SERVO_CENTRO + ESQUIVE_STEER;      // red -> RIGHT
     Serial.print(F(">> ESQUIVA ROJO (derecha)"));
     tone(BUZZER, 400, 80);
   } else if (colorEsquive == ID_VERDE) {
-    servoDodge = SERVO_CENTRO - ESQUIVE_STEER;      // verde -> IZQUIERDA
+    servoDodge = SERVO_CENTRO - ESQUIVE_STEER;      // green -> LEFT
     Serial.print(F(">> ESQUIVA VERDE (izquierda)"));
     tone(BUZZER, 700, 80);
   } else {
@@ -1212,13 +1212,13 @@ void decideEsquive() {
   Serial.print(F(" V=")); Serial.print(votosVerde); Serial.println(F("]"));
 }
 
-// ===== Giro normal (mide cambio ABSOLUTO de yaw: a prueba de signos) =====
+// ===== Normal turn (measures the ABSOLUTE change in yaw: sign-proof) =====
 void giraEsquina(bool haciaIzq) {
   MotorEncPulsos(-VEL_ESPACIO, PULSOS_ESPACIO);
-  // Si gira al lado contrario, invierte SOLO esta linea (SERVO_MAX <-> SERVO_MIN)
+  // If it turns to the wrong side, invert ONLY this line (SERVO_MAX <-> SERVO_MIN)
   int lock = haciaIzq ? SERVO_MAX : SERVO_MIN;
   mueveDir(lock); servoPos = lock;
-  delay(msServo(fabs(lock - SERVO_CENTRO)));           // espera EXACTA segun el servo montado
+  delay(msServo(fabs(lock - SERVO_CENTRO)));           // EXACT wait according to the mounted servo
   float yawStart = yaw;
   motor(VEL_GIRO);
   unsigned long t0 = millis();
@@ -1244,17 +1244,17 @@ void giraEsquina(bool haciaIzq) {
     if (RETROCESO_POST_GIRO_CM > 0) retrocedeCentrado(RETROCESO_POST_GIRO_CM);
   }
 
-  // Rumbo LOCAL: la nueva arista arranca en 0
+  // LOCAL heading: the new edge starts at 0
   yaw = 0; targetYaw = 0;
 }
 
-// ===== Giro en REVERSA: volante al lado CONTRARIO y motor en reversa =====
+// ===== REVERSE turn: steering to the OPPOSITE side and motor in reverse =====
 void giraEsquinaReversa(bool haciaIzq) {
   int lock = haciaIzq ? SERVO_MIN : SERVO_MAX;
   mueveDir(lock); servoPos = lock;
   delay(msServo(fabs(lock - SERVO_CENTRO)));
   float yawStart = yaw;
-  motor(-VEL_GIRO);                                    // <-- REVERSA
+  motor(-VEL_GIRO);                                    // <-- REVERSE
   unsigned long t0 = millis();
   while (true) {
     actualizaYaw();
@@ -1272,7 +1272,7 @@ void giraEsquinaReversa(bool haciaIzq) {
   yaw = 0; targetYaw = 0;
 }
 
-// Retrocede una distancia con el volante clavado en el centro.
+// Backs up a given distance with the steering locked at center.
 void retrocedeCentrado(float cm) {
   mueveDir(SERVO_CENTRO); servoPos = SERVO_CENTRO;
   delay(msServo(90));
@@ -1293,7 +1293,7 @@ void MotorEncPulsos(int velocidad, int pulsos) {
   motor(0);
 }
 
-// ===== Seguidor: lleva el objeto al centro (PD) =====
+// ===== Tracker: brings the object to the center (PD) =====
 void seguidor(Blob b) {
   float err = CENTRO_IMG - b.x;
   float d = err - errPrev;
@@ -1304,7 +1304,7 @@ void seguidor(Blob b) {
   mueveDir(servo); servoPos = servo;
 }
 
-// ===== Camara =====
+// ===== Camera =====
 Blob leeCamara() {
   Blob b = {false, 0, 0, 0, 0};
   if (!camara.request()) return b;
@@ -1324,7 +1324,7 @@ Blob leeCamara() {
   return b;
 }
 
-// ===== Rumbo recto =====
+// ===== Straight heading =====
 void conduceRecto() {
   float err = targetYaw - yaw;
   int salida = SERVO_CENTRO + SIGNO_RUMBO * (int)(Kp_head * err);
@@ -1352,7 +1352,7 @@ void calibraGiroZ() {
   gyroZoffset = s / 500.0;
 }
 
-// ===== Sensores ToF =====
+// ===== ToF sensors =====
 void leeTof() {
   VL53L0X_RangingMeasurementData_t m;
   tofIzq.rangingTest(&m, false);
@@ -1373,7 +1373,7 @@ float leeTofExterno() {
   return (m.RangeStatus == 4) ? 999.0 : m.RangeMilliMeter / 10.0;
 }
 
-// Lee el ULTRASONICO frontal (cm). Sin eco -> 999 (lejos).
+// Reads the front ULTRASONIC sensor (cm). No echo -> 999 (far away).
 float leeUltrasonico() {
   digitalWrite(TRIG_US, LOW);  delayMicroseconds(2);
   digitalWrite(TRIG_US, HIGH); delayMicroseconds(10);
@@ -1402,246 +1402,248 @@ void freno() { analogWrite(PWMA, 0); digitalWrite(STBY, LOW); }
 
 <a id="bitacora-decisiones"></a>
  
-## 4. Pensamiento Sistémico y Decisiones de Ingeniería
+## 4. Systems Thinking and Engineering Decisions
  
 > [!NOTE]
-> Esta sección documenta, en orden cronológico, el **razonamiento detrás de cada cambio importante** en el robot: el problema o restricción que lo motivó, las alternativas consideradas, la decisión tomada y la evidencia que la respalda. El objetivo es mostrar el proceso de ingeniería completo, no solo el resultado final.
+> This section documents, in chronological order, the **reasoning behind every major change** in the robot: the problem or constraint that motivated it, the alternatives considered, the decision taken and the evidence that supports it. The goal is to show the complete engineering process, not just the final result.
  
-Cada entrada sigue el mismo formato: **Contexto/Restricción → Opciones consideradas → Decisión y justificación → Evidencia/Resultado**.
+Every entry follows the same format: **Context/Constraint → Options considered → Decision and rationale → Evidence/Result**.
  
-### Resumen rápido
+### Quick summary
  
-| # | Fecha | Decisión | Categoría | Estado |
+| # | Date | Decision | Category | Status |
 |---|---|---|---|---|
-| 1 | Inicio de temporada (s/f) | RPi + Pure Pursuit para evasión de obstáculos | Software | ![Reemplazado](https://img.shields.io/badge/-Reemplazado-lightgrey) (ver 10) |
-| 2 | 21 may 2026 | Raspberry Pi → HuskyLens + Arduino Mega | Software/Hardware | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
-| 3 | s/f | Ruedas 62.4×20 mm → 57×14 mm | Mecánico | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
-| 4 | s/f | Baterías 6×3.7 V → 2×7.8 V/2200 mAh | Potencia | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) (comparando alternativa 7.4 V/3000 mAh) |
-| 5 | Antes del regional | VL53L0X probado, no usado en el regional | Sensores | ![Superado](https://img.shields.io/badge/-Superado-lightgrey) (ver 8) |
-| 6 | 25 jun 2026 | Falla eléctrica (regulador + servo) | Riesgo/Mantenimiento | ![Resuelto](https://img.shields.io/badge/-Resuelto-blue) |
-| 7 | 28 jun 2026 | Sensor de esquina IR + validación Open Round | Sensores | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
-| 8 | 5 jul 2026 | Sensores laterales: ultrasónico → VL53L0X | Sensores | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
-| 9 | 5 jul 2026 | Curvas: giroscopio → seguimiento de muro | Software | ![En pruebas](https://img.shields.io/badge/-En%20pruebas-yellow) |
-| 10 | Post-regional (s/f exacta) | Evasión: Pure Pursuit → reactivo por distancia | Software | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
-| 11 | 7 jul 2026 | Validación de evasión de obstáculos | Pruebas | ![Parcial](https://img.shields.io/badge/-Parcial-orange) (solo tramo recto) |
-| 12 | 26 jul – 9 ago 2026 | Falla de montaje en soportes de sensores laterales → rediseño e impresión de soporte definitivo | Mecánico | ![Resuelto](https://img.shields.io/badge/-Resuelto-blue) |
-| 13 | 3 ago 2026 | Corrección de deriva: orificio de eje mal dimensionado en soporte impreso del motor | Mecánico | ![Mejorado](https://img.shields.io/badge/-Mejorado-yellowgreen) |
-| 14 | 9 ago 2026 | Recalibración de umbrales de evasión + validación en ¾ de vuelta | Software/Pruebas | ![Vigente](https://img.shields.io/badge/-Vigente-brightgreen) |
-| 15 | 10 ago 2026 | Descontinuación del sensor infrarrojo de esquina | Sensores | ![Retirado](https://img.shields.io/badge/-Retirado-lightgrey) |
-| 16 | 23 ago 2026 | Corrida completa del Obstacle Challenge (2 min 18 s) | Pruebas | ![Validado](https://img.shields.io/badge/-Validado-brightgreen) |
+| 1 | Start of season (no date) | RPi + Pure Pursuit for obstacle avoidance | Software | ![Replaced](https://img.shields.io/badge/-Replaced-lightgrey) (see 10) |
+| 2 | May 21, 2026 | Raspberry Pi → HuskyLens + Arduino Mega | Software/Hardware | ![Current](https://img.shields.io/badge/-Current-brightgreen) |
+| 3 | no date | Wheels 62.4×20 mm → 57×14 mm | Mechanical | ![Current](https://img.shields.io/badge/-Current-brightgreen) |
+| 4 | no date | Batteries 6×3.7 V → 2×7.8 V/2200 mAh | Power | ![Current](https://img.shields.io/badge/-Current-brightgreen) (comparing a 7.4 V/3000 mAh alternative) |
+| 5 | Before the regional | VL53L0X tested, not used at the regional | Sensors | ![Superseded](https://img.shields.io/badge/-Superseded-lightgrey) (see 8) |
+| 6 | Jun 25, 2026 | Electrical failure (regulator + servo) | Risk/Maintenance | ![Resolved](https://img.shields.io/badge/-Resolved-blue) |
+| 7 | Jun 28, 2026 | IR corner sensor + Open Round validation | Sensors | ![Current](https://img.shields.io/badge/-Current-brightgreen) |
+| 8 | Jul 5, 2026 | Lateral sensors: ultrasonic → VL53L0X | Sensors | ![Current](https://img.shields.io/badge/-Current-brightgreen) |
+| 9 | Jul 5, 2026 | Curves: gyroscope → wall following | Software | ![In testing](https://img.shields.io/badge/-In%20testing-yellow) |
+| 10 | Post-regional (exact date n/a) | Avoidance: Pure Pursuit → reactive by distance | Software | ![Current](https://img.shields.io/badge/-Current-brightgreen) |
+| 11 | Jul 7, 2026 | Obstacle avoidance validation | Testing | ![Partial](https://img.shields.io/badge/-Partial-orange) (straight stretch only) |
+| 12 | Jul 26 – Aug 9, 2026 | Mounting failure in the lateral sensor mounts → redesign and printing of the definitive mount | Mechanical | ![Resolved](https://img.shields.io/badge/-Resolved-blue) |
+| 13 | Aug 3, 2026 | Drift correction: undersized axle hole in the printed motor mount | Mechanical | ![Improved](https://img.shields.io/badge/-Improved-yellowgreen) |
+| 14 | Aug 9, 2026 | Recalibration of avoidance thresholds + validation over ¾ of a lap | Software/Testing | ![Current](https://img.shields.io/badge/-Current-brightgreen) |
+| 15 | Aug 10, 2026 | Discontinuation of the infrared corner sensor | Sensors | ![Retired](https://img.shields.io/badge/-Retired-lightgrey) |
+| 16 | Aug 23, 2026 | Complete Obstacle Challenge run (2 min 18 s) | Testing | ![Validated](https://img.shields.io/badge/-Validated-brightgreen) |
  
-### Decisión 1 — Arquitectura inicial de evasión de obstáculos: Raspberry Pi + Pure Pursuit
+### Decision 1 — Initial obstacle avoidance architecture: Raspberry Pi + Pure Pursuit
  
-- **Contexto/Restricción:** el sistema de evasión de obstáculos dependía inicialmente de maniobras preprogramadas y casos específicos, lo cual limitaba la adaptabilidad del robot ante distintas posiciones de obstáculos.
-- **Decisión:** implementar un sistema de seguimiento de trayectoria basado en **Pure Pursuit**, usando la cámara Raspberry Pi Rev 1.3 como sensor principal de percepción. El algoritmo detectaba la posición del obstáculo, generaba puntos de trayectoria alrededor de este y seleccionaba continuamente un punto adelantado sobre la trayectoria para calcular el ángulo de dirección necesario.
-- **Resultado:** el enfoque generó movimientos más suaves que las maniobras fijas, pero incrementó la complejidad y la carga de procesamiento del sistema (ver Decisión 2 y Decisión 10).
-### Decisión 2 — Cambio de plataforma de visión: Raspberry Pi → HuskyLens (21 de mayo de 2026)
+- **Context/Constraint:** the obstacle avoidance system initially relied on preprogrammed maneuvers and specific cases, which limited the robot's adaptability to different obstacle positions.
+- **Decision:** implement a path tracking system based on **Pure Pursuit**, using the Raspberry Pi Rev 1.3 camera as the main perception sensor. The algorithm detected the obstacle's position, generated trajectory points around it and continuously selected a look-ahead point along the trajectory to compute the required steering angle.
+- **Result:** the approach produced smoother movements than fixed maneuvers, but it increased the system's complexity and processing load (see Decision 2 and Decision 10).
+### Decision 2 — Vision platform change: Raspberry Pi → HuskyLens (May 21, 2026)
  
-- **Contexto/Restricción:** la Raspberry Pi + cámara Raspberry Pi ofrecía resultados funcionales, pero incrementaba la complejidad general del sistema y requería mayor carga de procesamiento para ejecutar los algoritmos de detección.
-- **Opciones consideradas:** optimizar el pipeline de visión sobre Raspberry Pi vs. migrar a un sensor de visión dedicado con modos de reconocimiento preconfigurados.
-- **Decisión y justificación:** se reemplazaron la Raspberry Pi y su cámara por una **cámara HuskyLens**, dejando al **Arduino Mega** como único controlador. La HuskyLens simplifica el desarrollo del sistema de detección (funciones de visión artificial integradas) y libera al Arduino Mega para tareas de control y navegación, mejorando la capacidad de reacción durante maniobras dinámicas.
-- **Evidencia/Resultado:** HuskyLens integrada desde el 21 de mayo de 2026; se continúa calibrando y evaluando los distintos modos de reconocimiento de la cámara.
-### Decisión 3 — Rediseño de ruedas y footprint
+- **Context/Constraint:** the Raspberry Pi + Raspberry Pi camera gave functional results, but increased the overall complexity of the system and required a higher processing load to run the detection algorithms.
+- **Options considered:** optimize the vision pipeline on the Raspberry Pi vs. migrate to a dedicated vision sensor with preconfigured recognition modes.
+- **Decision and rationale:** the Raspberry Pi and its camera were replaced with a **HuskyLens camera**, leaving the **Arduino Mega** as the sole controller. The HuskyLens simplifies the development of the detection system (built-in computer vision functions) and frees the Arduino Mega for control and navigation tasks, improving responsiveness during dynamic maneuvers.
+- **Evidence/Result:** HuskyLens integrated since May 21, 2026; we continue calibrating and evaluating the camera's different recognition modes.
+### Decision 3 — Wheel and footprint redesign
  
-- **Contexto/Restricción:** las ruedas anteriores (62.4 × 20 mm) ofrecían buena estabilidad pero incrementaban el tamaño general del robot.
-- **Opciones consideradas:** mantener las ruedas actuales vs. adoptar un modelo más pequeño (Lego Spike Prime, 57 × 14 mm).
-- **Decisión y justificación:** se sustituyeron las ruedas por el modelo de 57 × 14 mm. Estas ruedas tienen un coeficiente de desgaste más alto, lo que mejora la durabilidad y el agarre en superficies de competencia; su menor tamaño también reduce dimensiones y peso.
-- **Evidencia/Resultado:** altura reducida de 23.9 cm a 20.3 cm; ancho de 15 cm a 14.6 cm. La estructura resultante es más compacta y ligera, con un centro de gravedad ligeramente mejorado que favorece la estabilidad en curvas y maniobras rápidas.
-### Decisión 4 — Simplificación del sistema de alimentación
+- **Context/Constraint:** the previous wheels (62.4 × 20 mm) offered good stability but increased the robot's overall size.
+- **Options considered:** keep the current wheels vs. adopt a smaller model (Lego Spike Prime, 57 × 14 mm).
+- **Decision and rationale:** the wheels were replaced with the 57 × 14 mm model. These wheels have a higher wear coefficient, which improves durability and grip on competition surfaces; their smaller size also reduces dimensions and weight.
+- **Evidence/Result:** height reduced from 23.9 cm to 20.3 cm; width from 15 cm to 14.6 cm. The resulting structure is more compact and lighter, with a slightly improved center of gravity that favors stability in curves and fast maneuvers.
+### Decision 4 — Simplification of the power system
  
-- **Contexto/Restricción:** el arreglo anterior de 6 baterías de 3.7 V (~12 V, 2000 mAh) cumplía los requerimientos energéticos, pero ocupaba mucho espacio interno y aumentaba el peso del robot.
-- **Opciones consideradas:** mantener el arreglo de 6 celdas vs. consolidar en menos celdas de mayor voltaje.
-- **Decisión y justificación:** se adoptaron **2 baterías de 7.8 V, 2200 mAh**, liberando espacio interno, reduciendo peso y simplificando la gestión energética.
-- **Evidencia/Resultado:** reducción de espacio y peso confirmada, con autonomía suficiente para completar las rondas. **Iteración en curso:** en paralelo se evalúa un segundo conjunto de baterías (7.4 V, 3000 mAh), más ligero y compacto pero de menor voltaje, comparándolo contra el actual en autonomía, estabilidad eléctrica bajo carga del motor, peso y desempeño en pista. El arreglo de 7.8 V / 2200 mAh se mantiene como configuración vigente mientras la comparación no arroje una ventaja clara del otro.
-### Decisión 5 — Prueba experimental del sensor VL53L0X (no desplegado en el regional)
+- **Context/Constraint:** the previous arrangement of 6 batteries of 3.7 V (~12 V, 2000 mAh) met the energy requirements, but took up a lot of internal space and increased the robot's weight.
+- **Options considered:** keep the 6-cell arrangement vs. consolidate into fewer cells of higher voltage.
+- **Decision and rationale:** **2 batteries of 7.8 V, 2200 mAh** were adopted, freeing internal space, reducing weight and simplifying energy management.
+- **Evidence/Result:** space and weight reduction confirmed, with enough autonomy to complete the rounds. **Iteration in progress:** in parallel we are evaluating a second battery set (7.4 V, 3000 mAh), lighter and more compact but of lower voltage, comparing it against the current one in autonomy, electrical stability under motor load, weight and on-track performance. The 7.8 V / 2200 mAh arrangement remains the current configuration as long as the comparison does not show a clear advantage for the other one.
+### Decision 5 — Experimental test of the VL53L0X sensor (not deployed at the regional)
  
-- **Contexto/Restricción:** el sensor láser VL53L0X (Time-of-Flight) se integró de forma experimental en la arquitectura electrónica para mejorar la detección frontal de obstáculos y la precisión a corta distancia.
-- **Decisión de mitigación de riesgo:** debido a limitaciones de tiempo durante la integración y calibración, el equipo decidió **no utilizar el sensor durante la competencia regional**, priorizando la confiabilidad del sistema sobre la incorporación de un componente insuficientemente probado.
-- **Resultado:** el sensor se documentó como una mejora importante para futuras iteraciones y se integró de forma permanente después del regional (ver Decisión 8).
-### Decisión 6 — Incidente eléctrico y respuesta a falla (25 de junio de 2026)
+- **Context/Constraint:** the VL53L0X laser sensor (Time-of-Flight) was integrated experimentally into the electronic architecture to improve front obstacle detection and short-range accuracy.
+- **Risk mitigation decision:** due to time constraints during integration and calibration, the team decided **not to use the sensor during the regional competition**, prioritizing system reliability over incorporating an insufficiently tested component.
+- **Result:** the sensor was documented as an important improvement for future iterations and was permanently integrated after the regional (see Decision 8).
+### Decision 6 — Electrical incident and failure response (June 25, 2026)
  
-- **Contexto:** durante las pruebas, el regulador de voltaje y el servomotor de dirección (MG90S) sufrieron un corto circuito y resultaron dañados.
-- **Impacto:** las pruebas de navegación se detuvieron temporalmente mientras se diagnosticaba el origen de la falla.
-- **Acción de mitigación:** reemplazo de ambos componentes y revisión del cableado y las conexiones asociadas, con el objetivo de evitar que la falla se repita.
-- **Estado:** Resuelto con el debido cambio de componentes.
-### Decisión 7 — Sensor de esquina trasero y validación con pruebas de vuelta abierta (28 de junio de 2026)
+- **Context:** during testing, the voltage regulator and the steering servo (MG90S) suffered a short circuit and were damaged.
+- **Impact:** navigation tests were temporarily halted while the origin of the failure was diagnosed.
+- **Mitigation action:** replacement of both components and review of the wiring and associated connections, with the goal of preventing the failure from recurring.
+- **Status:** Resolved with the corresponding replacement of components.
+### Decision 7 — Rear corner sensor and validation with open round tests (June 28, 2026)
  
-- **Contexto/Restricción:** el robot no contaba con un sensor dedicado a detectar las líneas de las esquinas de la pista, lo que podía generar imprecisiones al iniciar o finalizar una maniobra de giro.
-- **Decisión y justificación:** se incorporó un sensor infrarrojo **MH Sensor Series** (basado en TCRT5000 con comparador LM393) en el extremo trasero inferior, complementando la información de los sensores laterales VL53L0X y el algoritmo de seguimiento de muro.
-- **Evidencia/Resultado:** en las pruebas de vuelta abierta del mismo día, el robot completó **3 vueltas de forma consistente**, se estacionó correctamente en el cuadrante de inicio y completó el recorrido en **75 segundos**, validando en conjunto los sensores VL53L0X laterales, el seguimiento de muro y el nuevo sensor de esquina. Ver video en la sección [Open Challenge](#open-challenge).
-### Decisión 8 — Sensores laterales: de ultrasónico a VL53L0X ToF (5 de julio de 2026)
+- **Context/Constraint:** the robot did not have a sensor dedicated to detecting the track's corner lines, which could produce inaccuracies when starting or ending a turning maneuver.
+- **Decision and rationale:** an **MH Sensor Series** infrared sensor (based on the TCRT5000 with an LM393 comparator) was added at the lower rear end, complementing the information from the lateral VL53L0X sensors and the wall following algorithm.
+- **Evidence/Result:** in the open round tests that same day, the robot completed **3 laps consistently**, parked correctly in the starting quadrant and finished the run in **75 seconds**, jointly validating the lateral VL53L0X sensors, the wall following and the new corner sensor. See the video in the [Open Challenge](#open-challenge) section.
+### Decision 8 — Lateral sensors: from ultrasonic to VL53L0X ToF (July 5, 2026)
  
-- **Contexto/Restricción:** los sensores ultrasónicos (HC-SR04P) usados en los laterales eran susceptibles a variaciones de lectura según el ángulo o el material del muro.
-- **Opciones consideradas:** mantener los sensores ultrasónicos vs. desplegar de forma definitiva el VL53L0X, ya validado experimentalmente (Decisión 5) pero no usado en el regional por límites de tiempo.
-- **Decisión y justificación:** se sustituyeron los sensores laterales ultrasónicos por **VL53L0X ToF**, que al basarse en luz infrarroja ofrecen mediciones más estables y consistentes a corta distancia que la reflexión de ondas sonoras.
-- **Resultado:** el VL53L0X pasa a formar parte permanente de la arquitectura electrónica, específicamente en los laterales.
-### Decisión 9 — Navegación en curvas: de giroscopio a seguimiento de muro
+- **Context/Constraint:** the ultrasonic sensors (HC-SR04P) used on the sides were susceptible to reading variations depending on the angle or the material of the wall.
+- **Options considered:** keep the ultrasonic sensors vs. permanently deploy the VL53L0X, already validated experimentally (Decision 5) but not used at the regional due to time limits.
+- **Decision and rationale:** the lateral ultrasonic sensors were replaced with **VL53L0X ToF** sensors which, being based on infrared light, offer more stable and consistent measurements at short range than the reflection of sound waves.
+- **Result:** the VL53L0X becomes a permanent part of the electronic architecture, specifically on the sides.
+### Decision 9 — Navigation in curves: from gyroscope to wall following
 
-- **Contexto/Restricción:** el robot resolvía todo el Open Challenge apoyado en un solo sensor: el giroscopio (GY-9250). Avanzaba recto manteniendo un rumbo y giraba las esquinas contra ese mismo rumbo. El problema de fondo es que el giroscopio estima el ángulo **integrando** la velocidad angular, así que su error se acumula con el tiempo y crece con la velocidad: entre más rápido iba el robot, más rápido se degradaba su estimación de rumbo y más se desviaba de la trayectoria. Eso nos obligaba a **bajar la velocidad del robot** para que el giroscopio alcanzara a mantener un rumbo confiable — estábamos pagando velocidad para comprar precisión.
-- **Opciones consideradas:** seguir bajando la velocidad y afinando la calibración del giroscopio, o cambiar a una referencia **absoluta** en lugar de una acumulativa: medir directamente la distancia al muro exterior con los sensores VL53L0X (Decisión 8).
-- **Decisión y justificación:** migramos a un esquema de **seguimiento de muro**, donde el sistema mide constantemente la distancia al muro exterior y corrige la dirección para mantenerla constante. A diferencia del rumbo por giroscopio, esta medición **no acumula error**: cada lectura es independiente y se refiere a algo físico y fijo (el muro), así que un mal dato no contamina los siguientes. Eso eliminó la razón por la que teníamos que ir despacio.
-- **Evidencia/Resultado:** con el esquema anterior, dependiendo únicamente del giroscopio, el mejor tiempo del Open Challenge era de **95 segundos**. Al migrar al seguimiento de muro pudimos **subir la velocidad del robot** sin perder precisión de trayectoria, bajando el recorrido a **75 segundos** — una mejora de **≈21 %** atribuible directamente al cambio de referencia de navegación.
-- **Nota de pensamiento sistémico:** este cambio de algoritmo fue posible *gracias* a la decisión de hardware anterior (Decisión 8) — un ejemplo de cómo una decisión de sensado habilitó directamente una mejora de desempeño en el software de navegación. El giroscopio no se retiró del robot: sigue siendo la referencia de rumbo en el Obstacle Challenge, donde los pilares interrumpen la continuidad del muro y el seguimiento de pared no es viable como referencia única.
-### Decisión 10 — Evasión de obstáculos: de Pure Pursuit a seguimiento reactivo por distancia
+- **Context/Constraint:** the robot solved the whole Open Challenge relying on a single sensor: the gyroscope (GY-9250). It drove straight holding a heading and turned the corners against that same heading. The underlying problem is that the gyroscope estimates the angle by **integrating** the angular rate, so its error accumulates over time and grows with speed: the faster the robot went, the faster its heading estimate degraded and the more it deviated from the trajectory. That forced us to **lower the robot's speed** so the gyroscope could keep a reliable heading — we were paying speed to buy accuracy.
+- **Options considered:** keep lowering the speed and fine-tuning the gyroscope calibration, or switch to an **absolute** reference instead of a cumulative one: directly measuring the distance to the outer wall with the VL53L0X sensors (Decision 8).
+- **Decision and rationale:** we migrated to a **wall following** scheme, where the system constantly measures the distance to the outer wall and corrects the steering to keep it constant. Unlike gyroscope heading, this measurement **does not accumulate error**: each reading is independent and refers to something physical and fixed (the wall), so a bad data point does not contaminate the following ones. That eliminated the reason we had to go slowly.
+- **Evidence/Result:** with the previous scheme, relying solely on the gyroscope, the best Open Challenge time was **95 seconds**. After migrating to wall following we were able to **raise the robot's speed** without losing trajectory accuracy, bringing the run down to **75 seconds** — an improvement of **≈21 %** directly attributable to the change of navigation reference.
+- **Systems thinking note:** this algorithm change was possible *thanks to* the previous hardware decision (Decision 8) — an example of how a sensing decision directly enabled a performance improvement in the navigation software. The gyroscope was not removed from the robot: it is still the heading reference in the Obstacle Challenge, where the pillars interrupt the continuity of the wall and wall following is not viable as the sole reference.
+### Decision 10 — Obstacle avoidance: from Pure Pursuit to reactive distance-based tracking
  
-- **Contexto/Restricción:** Pure Pursuit requería generar puntos de trayectoria y recalcular constantemente una trayectoria geométrica alrededor de cada obstáculo, lo cual añadía complejidad de cómputo y de diseño.
-- **Opciones consideradas:** mantener y refinar Pure Pursuit vs. adoptar un esquema reactivo más simple basado en umbrales de distancia.
-- **Decisión y justificación:** se eliminó Pure Pursuit para la evasión de obstáculos y se adoptó un esquema reactivo:
-  1. El robot avanza en línea recta.
-  2. Al detectar un obstáculo a 50 cm, inicia su seguimiento manteniéndolo centrado en el campo de visión de la HuskyLens.
-  3. A 30 cm, comienza a girar para esquivarlo.
-  4. El giro continúa hasta perder de vista el obstáculo.
-  5. Se ejecuta un protocolo de re-centrado de 10 cuadros respecto al carril antes de continuar recto.
-  **Este cambio afecta únicamente al sistema de evasión de obstáculos**; los sensores y el algoritmo de seguimiento de muro (Decisión 9) no se modificaron.
-- **Evidencia/Resultado:** validado en las pruebas de evasión de obstáculos del 7 de julio de 2026 (ver Decisión 11).
-### Decisión 11 — Validación: pruebas de evasión de obstáculos (7 de julio de 2026)
+- **Context/Constraint:** Pure Pursuit required generating trajectory points and constantly recomputing a geometric path around each obstacle, which added computational and design complexity.
+- **Options considered:** keep and refine Pure Pursuit vs. adopt a simpler reactive scheme based on distance thresholds.
+- **Decision and rationale:** Pure Pursuit was removed for obstacle avoidance and a reactive scheme was adopted:
+  1. The robot drives in a straight line.
+  2. On detecting an obstacle at 50 cm, it starts tracking it, keeping it centered in the HuskyLens field of view.
+  3. At 30 cm, it starts turning to avoid it.
+  4. The turn continues until the obstacle is out of sight.
+  5. A 10-frame re-centering protocol with respect to the lane is executed before continuing straight.
+  **This change affects only the obstacle avoidance system**; the sensors and the wall following algorithm (Decision 9) were not modified.
+- **Evidence/Result:** validated in the obstacle avoidance tests of July 7, 2026 (see Decision 11).
+### Decision 11 — Validation: obstacle avoidance tests (July 7, 2026)
  
-- **Contexto:** validar en pista el esquema reactivo de la Decisión 10.
-- **Evidencia/Resultado:** en una sección recta, el robot evadió correctamente un pilar rojo (mantenido a su derecha) y un pilar verde (mantenido a su izquierda). [Ver video de esta prueba](https://youtu.be/mim8iLk7CLE) (video histórico; el video actual en la sección [Obstacle Challenge](#obstacle-challenge) corresponde a una corrida más reciente y completa).
-- **Estado actual:** esta prueba corresponde únicamente a un tramo recto de la pista. Continúan las pruebas para validar la evasión de pilares en distintas posiciones y combinaciones de color a lo largo del circuito completo.
-### Decisión 12 — Falla de montaje en soportes de sensores laterales: iteración de la solución (26 de julio – 9 de agosto de 2026)
+- **Context:** validate on the track the reactive scheme from Decision 10.
+- **Evidence/Result:** on a straight section, the robot correctly avoided a red pillar (kept to its right) and a green pillar (kept to its left). [See the video of this test](https://youtu.be/mim8iLk7CLE) (historical video; the current video in the [Obstacle Challenge](#obstacle-challenge) section corresponds to a more recent and complete run).
+- **Current status:** this test covers only a straight stretch of the track. Testing continues in order to validate pillar avoidance in different positions and color combinations along the complete circuit.
+### Decision 12 — Mounting failure in the lateral sensor mounts: iterating on the solution (July 26 – August 9, 2026)
 
-- **Contexto/Restricción:** se detectó que los soportes de MDF de los sensores láser laterales (VL53L0X), al embonar con la base del chasis, quedan ligeramente chuecos con una leve inclinación hacia abajo. Esto provoca que el sensor no lea correctamente la distancia al muro, sino que detecte distancia al suelo.
-- **Opciones consideradas:** ajustar/calzar manualmente los soportes de MDF existentes vs. diseñar un soporte a la medida en CAD e imprimirlo en 3D con PLA.
-- **Plan inicial (28 de julio de 2026):** el equipo concluyó que la mejor solución era diseñar soportes nuevos en digital e imprimirlos en 3D con PLA, con un ángulo de montaje corregido, para sustituir las piezas de MDF actuales.
-- **Iteración 1 — solución realmente implementada:** en la práctica, el equipo decidió **no fabricar soportes nuevos con otro ángulo**. En su lugar, se reutilizaron los mismos soportes de MDF ya existentes, reubicándolos pegados en la parte inferior del segundo piso del chasis, justo por encima de su posición original. Esto elevó a los sensores hasta aproximadamente **8 cm** sobre el suelo.
-- **Nuevo hallazgo (9 de agosto de 2026):** dado que los muros de la pista miden **10 cm** de altura, esta nueva posición (8 cm) deja poco margen respecto al borde superior del muro, generando incertidumbre sobre qué tan confiable es la lectura de distancia a esa altura.
-- **Iteración 2 — solución definitiva (desde el 9 de agosto de 2026):** el equipo diseñará soportes que conserven el mismo ángulo y simetría que los soportes actuales, pero de **mayor longitud**, y los regresará a la **posición de montaje original** (no a la ubicación temporal bajo el segundo piso). Así, los sensores quedarán más elevados que en su posición original, sin depender de la reubicación provisional.
-- **Iteración 3 — pieza final impresa en 3D:** se diseñó e imprimió un nuevo soporte (`SoporteLaser.STL`, ver [Piezas de Diseño Mecánico](#piezas-cad)) que eleva al sensor casi 4 cm por encima del soporte de MDF original, corrigiendo la inclinación. El equipo confirma que esto resolvió las falsas lecturas y dio un comportamiento más constante.
-- **Estado actual:** ✅ **Resuelto.**
-### Decisión 13 — Corrección de deriva: orificio de eje mal dimensionado en soporte impreso del motor (3 de agosto de 2026)
+- **Context/Constraint:** it was found that the MDF mounts of the lateral laser sensors (VL53L0X), when fitted into the chassis base, ended up slightly crooked with a small downward tilt. This caused the sensor not to read the distance to the wall correctly, but instead to detect the distance to the floor.
+- **Options considered:** manually adjust/shim the existing MDF mounts vs. design a custom mount in CAD and 3D print it in PLA.
+- **Initial plan (July 28, 2026):** the team concluded that the best solution was to design new mounts digitally and 3D print them in PLA, with a corrected mounting angle, to replace the current MDF parts.
+- **Iteration 1 — the solution actually implemented:** in practice, the team decided **not to fabricate new mounts with a different angle**. Instead, the same existing MDF mounts were reused, relocated and glued to the underside of the chassis's second deck, just above their original position. This raised the sensors to approximately **8 cm** above the floor.
+- **New finding (August 9, 2026):** since the track walls are **10 cm** tall, this new position (8 cm) leaves little margin with respect to the top edge of the wall, creating uncertainty about how reliable the distance reading is at that height.
+- **Iteration 2 — definitive solution (from August 9, 2026):** the team will design mounts that keep the same angle and symmetry as the current ones, but with **greater length**, and will return them to the **original mounting position** (not the temporary location under the second deck). This way, the sensors will end up higher than in their original position, without depending on the provisional relocation.
+- **Iteration 3 — final 3D printed part:** a new mount was designed and printed (`SoporteLaser.STL`, see [Mechanical Design Parts](#piezas-cad)) that raises the sensor almost 4 cm above the original MDF mount, correcting the tilt. The team confirms that this solved the false readings and produced more consistent behavior.
+- **Current status:** ✅ **Resolved.**
+### Decision 13 — Drift correction: undersized axle hole in the printed motor mount (August 3, 2026)
 
-- **Contexto/Restricción:** al medir el desempeño del robot en tramos rectos (~3 metros), se detectó una **deriva** (desviación angular) excesiva: en lugar de avanzar en línea recta, el robot se abría formando una trayectoria en forma de triángulo respecto a la línea ideal. La desviación medida era de aproximadamente **45°**.
-- **Diagnóstico:** al probar el robot suspendido en el aire (sin contacto con el suelo), se observó que una de las llantas (lado izquierdo, visto desde atrás del robot) no giraba. La causa: el orificio del eje en la pieza impresa en 3D que sostiene el motor (soporte naranja, visible en la foto trasera del robot) era ligeramente más pequeño que la medida real del eje (*axle*) de Lego, generando un ajuste a presión excesivo. Esto provocaba que esa rueda solo girara cuando había contacto y fricción con el suelo, avanzando más lento que el lado contrario y generando la deriva.
+- **Context/Constraint:** when measuring the robot's performance on straight stretches (~3 meters), an excessive **drift** (angular deviation) was detected: instead of moving in a straight line, the robot opened up, forming a triangle-shaped trajectory with respect to the ideal line. The measured deviation was approximately **45°**.
+- **Diagnosis:** when testing the robot suspended in the air (with no contact with the floor), it was observed that one of the wheels (left side, seen from behind the robot) did not turn. The cause: the axle hole in the 3D printed part that holds the motor (orange mount, visible in the rear photo of the robot) was slightly smaller than the actual size of the Lego axle, creating an excessive press fit. This meant that wheel only turned when there was contact and friction with the floor, advancing more slowly than the opposite side and generating the drift.
 
 <div align="center">
-<img src="v-photos/rearView.jpeg" width="220" alt="Vista trasera del robot, soporte impreso del motor">
-<br><sub>Vista trasera — soporte impreso del motor (pieza naranja) donde se detectó el orificio del eje mal dimensionado.</sub>
+<img src="v-photos/rearView.jpeg" width="220" alt="Rear view of the robot, printed motor mount">
+<br><sub>Rear view — printed motor mount (orange part) where the undersized axle hole was found.</sub>
 </div>
 
-- **Decisión y acción correctiva:** se agrandó el orificio del soporte impreso con una broca de taladro, permitiendo que el eje gire libremente en cualquier circunstancia, tanto suspendido en el aire como en contacto con la pista.
-- **Evidencia/Resultado:** la rueda ahora gira correctamente en ambas condiciones, tanto suspendida en el aire como sobre la pista. La deriva del robot es **mucho menor** que antes de la corrección, y el tiempo de recorrido en el Open Challenge mejoró de forma notoria en la misma sesión — resultado consistente con una trayectoria más recta y con menos correcciones necesarias durante el recorrido.
-- **Estado:** mejora confirmada; el equipo continúa dando seguimiento a la deriva restante para reducirla aún más.
-### Decisión 14 — Recalibración de umbrales de evasión y validación en ¾ de vuelta (9 de agosto de 2026)
+- **Decision and corrective action:** the hole in the printed mount was enlarged with a drill bit, allowing the axle to turn freely under any circumstance, both suspended in the air and in contact with the track.
+- **Evidence/Result:** the wheel now turns correctly in both conditions, both suspended in the air and on the track. The robot's drift is **much smaller** than before the correction, and the Open Challenge run time improved noticeably in that same session — a result consistent with a straighter trajectory requiring fewer corrections along the run.
+- **Status:** improvement confirmed; the team continues to monitor the remaining drift in order to reduce it further.
+### Decision 14 — Recalibration of avoidance thresholds and validation over ¾ of a lap (August 9, 2026)
 
-- **Contexto:** el esquema reactivo de evasión de obstáculos (Decisión 10) solo se había validado en un tramo recto de la pista (Decisión 11, 7 de julio de 2026), usando umbrales fijos de 50 cm (inicio de seguimiento) y 30 cm (inicio del giro de evasión).
-- **Decisión y cambio:** tras pruebas iterativas, se recalibraron los umbrales de distancia:
-  - **Seguimiento del obstáculo:** ahora entre **60 cm y 30 cm** (antes: umbral único de 50 cm).
-  - **Inicio de la secuencia de evasión:** ahora entre **25 cm y 20 cm** (antes: umbral único de 30 cm), con una **desviación progresiva** conforme el robot se acerca al obstáculo, en lugar de un giro más abrupto a partir de un solo umbral.
-  - **Regla de color (sin cambio):** pilar verde → evasión por la izquierda; pilar rojo → evasión por la derecha.
-- **Evidencia/Resultado:** se validó el esquema recalibrado en una prueba que cubre **≈3/4 de una vuelta completa** de la pista — una cobertura mucho mayor que la prueba anterior, limitada a un tramo recto (Decisión 11) — detectando y evadiendo obstáculos según su color y distancia de forma consistente. [Ver video de esta prueba](https://youtube.com/shorts/EIXM7CX9vMc?feature=share) (video histórico; el video actual en la sección [Obstacle Challenge](#obstacle-challenge) corresponde a una corrida más reciente y completa).
-- **Estado:** umbrales vigentes del sistema de evasión de obstáculos.
-### Decisión 15 — Descontinuación del sensor infrarrojo de esquina (10 de agosto de 2026)
+- **Context:** the reactive obstacle avoidance scheme (Decision 10) had only been validated on a straight stretch of the track (Decision 11, July 7, 2026), using fixed thresholds of 50 cm (start of tracking) and 30 cm (start of the avoidance turn).
+- **Decision and change:** after iterative testing, the distance thresholds were recalibrated:
+  - **Obstacle tracking:** now between **60 cm and 30 cm** (previously: a single 50 cm threshold).
+  - **Start of the avoidance sequence:** now between **25 cm and 20 cm** (previously: a single 30 cm threshold), with a **progressive deviation** as the robot approaches the obstacle, instead of a more abrupt turn from a single threshold.
+  - **Color rule (unchanged):** green pillar → avoid on the left; red pillar → avoid on the right.
+- **Evidence/Result:** the recalibrated scheme was validated in a test covering **≈3/4 of a complete lap** of the track — much broader coverage than the previous test, which was limited to a straight stretch (Decision 11) — detecting and avoiding obstacles by color and distance consistently. [See the video of this test](https://youtube.com/shorts/EIXM7CX9vMc?feature=share) (historical video; the current video in the [Obstacle Challenge](#obstacle-challenge) section corresponds to a more recent and complete run).
+- **Status:** current thresholds of the obstacle avoidance system.
+### Decision 15 — Discontinuation of the infrared corner sensor (August 10, 2026)
 
-- **Contexto:** el sensor infrarrojo MH Sensor Series, agregado el 28 de junio de 2026 para leer las líneas de esquina y complementar los sensores laterales VL53L0X (Decisión 7), estuvo activo hasta el 9 de agosto de 2026.
-- **Decisión:** se dejó de utilizar a partir del **10 de agosto de 2026**. Se retiró del BOM y de las especificaciones actuales del vehículo (tabla "Potencia y Sensores").
-- **Nota:** las entradas de la Bitácora y el video de Open Challenge que documentan pruebas anteriores a esta fecha (Decisión 7, 28 de junio de 2026) se conservan sin cambios, ya que describen correctamente el estado del robot en ese momento.
-### Decisión 16 — Validación: corrida completa del Obstacle Challenge (23 de agosto de 2026)
+- **Context:** the MH Sensor Series infrared sensor, added on June 28, 2026 to read the corner lines and complement the lateral VL53L0X sensors (Decision 7), was in use until August 9, 2026.
+- **Decision:** it was discontinued as of **August 10, 2026**. It was removed from the BOM and from the vehicle's current specifications ("Power and Sensors" table).
+- **Note:** the Decision Log entries and the Open Challenge video documenting tests prior to this date (Decision 7, June 28, 2026) are kept unchanged, since they correctly describe the state of the robot at that time.
+### Decision 16 — Validation: complete Obstacle Challenge run (August 23, 2026)
 
-- **Contexto:** hasta esta fecha, el Obstacle Challenge solo se había validado por tramos: un segmento recto (Decisión 11) y ≈3/4 de vuelta (Decisión 14). Faltaba comprobar que la máquina de estados sostuviera el comportamiento a lo largo de una corrida larga, donde se acumulan esquinas, esquives y deriva del giroscopio.
-- **Evidencia/Resultado:** el **23 de agosto de 2026** el robot completó una corrida de **2 min 18 s** encadenando de forma autónoma el ciclo completo: seguimiento de rumbo recto, detección y esquive de pilares según color, y detección y giro de esquinas — sin intervención manual y sin desplazar señales. [Ver video](https://youtu.be/mVZCY8PyXOI).
-- **Qué valida esta prueba:** que las tres piezas del sistema (percepción por color, seguimiento de rumbo por giroscopio y detección de esquina por ToF en modo de largo alcance) conviven sin interferirse a lo largo de una corrida larga, y que las salvaguardas de tiempo descritas en el punto 10 de [Arquitectura de Software](#ingenieria-defensiva) mantienen al robot fuera de estados bloqueados.
-- **Estado:** comportamiento vigente del Obstacle Challenge.
-[⬆ Volver al índice](#indicleto)
+- **Context:** up to this date, the Obstacle Challenge had only been validated in segments: a straight section (Decision 11) and ≈3/4 of a lap (Decision 14). What remained was to prove that the state machine could sustain its behavior over a long run, where corners, dodges and gyroscope drift accumulate.
+- **Evidence/Result:** on **August 23, 2026** the robot completed a **2 min 18 s** run, autonomously chaining the complete cycle: straight heading control, detection and avoidance of pillars by color, and corner detection and turning — without manual intervention and without displacing any sign. [See the video](https://youtu.be/mVZCY8PyXOI).
+- **What this test validates:** that the three pieces of the system (color perception, gyroscope heading control and ToF corner detection in long range mode) coexist without interfering with each other over a long run, and that the safety timeouts described in point 10 of [Software Architecture](#ingenieria-defensiva) keep the robot out of blocked states.
+- **Status:** current behavior of the Obstacle Challenge.
+[⬆ Back to top](#indicleto)
  
 ---
 
 <a id="reproducibilidad"></a>
 
-## 5. Reproducibilidad y Estructura del Repositorio
+## 5. Reproducibility and Repository Structure
 
 > [!NOTE]
-> Esta sección existe para que **otro equipo pueda tomar este repositorio y reconstruir el robot** solo con lo que hay aquí: qué archivo es cada cosa, cómo se compila, y cómo se gestiona el historial de cambios.
+> This section exists so that **another team could take this repository and rebuild the robot** with only what is here: what each file is, how it is compiled, and how the change history is managed.
 
-### Estructura del repositorio
+### Repository structure
 
 ```
-├── README.md                          # Este documento
-├── abierto.ino                        # Código del Open Challenge (ver Arquitectura de Software, 3.1)
-├── obstaculos.ino                     # Código del Obstacle Challenge (ver Arquitectura de Software, 3.2)
-├── cad/                                # Piezas de diseño mecánico en .STL (ver Movilidad y Diseño Mecánico)
+├── README.md                          # This document
+├── abierto.ino                        # Open Challenge code (see Software Architecture, 3.1)
+├── obstaculos.ino                     # Obstacle Challenge code (see Software Architecture, 3.2)
+├── cad/                                # Mechanical design parts in .STL (see Mobility and Mechanical Design)
 │   ├── S25_chasis_rev18.STL
 │   ├── S25_Plataforma_Soporte_Rev_8.STL
 │   ├── S25_Soporte_de_motor_y_transmision_Rev_4B.STL
 │   ├── S25_Mangueta_Rev_2.STL
 │   ├── R26_EnlaceDireccion_Rev7.STL
 │   └── SoporteLaser.STL
-├── schemes/                            # Fotos de componentes (BOM) y diagramas de cableado
-├── v-photos/                            # Fotos del vehículo (6 vistas + fotos de pruebas)
-└── t-photos/                            # Foto del equipo
+├── schemes/                            # Component photos (BOM) and wiring diagrams
+├── v-photos/                            # Vehicle photos (6 views + test photos)
+└── t-photos/                            # Team photo
 ```
 
-### Cómo compilar y cargar cada programa
+### How to compile and upload each program
 
-1. Instalar el **Arduino IDE**.
-2. Instalar las librerías que usa cada programa (Administrador de Librerías → buscar por nombre):
-   - **Ambos programas:** `Wire` (incluida con el IDE), `MPU6050_light`.
-   - **`abierto.ino`** (Open Challenge): `Adafruit_VL53L0X`, `Servo` (incluida con el IDE).
-   - **`obstaculos.ino`** (Obstacle Challenge): `Adafruit_VL53L0X`, `SCServo` (librería de Waveshare para el ST3215), `HUSKYLENS` (librería oficial de DFRobot).
-3. Abrir el archivo correspondiente al reto (`abierto.ino` u `obstaculos.ino`).
-4. Seleccionar placa **Arduino Mega 2560** y el puerto correspondiente.
-5. Verificar que el HuskyLens esté configurado en modo **I2C** (solo aplica para `obstaculos.ino`) y que el algoritmo de reconocimiento de color tenga aprendidos los colores rojo y verde antes de correr el programa.
-6. Cargar el programa. En `obstaculos.ino`, el robot espera a que se presione el botón de arranque (pin 23) antes de empezar a moverse.
+1. Install the **Arduino IDE**.
+2. Install the libraries each program uses (Library Manager → search by name):
+   - **Both programs:** `Wire` (included with the IDE), `MPU6050_light`.
+   - **`abierto.ino`** (Open Challenge): `Adafruit_VL53L0X`, `Servo` (included with the IDE).
+   - **`obstaculos.ino`** (Obstacle Challenge): `Adafruit_VL53L0X`, `SCServo` (Waveshare library for the ST3215), `HUSKYLENS` (official DFRobot library).
+3. Open the file corresponding to the challenge (`abierto.ino` or `obstaculos.ino`).
+4. Select the **Arduino Mega 2560** board and the corresponding port.
+5. Verify that the HuskyLens is set to **I2C** mode (applies only to `obstaculos.ino`) and that the color recognition algorithm has learned the colors red and green before running the program.
+6. Upload the program. In `obstaculos.ino`, the robot waits for the start button (pin 23) to be pressed before it starts moving.
 
-### Convención de commits y versionado
+### Commit and versioning conventions
 
-- **Mensajes de commit descriptivos**, en la línea de: `feat: agregar recalibración de umbrales de esquive`, `fix: corregir orificio de eje en soporte de motor`, `docs: actualizar README con arquitectura de potencia`.
-- **Historial de commits conforme al reglamento**: al menos 3 commits, el primero con al menos 1/5 del código final y con al menos dos meses de anticipación a la competencia, el segundo con al menos un mes de anticipación, y el tercero (el que se evalúa) con al menos dos semanas de anticipación.
-- **Etiquetas de versión (tags)** en los hitos importantes de la Bitácora, por ejemplo: `v1.0` (Regional Mexicali), `v1.1` (post-regional: VL53L0X laterales + wall-following), `v1.2` (algoritmo de evasión reactivo), `v1.3` (servo ST3215-HS + soportes rediseñados).
+- **Descriptive commit messages**, along the lines of: `feat: add recalibration of dodge thresholds`, `fix: correct axle hole in motor mount`, `docs: update README with power architecture`.
+- **Commit history compliant with the rules**: at least 3 commits, the first with at least 1/5 of the final code and at least two months before the competition, the second at least one month before, and the third (the one that is evaluated) at least two weeks before.
+- **Version tags** at the important milestones of the Decision Log, for example: `v1.0` (Mexicali Regional), `v1.1` (post-regional: lateral VL53L0X + wall following), `v1.2` (reactive avoidance algorithm), `v1.3` (ST3215-HS servo + redesigned mounts).
 
-### Trazabilidad entre código, pruebas y documentación
+### Traceability between code, tests and documentation
 
-Cada cambio de fondo documentado en la [Bitácora](#bitacora-decisiones) tiene su evidencia correspondiente en otra parte del repositorio, para que se pueda verificar en lugar de solo tomarlo por escrito:
+Every substantive change documented in the [Decision Log](#bitacora-decisiones) has its corresponding evidence elsewhere in the repository, so it can be verified rather than just taken on written word:
 
-| Tipo de cambio | Dónde vive el código/evidencia |
+| Type of change | Where the code/evidence lives |
 |---|---|
-| Cambios de hardware (sensores, chasis, servos) | [Piezas de Diseño Mecánico](#piezas-cad) (`/cad`) y [BOM](#bom) |
-| Cambios de algoritmo | `abierto.ino` / `obstaculos.ino`, explicados en [Arquitectura de Software](#arquitectura-software) |
-| Validación en pista | [Videos de la Competencia](#videos-de-la-competencia) |
+| Hardware changes (sensors, chassis, servos) | [Mechanical Design Parts](#piezas-cad) (`/cad`) and [BOM](#bom) |
+| Algorithm changes | `abierto.ino` / `obstaculos.ino`, explained in [Software Architecture](#arquitectura-software) |
+| On-track validation | [Competition Videos](#competition-videos) |
 
-[⬆ Volver al índice](#indicleto)
+[⬆ Back to top](#indicleto)
  
 ---
  
-## Videos de la Competencia
+<a id="competition-videos"></a>
+
+## Competition Videos
 
 
  
-Conforme al reglamento oficial WRO 2026 – Future Engineers, cada equipo debe publicar un video en YouTube (público o accesible mediante enlace) que documente el manejo autónomo del vehículo para cada reto, con una duración mínima de 30 segundos por video.
+In accordance with the official WRO 2026 – Future Engineers rules, each team must publish a video on YouTube (public or accessible via link) documenting the autonomous driving of the vehicle for each challenge, with a minimum duration of 30 seconds per video.
  
-| Reto | Estado | Enlace | Duración del recorrido |
+| Challenge | Status | Link | Run duration |
 |------|--------|--------|-------------------------|
-| **Open Challenge** (Vuelta Abierta) | ✅ Publicado | [Ver en YouTube](https://youtu.be/jBpTh44YIUg) | 75 s |
-| **Obstacle Challenge** (Vuelta con Obstáculos) | ✅ Publicado | [Ver en YouTube](https://youtu.be/mVZCY8PyXOI) | 2 min 18 s |
+| **Open Challenge** | ✅ Published | [Watch on YouTube](https://youtu.be/jBpTh44YIUg) | 75 s |
+| **Obstacle Challenge** | ✅ Published | [Watch on YouTube](https://youtu.be/mVZCY8PyXOI) | 2 min 18 s |
  
 ### Open Challenge
  
 <div align="center">
-<a href="https://youtu.be/jBpTh44YIUg"><img src="https://img.youtube.com/vi/jBpTh44YIUg/0.jpg" width="320" alt="Video Open Challenge"></a>
+<a href="https://youtu.be/jBpTh44YIUg"><img src="https://img.youtube.com/vi/jBpTh44YIUg/0.jpg" width="320" alt="Open Challenge video"></a>
 </div>
-El video corresponde a la prueba de la ronda de vuelta abierta realizada el **28 de junio de 2026**. En la corrida documentada, el robot:
+The video corresponds to the open round test carried out on **June 28, 2026**. In the documented run, the robot:
  
-- Ejecuta de forma autónoma **3 vueltas consecutivas** sobre la pista.
-- Se estaciona en el **cuadrante de inicio** del recorrido, sin intervención manual.
-- Completa la totalidad del reto en **75 segundos**.
-**Sistemas involucrados durante la corrida:** seguimiento de muro mediante sensores VL53L0X laterales para la toma de curvas, sensor infrarrojo MH Sensor Series en el extremo trasero inferior para lectura de líneas de esquina, y HuskyLens + Arduino Mega como unidad de control principal.
+- Autonomously performs **3 consecutive laps** around the track.
+- Parks in the **starting quadrant** of the course, without manual intervention.
+- Completes the entire challenge in **75 seconds**.
+**Systems involved during the run:** wall following using lateral VL53L0X sensors for taking the curves, MH Sensor Series infrared sensor at the lower rear end for reading corner lines, and HuskyLens + Arduino Mega as the main control unit.
  
 ### Obstacle Challenge
  
 <div align="center">
-<a href="https://youtu.be/mVZCY8PyXOI"><img src="https://img.youtube.com/vi/mVZCY8PyXOI/0.jpg" width="320" alt="Video Obstacle Challenge"></a>
+<a href="https://youtu.be/mVZCY8PyXOI"><img src="https://img.youtube.com/vi/mVZCY8PyXOI/0.jpg" width="320" alt="Obstacle Challenge video"></a>
 </div>
-El video corresponde a una corrida completa de evasión de obstáculos realizada el **23 de agosto de 2026**, con una duración de **2 min 18 s** (ver Bitácora, **Decisión 16**). El robot detecta y evade los obstáculos según su color y distancia:
+The video corresponds to a complete obstacle avoidance run carried out on **August 23, 2026**, lasting **2 min 18 s** (see Decision Log, **Decision 16**). The robot detects and avoids the obstacles according to their color and distance:
  
-- **Pilar verde:** se evade por la **izquierda**.
-- **Pilar rojo:** se evade por la **derecha**.
+- **Green pillar:** avoided on the **left**.
+- **Red pillar:** avoided on the **right**.
 
-**Sistemas involucrados durante la corrida:** detección de color mediante la cámara HuskyLens; seguimiento del obstáculo manteniéndolo centrado en cámara entre **60 y 30 cm** de distancia; inicio de la secuencia de evasión entre **25 y 20 cm**, con desviación progresiva conforme el robot se acerca; detección y giro de esquinas; y protocolo de re-centrado de 10 cuadros al perder de vista el obstáculo.
+**Systems involved during the run:** color detection with the HuskyLens camera; obstacle tracking keeping it centered in the camera between **60 and 30 cm** away; start of the avoidance sequence between **25 and 20 cm**, with progressive deviation as the robot approaches; corner detection and turning; and a 10-frame re-centering protocol when the obstacle goes out of sight.
 
 > [!NOTE]
-> Los videos anteriores de Obstacle Challenge (tramo recto del 7 de julio, ≈3/4 de vuelta del 9 de agosto) se conservan en la Bitácora como evidencia histórica de la evolución del sistema — ver Decisiones 11 y 14.
+> The earlier Obstacle Challenge videos (straight stretch from July 7, ≈3/4 of a lap from August 9) are kept in the Decision Log as historical evidence of the system's evolution — see Decisions 11 and 14.
  
-[⬆ Volver al índice](#indicleto)
+[⬆ Back to top](#indicleto)
  
 ---
  
@@ -1649,25 +1651,25 @@ El video corresponde a una corrida completa de evasión de obstáculos realizada
  
 ## BOM (Bill of Materials)
  
-| Componente | Requerimiento de energía | Imagen | Precio |
+| Component | Power requirement | Image | Price |
 |------------|--------------------------|--------|--------|
-| Arduino Mega 2560 | 0.25-0.5W | <img src="schemes/ArduinoMega.jpg" width="80"> | ≈ 24.46 Dlls |
-| Motor DC con Encoder: GA37-520 300RPM | 5.55-16.65W | <img src="schemes/MOTORDC.jpg" width="80"> | ≈ 22.12 Dlls |
-| Puente H TB6612FNG | 0.025W | <img src="schemes/HBRIDGE.jpg" width="80"> | ≈ 4.35 Dlls |
-| Servo Motor: MG90S (Open Challenge) | 0.5-2.5W | <img src="schemes/SERVO.webp" width="80"> | ≈ 4.08 Dlls |
-| Servo de bus serial: Waveshare ST3215-HS (Obstacle Challenge) | 0.75-6.75W (0.1-0.9A a 7.5V) | <img src="schemes/ST3215.jpg" width="80"> | ≈ 18.00 Dlls |
-| Sensor Ultrasonico: HC-SR04P x1 (frontal) | 0.075W | <img src="schemes/ULTRASONICO.webp" width="80"> | ≈ 0.90 Dlls |
-| Sensor Láser ToF: VL53L0X x2 (laterales) | ≈ 0.10W | <img src="schemes/laser.jpg" width="80"> | ≈ 9.00 Dlls |
-| Acelerometro/Giroscopio: GY-9250 | 0.033W | <img src="schemes/GIRO.jpg" width="80"> | ≈ 9.24 Dlls |
-| LED x4 | 0.264W | <img src="schemes/LED.png" width="80"> | ≈ 0.44 Dlls |
-| Buzzer | N/A | <img src="schemes/BUZ.jpg" width="80"> | ≈ 0.27 Dlls |
-| SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | <img src="schemes/HUSKY.webp" width="80"> | ≈ 40.65 Dlls |
-| **Total** | | | **≈ 133.51 Dlls** |
+| Arduino Mega 2560 | 0.25-0.5W | <img src="schemes/ArduinoMega.jpg" width="80"> | ≈ 24.46 USD |
+| DC Motor with Encoder: GA37-520 300RPM | 5.55-16.65W | <img src="schemes/MOTORDC.jpg" width="80"> | ≈ 22.12 USD |
+| TB6612FNG H-Bridge | 0.025W | <img src="schemes/HBRIDGE.jpg" width="80"> | ≈ 4.35 USD |
+| Servo Motor: MG90S (Open Challenge) | 0.5-2.5W | <img src="schemes/SERVO.webp" width="80"> | ≈ 4.08 USD |
+| Serial bus servo: Waveshare ST3215-HS (Obstacle Challenge) | 0.75-6.75W (0.1-0.9A at 7.5V) | <img src="schemes/ST3215.jpg" width="80"> | ≈ 18.00 USD |
+| Ultrasonic Sensor: HC-SR04P x1 (front) | 0.075W | <img src="schemes/ULTRASONICO.webp" width="80"> | ≈ 0.90 USD |
+| ToF Laser Sensor: VL53L0X x2 (lateral) | ≈ 0.10W | <img src="schemes/laser.jpg" width="80"> | ≈ 9.00 USD |
+| Accelerometer/Gyroscope: GY-9250 | 0.033W | <img src="schemes/GIRO.jpg" width="80"> | ≈ 9.24 USD |
+| LED x4 | 0.264W | <img src="schemes/LED.png" width="80"> | ≈ 0.44 USD |
+| Buzzer | N/A | <img src="schemes/BUZ.jpg" width="80"> | ≈ 0.27 USD |
+| SEN0336 HuskyLens PRO OV5640 | 3.3~5.0V | <img src="schemes/HUSKY.webp" width="80"> | ≈ 40.65 USD |
+| **Total** | | | **≈ 133.51 USD** |
 
 > [!NOTE]
-> El sensor infrarrojo (MH Sensor Series) se retiró de este BOM porque se dejó de usar a partir del **10 de agosto de 2026** — ver Bitácora, **Decisión 15**.
+> The infrared sensor (MH Sensor Series) was removed from this BOM because it was discontinued as of **August 10, 2026** — see Decision Log, **Decision 15**.
 
 > [!NOTE]
-> El robot usa un servomotor distinto en cada reto: **MG90S** en el Open Challenge y **ST3215-HS** en el Obstacle Challenge — ver [Arquitectura de Software](#arquitectura-software) y [Arquitectura de Potencia](#arquitectura-potencia).
+> The robot uses a different servo in each challenge: **MG90S** in the Open Challenge and **ST3215-HS** in the Obstacle Challenge — see [Software Architecture](#arquitectura-software) and [Power Architecture](#arquitectura-potencia).
  
-[⬆ Volver al índice](#indicleto)
+[⬆ Back to top](#indicleto)
