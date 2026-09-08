@@ -178,9 +178,9 @@ El eje de salida del motor de tracción está acoplado a ejes Lego, que a su vez
 
 #### Plataforma / soporte superior
 
-Segundo piso del chasis, donde se monta parte de la electrónica del robot.
+Primer piso del chasis, donde se monta parte de la electrónica del robot.
 
-- **Archivo:** [`S25_Plataforma_Soporte_Rev_8.STL`](cad/S25_Plataforma_Soporte_Rev_8.STL)
+- **Archivo:** [`R26_piso_1_rev2.STL`](cad/R26_piso_1_rev2.STL)
 - **Dimensiones (caja delimitadora):** 114.9 × 3.1 × 26.8 mm
 
 #### Chasis
